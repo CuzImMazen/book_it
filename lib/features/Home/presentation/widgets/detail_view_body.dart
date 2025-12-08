@@ -1,0 +1,59 @@
+import 'package:book_it/features/Home/data/models/property_model.dart';
+import 'package:book_it/features/Home/presentation/widgets/book_button.dart';
+import 'package:book_it/features/Home/presentation/widgets/detail_page_location_row.dart';
+import 'package:book_it/features/Home/presentation/widgets/detail_page_name_row.dart';
+import 'package:book_it/features/Home/presentation/widgets/features_scroller.dart';
+import 'package:book_it/features/Home/presentation/widgets/property_description.dart';
+import 'package:book_it/features/Home/presentation/widgets/property_images_slider.dart';
+import 'package:book_it/features/Home/presentation/widgets/property_owner_row.dart';
+import 'package:flutter/material.dart';
+
+class DetailViewBody extends StatelessWidget {
+  const DetailViewBody({super.key, required this.property});
+
+  final PropertyModel property;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PropertyImages(images: property.images ?? []),
+          SizedBox(height: 10),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                DetailPageNameRow(property: property),
+                SizedBox(height: 5),
+                DetailPageLocationRow(property: property),
+                SizedBox(height: 20),
+                PropertyFeaturesScroller(property: property),
+                SizedBox(height: 20),
+                Text(
+                  "Property Description",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                ),
+                SizedBox(height: 10),
+
+                ReadMoreDescription(property: property),
+                SizedBox(height: 20),
+                Text(
+                  "Owner",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                ),
+                SizedBox(height: 12),
+                OwnerRow(propertyOwner: property.owner),
+                SizedBox(height: 25),
+                BookButton(),
+                SizedBox(height: 25),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
