@@ -7,13 +7,13 @@ import 'package:book_it/features/Home/data/models/property_model.dart';
 import 'package:book_it/features/Home/presentation/views/property_detail_view.dart';
 import 'package:book_it/features/Introduction/presentation/views/welcome_view.dart';
 import 'package:book_it/features/Layout/presentation/views/layout_view.dart';
-//import 'package:book_it/features/Splash/presentation/views/splash_view.dart';
+import 'package:book_it/features/Splash/presentation/views/splash_view.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', builder: (context, state) => const LayoutView()),
+    GoRoute(path: '/', builder: (context, state) => const SplashView()),
     GoRoute(
       path: '/welcome',
       pageBuilder: (context, state) => fadeTransitionPage(const WelcomeView()),
