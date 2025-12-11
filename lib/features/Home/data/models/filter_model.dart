@@ -5,6 +5,7 @@ class FilterModel {
   final RangeValues areaRange;
   final String? selectedGovernorate;
   final String? selectedCity;
+  final String selectedCategory;
   final bool onlyAvailable;
   final int? numberOfBedrooms;
   final int? numberOfBathrooms;
@@ -16,6 +17,7 @@ class FilterModel {
     this.onlyAvailable = false,
     this.selectedGovernorate,
     this.selectedCity,
+    this.selectedCategory = "All",
     this.numberOfBedrooms,
     this.numberOfBathrooms,
     this.numberOfKitchens,
@@ -26,6 +28,7 @@ class FilterModel {
     RangeValues? areaRange,
     String? selectedGovernorate,
     String? selectedCity,
+    String? selectedCategory,
     bool? onlyAvailable,
     int? numberOfBedrooms,
     int? numberOfBathrooms,
@@ -36,6 +39,7 @@ class FilterModel {
       areaRange: areaRange ?? this.areaRange,
       selectedGovernorate: selectedGovernorate ?? this.selectedGovernorate,
       selectedCity: selectedCity ?? this.selectedCity,
+      selectedCategory: selectedCategory ?? this.selectedCategory,
       onlyAvailable: onlyAvailable ?? this.onlyAvailable,
       numberOfBedrooms: numberOfBedrooms ?? this.numberOfBedrooms,
       numberOfBathrooms: numberOfBathrooms ?? this.numberOfBathrooms,

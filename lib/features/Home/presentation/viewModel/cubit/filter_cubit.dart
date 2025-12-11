@@ -3,10 +3,14 @@ import 'package:book_it/features/Home/data/models/filter_model.dart';
 import 'package:flutter/material.dart';
 
 class FilterCubit extends Cubit<FilterModel> {
-  FilterCubit() : super(FilterModel());
+  FilterCubit() : super(const FilterModel());
 
   void updateLocation({String? governorate, String? city}) {
     emit(state.copyWith(selectedGovernorate: governorate, selectedCity: city));
+  }
+
+  void updateCategory(String category) {
+    emit(state.copyWith(selectedCategory: category));
   }
 
   void updatePriceRange(RangeValues newRange) {
