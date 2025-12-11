@@ -6,7 +6,16 @@ class FilterCubit extends Cubit<FilterModel> {
   FilterCubit() : super(const FilterModel());
 
   void updateLocation({String? governorate, String? city}) {
-    emit(state.copyWith(selectedGovernorate: governorate, selectedCity: city));
+    if (governorate != null && governorate != state.selectedGovernorate) {
+      emit(
+        state.copyWith(selectedGovernorate: governorate, selectedCity: null),
+      );
+      return;
+    }
+
+    if (city != null) {
+      emit(state.copyWith(selectedCity: city));
+    }
   }
 
   void updateCategory(String category) {

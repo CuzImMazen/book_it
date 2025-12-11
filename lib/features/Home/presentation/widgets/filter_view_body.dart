@@ -111,20 +111,7 @@ class FilterViewBody extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       final filter = context.read<FilterCubit>().state;
-                      print("Current filter state:");
-                      print("Governorate: ${filter.selectedGovernorate}");
-                      print("City: ${filter.selectedCity}");
-                      print(
-                        "Price: ${filter.priceRange.start}-${filter.priceRange.end}",
-                      );
-                      print(
-                        "Area: ${filter.areaRange.start}-${filter.areaRange.end}",
-                      );
-                      print("Bedrooms: ${filter.numberOfBedrooms}");
-                      print("Bathrooms: ${filter.numberOfBathrooms}");
-                      print("Kitchens: ${filter.numberOfKitchens}");
-                      print("Only Available: ${filter.onlyAvailable}");
-                      print("Category: ${filter.selectedCategory}");
+                      print(filter.toQueryParameters());
                     },
                     child: const ApplyFiltersButton(),
                   ),

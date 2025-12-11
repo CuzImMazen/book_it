@@ -28,7 +28,7 @@ class DropDownButtonRow extends StatelessWidget {
         DropdownButton<String>(
           menuMaxHeight: 500,
           hint: Center(child: Text(hintText!)),
-          value: currentValue,
+          value: items.contains(currentValue) ? currentValue : null,
 
           onChanged: onChanged,
           items: items
