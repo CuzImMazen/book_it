@@ -124,6 +124,7 @@ class FilterViewBody extends StatelessWidget {
                       print("Bathrooms: ${filter.numberOfBathrooms}");
                       print("Kitchens: ${filter.numberOfKitchens}");
                       print("Only Available: ${filter.onlyAvailable}");
+                      print("Category: ${filter.selectedCategory}");
                     },
                     child: const ApplyFiltersButton(),
                   ),

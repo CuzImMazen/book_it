@@ -44,7 +44,7 @@ class HomeView extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height / 15),
           FilterButtonRow(),
           SizedBox(height: 20),
-          CatgeorySelector(),
+          CategorySelector(),
           SizedBox(height: 20),
 
           Expanded(
