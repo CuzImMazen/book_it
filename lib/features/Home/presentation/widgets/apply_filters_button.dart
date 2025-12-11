@@ -12,7 +12,7 @@ class ApplyFiltersButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           color: kPrimaryColor.withAlpha(200),
         ),
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Text(

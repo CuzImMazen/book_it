@@ -18,7 +18,6 @@ class LocationFilters extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Governorate dropdown
         DropDownButtonRow(
           hintText: "Governorate",
           text: "Governorate :",
@@ -27,7 +26,7 @@ class LocationFilters extends StatelessWidget {
           onChanged: (value) {
             if (value == "All") {
               context.read<FilterCubit>().updateLocation(
-                governorate: null,
+                governorate: "All",
                 city: null,
               );
             } else {
@@ -40,7 +39,6 @@ class LocationFilters extends StatelessWidget {
         ),
         const SizedBox(height: 10),
 
-        // City dropdown
         DropDownButtonRow(
           hintText: "Select City",
           text: "Choose a City :",

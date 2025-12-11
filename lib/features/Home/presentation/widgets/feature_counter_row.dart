@@ -3,8 +3,8 @@ import 'package:book_it/core/style/colors.dart';
 
 class FeatureCounterRow extends StatelessWidget {
   final String text;
-  final int? value;
-  final Function(int?) onChanged;
+  final int value; // Never nullable
+  final void Function(int) onChanged;
 
   const FeatureCounterRow({
     super.key,
@@ -15,7 +15,7 @@ class FeatureCounterRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayValue = value == null ? "Any" : value.toString();
+    final displayValue = value == 0 ? "Any" : value.toString();
 
     return Row(
       children: [
@@ -34,9 +34,11 @@ class FeatureCounterRow extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: () {
-                  if (value != null && value! > 1) {
-                    onChanged(value! - 1);
-                  } else {}
+                  if (value > 1) {
+                    onChanged(value - 1);
+                  } else {
+                    onChanged(0); // 1 → Any
+                  }
                 },
                 icon: const Icon(Icons.remove, color: kPrimaryColor),
               ),
@@ -46,10 +48,10 @@ class FeatureCounterRow extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  if (value == null) {
-                    onChanged(1);
-                  } else if (value! < 10) {
-                    onChanged(value! + 1);
+                  if (value == 0) {
+                    onChanged(1); // Any → 1
+                  } else if (value < 10) {
+                    onChanged(value + 1);
                   }
                 },
                 icon: const Icon(Icons.add, color: kPrimaryColor),
