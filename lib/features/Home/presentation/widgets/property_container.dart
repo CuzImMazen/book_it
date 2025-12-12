@@ -59,7 +59,7 @@ class PropertyContainer extends StatelessWidget {
                 children: [
                   Icon(Icons.location_on, color: Color(0xff0987b6)),
                   Text(
-                    "${property.location.governorate}, ${property.location.city}",
+                    "${property.governorate}, ${property.city}",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,

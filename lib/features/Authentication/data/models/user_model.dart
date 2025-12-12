@@ -1,5 +1,5 @@
 class UserModel {
-  UserModel({
+  const UserModel({
     required this.id,
     required this.firstName,
     required this.lastName,
@@ -9,14 +9,14 @@ class UserModel {
     required this.profileImage,
     required this.idImage,
   });
-  int? id;
-  String? firstName;
-  String? lastName;
-  String? birthDate;
-  String? phoneNumber;
-  String? role;
-  String? profileImage;
-  String? idImage;
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String birthDate;
+  final String phoneNumber;
+  final String role;
+  final String profileImage;
+  final String idImage;
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(

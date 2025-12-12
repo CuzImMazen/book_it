@@ -67,22 +67,22 @@ class FilterModel {
     }
 
     if (!(priceRange.start == 25 && priceRange.end == 250)) {
-      params['priceMin'] = priceRange.start.toInt().toString();
-      params['priceMax'] = priceRange.end.toInt().toString();
+      params['min_price'] = priceRange.start.toInt().toString();
+      params['max_price'] = priceRange.end.toInt().toString();
     }
 
     if (!(areaRange.start == 100 && areaRange.end == 1000)) {
-      params['areaMin'] = areaRange.start.toInt().toString();
-      params['areaMax'] = areaRange.end.toInt().toString();
+      params['min_area'] = areaRange.start.toInt().toString();
+      params['max_area'] = areaRange.end.toInt().toString();
     }
 
-    if (numberOfBedrooms > 0) params['bedrooms'] = numberOfBedrooms.toString();
+    if (numberOfBedrooms > 0) params['rooms'] = numberOfBedrooms.toString();
     if (numberOfBathrooms > 0)
       params['bathrooms'] = numberOfBathrooms.toString();
 
     if (numberOfKitchens > 0) params['kitchens'] = numberOfKitchens.toString();
 
-    if (onlyAvailable) params['onlyAvailable'] = 'true';
+    if (onlyAvailable) params['is_available'] = 'true';
 
     return params;
   }
