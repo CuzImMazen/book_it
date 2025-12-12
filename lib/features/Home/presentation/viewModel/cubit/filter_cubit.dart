@@ -1,21 +1,18 @@
-import 'package:bloc/bloc.dart';
 import 'package:book_it/features/Home/data/models/filter_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilterCubit extends Cubit<FilterModel> {
   FilterCubit() : super(const FilterModel());
 
-  void updateLocation({String? governorate, String? city}) {
-    if (governorate != null && governorate != state.selectedGovernorate) {
-      emit(
-        state.copyWith(selectedGovernorate: governorate, selectedCity: null),
-      );
-      return;
-    }
+  void updateGovernorate(String? governorate) {
+    // Default to "All" if null
+    final gov = governorate ?? "All";
+    emit(state.copyWith(selectedGovernorate: gov, selectedCity: "All"));
+  }
 
-    if (city != null) {
-      emit(state.copyWith(selectedCity: city));
-    }
+  void updateCity(String? city) {
+    emit(state.copyWith(selectedCity: city ?? "All"));
   }
 
   void updateCategory(String category) {
@@ -30,15 +27,15 @@ class FilterCubit extends Cubit<FilterModel> {
     emit(state.copyWith(areaRange: newRange));
   }
 
-  void updateBedrooms(int? count) {
+  void updateBedrooms(int count) {
     emit(state.copyWith(numberOfBedrooms: count));
   }
 
-  void updateBathrooms(int? count) {
+  void updateBathrooms(int count) {
     emit(state.copyWith(numberOfBathrooms: count));
   }
 
-  void updateKitchens(int? count) {
+  void updateKitchens(int count) {
     emit(state.copyWith(numberOfKitchens: count));
   }
 
@@ -47,7 +44,19 @@ class FilterCubit extends Cubit<FilterModel> {
   }
 
   void clearFilters() {
-    emit(const FilterModel());
+    emit(
+      const FilterModel(
+        selectedGovernorate: "All",
+        selectedCity: "All",
+        selectedCategory: "All",
+        priceRange: RangeValues(25, 250),
+        areaRange: RangeValues(100, 1000),
+        numberOfBedrooms: 0,
+        numberOfBathrooms: 0,
+        numberOfKitchens: 0,
+        onlyAvailable: false,
+      ),
+    );
   }
 
   void applyFilters() {}

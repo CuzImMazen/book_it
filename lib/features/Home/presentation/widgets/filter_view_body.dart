@@ -2,8 +2,8 @@ import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/features/Home/data/models/filter_model.dart';
 import 'package:book_it/features/Home/presentation/viewModel/cubit/filter_cubit.dart';
 import 'package:book_it/features/Home/presentation/widgets/apply_filters_button.dart';
+import 'package:book_it/features/Home/presentation/widgets/drop_down_button_row.dart';
 import 'package:book_it/features/Home/presentation/widgets/feature_counter_row.dart';
-import 'package:book_it/features/Home/presentation/widgets/location_filters_column.dart';
 import 'package:book_it/features/Home/presentation/widgets/only_available_properties_row.dart';
 import 'package:book_it/features/Home/presentation/widgets/range_slider_container.dart';
 import 'package:flutter/material.dart';
@@ -15,113 +15,191 @@ class FilterViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FilterCubit, FilterModel>(
-      builder: (context, state) {
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 10),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 25.0, right: 25.0, bottom: 10),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () => context.pop(),
-                        icon: const Icon(Icons.arrow_back),
-                      ),
-                      const Spacer(),
-                      const Text(
-                        "Filters",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                        ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () => showDiscardFiltersDialog(context),
-                        icon: const Icon(Icons.delete),
-                      ),
-                    ],
+                  IconButton(
+                    onPressed: () => context.pop(),
+                    icon: const Icon(Icons.arrow_back),
                   ),
-                  const SizedBox(height: 10),
-
-                  LocationFilters(
-                    selectedGovernorate: state.selectedGovernorate,
-                    selectedCity: state.selectedCity,
+                  const Spacer(),
+                  const Text(
+                    "Filters",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                   ),
-                  const SizedBox(height: 10),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () => showDiscardFiltersDialog(context),
+                    icon: const Icon(Icons.delete),
+                  ),
+                ],
+              ),
 
-                  RangeSliderContainer(
+              const SizedBox(height: 10),
+
+              BlocSelector<FilterCubit, FilterModel, String?>(
+                selector: (state) => state.selectedGovernorate,
+                builder: (context, selectedGovernorate) {
+                  return DropDownButtonRow(
+                    text: "Governorate :",
+                    hintText: "Select Governorate",
+                    items: getGovernorates(),
+                    currentValue: selectedGovernorate,
+                    onChanged: (value) {
+                      context.read<FilterCubit>().updateGovernorate(value);
+                    },
+                  );
+                },
+              ),
+
+              const SizedBox(height: 10),
+
+              BlocBuilder<FilterCubit, FilterModel>(
+                buildWhen: (prev, curr) =>
+                    prev.selectedGovernorate != curr.selectedGovernorate ||
+                    prev.selectedCity != curr.selectedCity,
+                builder: (context, state) {
+                  final gov = state.selectedGovernorate;
+                  final cities = getCities(gov);
+
+                  final currentCity =
+                      (state.selectedCity != null &&
+                          cities.contains(state.selectedCity))
+                      ? state.selectedCity
+                      : null;
+
+                  return DropDownButtonRow(
+                    text: "Choose a City :",
+                    hintText: "Select City",
+                    items: cities,
+                    currentValue: currentCity,
+                    onChanged: (value) =>
+                        context.read<FilterCubit>().updateCity(value),
+                  );
+                },
+              ),
+
+              const SizedBox(height: 10),
+
+              BlocSelector<FilterCubit, FilterModel, RangeValues>(
+                selector: (state) => state.priceRange,
+                builder: (context, priceRange) {
+                  return RangeSliderContainer(
                     text: "Price :",
                     min: 25,
                     max: 250,
                     divisions: 22,
                     unit: "\$",
-                    currentRange: state.priceRange,
-                    onChanged: (range) =>
-                        context.read<FilterCubit>().updatePriceRange(range),
-                  ),
-                  const SizedBox(height: 10),
+                    currentRange: priceRange,
+                    onChanged: (range) {
+                      context.read<FilterCubit>().updatePriceRange(range);
+                    },
+                  );
+                },
+              ),
 
-                  RangeSliderContainer(
+              const SizedBox(height: 10),
+
+              BlocSelector<FilterCubit, FilterModel, RangeValues>(
+                selector: (state) => state.areaRange,
+                builder: (context, areaRange) {
+                  return RangeSliderContainer(
                     text: "Area :",
                     min: 100,
                     max: 1000,
                     divisions: 18,
                     unit: "m²",
-                    currentRange: state.areaRange,
-                    onChanged: (range) =>
-                        context.read<FilterCubit>().updateAreaRange(range),
-                  ),
-                  const SizedBox(height: 10),
-
-                  FeatureCounterRow(
-                    text: "Num of Bedrooms :",
-                    value: state.numberOfBedrooms,
-                    onChanged: (val) =>
-                        context.read<FilterCubit>().updateBedrooms(val),
-                  ),
-                  const SizedBox(height: 10),
-                  FeatureCounterRow(
-                    text: " Num of Bathrooms :",
-                    value: state.numberOfBathrooms,
-
-                    onChanged: (val) =>
-                        context.read<FilterCubit>().updateBathrooms(val),
-                  ),
-                  const SizedBox(height: 10),
-                  FeatureCounterRow(
-                    text: " Num of Kitchens:",
-                    value: state.numberOfKitchens,
-                    onChanged: (val) =>
-                        context.read<FilterCubit>().updateKitchens(val),
-                  ),
-                  const SizedBox(height: 15),
-
-                  OnlyAvailablePropertiesRow(
-                    onlyAvailable: state.onlyAvailable,
-                    onChanged: (val) =>
-                        context.read<FilterCubit>().toggleOnlyAvailable(val),
-                  ),
-                  const SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: () {
-                      final filter = context.read<FilterCubit>().state;
-                      print(filter.toQueryParameters());
+                    currentRange: areaRange,
+                    onChanged: (range) {
+                      context.read<FilterCubit>().updateAreaRange(range);
                     },
-                    child: const ApplyFiltersButton(),
-                  ),
-                  SizedBox(height: 10),
-                ],
+                  );
+                },
               ),
-            ),
+
+              const SizedBox(height: 10),
+
+              BlocSelector<FilterCubit, FilterModel, int>(
+                selector: (state) => state.numberOfBedrooms,
+                builder: (context, bedrooms) {
+                  return FeatureCounterRow(
+                    text: "Num of Bedrooms :",
+                    value: bedrooms,
+                    onChanged: (val) {
+                      context.read<FilterCubit>().updateBedrooms(val);
+                    },
+                  );
+                },
+              ),
+
+              const SizedBox(height: 10),
+
+              BlocSelector<FilterCubit, FilterModel, int>(
+                selector: (state) => state.numberOfBathrooms,
+                builder: (context, bathrooms) {
+                  return FeatureCounterRow(
+                    text: "Num of Bathrooms :",
+                    value: bathrooms,
+                    onChanged: (val) {
+                      context.read<FilterCubit>().updateBathrooms(val);
+                    },
+                  );
+                },
+              ),
+
+              const SizedBox(height: 10),
+
+              BlocSelector<FilterCubit, FilterModel, int>(
+                selector: (state) => state.numberOfKitchens,
+                builder: (context, kitchens) {
+                  return FeatureCounterRow(
+                    text: "Num of Kitchens :",
+                    value: kitchens,
+                    onChanged: (val) {
+                      context.read<FilterCubit>().updateKitchens(val);
+                    },
+                  );
+                },
+              ),
+
+              const SizedBox(height: 15),
+
+              BlocSelector<FilterCubit, FilterModel, bool>(
+                selector: (state) => state.onlyAvailable,
+                builder: (context, available) {
+                  return OnlyAvailablePropertiesRow(
+                    onlyAvailable: available,
+                    onChanged: (val) {
+                      context.read<FilterCubit>().toggleOnlyAvailable(val);
+                    },
+                  );
+                },
+              ),
+
+              const SizedBox(height: 10),
+
+              GestureDetector(
+                onTap: () {
+                  final filter = context.read<FilterCubit>().state;
+                  print(filter.toQueryParameters());
+                },
+                child: const ApplyFiltersButton(),
+              ),
+
+              const SizedBox(height: 10),
+            ],
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

@@ -56,7 +56,9 @@ class FilterModel {
       params['governorate'] = selectedGovernorate!;
     }
 
-    if (selectedCity != null && selectedCity!.isNotEmpty) {
+    if (selectedCity != null &&
+        selectedCity!.isNotEmpty &&
+        selectedCity != "All") {
       params['city'] = selectedCity!;
     }
 

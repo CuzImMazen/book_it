@@ -46,6 +46,8 @@ CustomTransitionPage fadeTransitionPage(Widget child) {
 
 List<String> getCities(String? governorate) {
   switch (governorate) {
+    case "All":
+      return const [];
     case "Damascus":
       return const [
         "Al-Qadam",
