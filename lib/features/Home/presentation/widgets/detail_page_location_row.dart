@@ -11,7 +11,7 @@ class DetailPageLocationRow extends StatelessWidget {
     return Row(
       children: [
         Text(
-          "${property.location.governorate}, ${property.location.city}",
+          "${property.governorate}, ${property.city}",
           style: TextStyle(
             color: Colors.grey,
             fontWeight: FontWeight.w500,

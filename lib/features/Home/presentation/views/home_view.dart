@@ -1,5 +1,6 @@
-import 'package:book_it/features/Home/data/models/location_model.dart';
-import 'package:book_it/features/Home/data/models/owner_model.dart';
+import 'package:book_it/features/Authentication/data/models/user_model.dart';
+import 'package:book_it/features/Home/data/models/property_features_model.dart';
+
 import 'package:book_it/features/Home/data/models/property_model.dart';
 import 'package:book_it/features/Home/presentation/widgets/category_selector.dart';
 import 'package:book_it/features/Home/presentation/widgets/filter_button_row.dart';
@@ -15,18 +16,25 @@ class HomeView extends StatelessWidget {
     description:
         "A stunning, modern mansion featuring elegant architecture and spacious interiors. Large windows fill the home with natural light, highlighting premium finishes and high-end amenities. Surrounded by beautifully landscaped gardens, it offers luxury, comfort, and style in every detail.",
     price: "250.000",
-    location: Location(city: "AlShalaan", governorate: "Damascus"),
+    governorate: "Damascus",
+    city: "Al-Shalaan",
     availability: true,
     mainImage: "assets/images/house5.avif",
-    numberOfKitchens: 2,
-    numberOfBaths: 2,
-    numberOfBedrooms: 4,
-    area: 500,
-    owner: OwnerModel(
-      image: "assets/images/profile.jpg",
+    features: PropertyFeaturesModel(
+      numberOfKitchens: 2,
+      numberOfBathrooms: 2,
+      numberOfBedrooms: 3,
+      area: 100,
+    ),
+    owner: UserModel(
+      id: 1,
+      profileImage: "assets/images/profile.jpg",
       firstName: "Mazen",
       lastName: "Alrefai",
-      phone: "0947476626",
+      phoneNumber: "0947476626",
+      birthDate: "1995-01-01",
+      role: "Owner",
+      idImage: "assets/images/id.jpg",
     ),
     images: [
       "assets/images/house5.avif",

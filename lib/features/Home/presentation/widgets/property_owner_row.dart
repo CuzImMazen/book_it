@@ -1,9 +1,9 @@
-import 'package:book_it/features/Home/data/models/owner_model.dart';
+import 'package:book_it/features/Authentication/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class OwnerRow extends StatelessWidget {
   const OwnerRow({super.key, required this.propertyOwner});
-  final OwnerModel propertyOwner;
+  final UserModel propertyOwner;
   @override
   Widget build(BuildContext context) {
     return Padding(
