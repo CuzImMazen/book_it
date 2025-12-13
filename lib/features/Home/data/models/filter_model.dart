@@ -82,7 +82,7 @@ class FilterModel {
 
     if (numberOfKitchens > 0) params['kitchens'] = numberOfKitchens.toString();
 
-    if (onlyAvailable) params['is_available'] = 'true';
+    if (onlyAvailable) params['is_available'] = '1';
 
     return params;
   }

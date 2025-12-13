@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/features/Home/data/models/filter_model.dart';
 import 'package:book_it/features/Home/presentation/viewModel/cubit/filter_cubit.dart';
@@ -193,6 +195,7 @@ class FilterViewBody extends StatelessWidget {
                   final filterState = context.read<FilterCubit>().state;
                   final queryParams = filterState.toQueryParameters();
                   context.read<PropertyCubit>().getProperties(queryParams);
+                  log(queryParams.toString());
                   context.pop();
                 },
                 child: const ApplyFiltersButton(),

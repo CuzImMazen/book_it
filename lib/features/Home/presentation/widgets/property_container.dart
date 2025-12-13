@@ -77,7 +77,7 @@ class PropertyContainer extends StatelessWidget {
                           ),
                         )
                       : Text(
-                          "unavailable",
+                          "Unavailable",
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.red,
