@@ -53,7 +53,7 @@ class _BookConfirmationViewBodyState extends State<BookConfirmationViewBody> {
     final start = DateTime.parse(_startDateController.text);
     final end = DateTime.parse(_endDateController.text);
 
-    final days = end.difference(start).inDays + 1;
+    final days = end.difference(start).inDays;
     return days * double.parse(widget.confirmBookData.price);
   }
 

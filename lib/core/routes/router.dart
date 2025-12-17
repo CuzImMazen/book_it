@@ -5,7 +5,7 @@ import 'package:book_it/features/Authentication/presentation/views/second_signup
 import 'package:book_it/features/Authentication/presentation/views/signin_view_.dart';
 import 'package:book_it/features/Home/data/models/confirm_book_data.dart';
 import 'package:book_it/features/Home/data/models/property_model.dart';
-import 'package:book_it/features/Home/presentation/views/book_confirmation_view.dart';
+import 'package:book_it/features/Book/presentation/views/book_confirmation_view.dart';
 import 'package:book_it/features/Home/presentation/views/filter_view.dart';
 import 'package:book_it/features/Home/presentation/views/property_detail_view.dart';
 import 'package:book_it/features/Introduction/presentation/views/welcome_view.dart';
@@ -18,10 +18,10 @@ final GoRouter router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      // builder: (context, state) => const BookConfirmationView(
-      //   confirmBookData: ConfirmBookData(propertyId: 1, price: "25"),
-      // ),
-      builder: (context, state) => const SplashView(),
+      builder: (context, state) => const BookConfirmationView(
+        confirmBookData: ConfirmBookData(propertyId: 1, price: "25"),
+      ),
+      // builder: (context, state) => const SplashView(),
     ),
     GoRoute(
       path: '/welcome',

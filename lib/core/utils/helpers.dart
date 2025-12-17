@@ -20,15 +20,13 @@ Future<String?> pickBirthDate({required BuildContext context}) async {
 }
 
 Future<String?> pickStartDate({required BuildContext context}) async {
+  final tomorrow = DateTime.now().add(const Duration(days: 1));
+  final lastDate = tomorrow.add(const Duration(days: 365));
   final pickedDate = await showDatePicker(
     context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime.now(),
-    lastDate: DateTime(
-      DateTime.now().year + 1,
-      DateTime.now().month,
-      DateTime.now().day,
-    ),
+    initialDate: tomorrow,
+    firstDate: tomorrow,
+    lastDate: lastDate,
   );
 
   if (pickedDate != null) {
@@ -49,16 +47,15 @@ Future<String?> pickEndDate({
     );
     return null;
   }
+
   final DateTime start = DateTime.parse(startDate);
+  final minEndDate = start.add(const Duration(days: 1));
+  final maxEndDate = start.add(const Duration(days: 365));
   final pickedDate = await showDatePicker(
     context: context,
-    initialDate: start,
-    firstDate: start,
-    lastDate: DateTime(
-      DateTime.now().year + 1,
-      DateTime.now().month,
-      DateTime.now().day,
-    ),
+    initialDate: minEndDate,
+    firstDate: minEndDate,
+    lastDate: maxEndDate,
   );
 
   if (pickedDate != null) {

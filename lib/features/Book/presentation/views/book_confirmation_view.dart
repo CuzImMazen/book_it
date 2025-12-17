@@ -1,5 +1,5 @@
 import 'package:book_it/features/Home/data/models/confirm_book_data.dart';
-import 'package:book_it/features/Home/presentation/widgets/book_confirmation_view_body.dart';
+import 'package:book_it/features/Book/presentation/widgets/book_confirmation_view_body.dart';
 import 'package:flutter/material.dart';
 
 class BookConfirmationView extends StatelessWidget {
