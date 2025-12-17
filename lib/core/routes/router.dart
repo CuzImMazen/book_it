@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/features/Authentication/data/models/first_signup_data.dart';
 import 'package:book_it/features/Authentication/presentation/views/first_signup_view.dart';
@@ -18,10 +20,11 @@ final GoRouter router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const BookConfirmationView(
-        confirmBookData: ConfirmBookData(propertyId: 1, price: "25"),
-      ),
+      // builder: (context, state) => const BookConfirmationView(
+      //   confirmBookData: ConfirmBookData(propertyId: 1, price: "25"),
+      // ),
       // builder: (context, state) => const SplashView(),
+      builder: (context, state) => const LayoutView(),
     ),
     GoRoute(
       path: '/welcome',
