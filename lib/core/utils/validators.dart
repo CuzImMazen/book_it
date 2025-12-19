@@ -62,6 +62,9 @@ String? cardNumberValidator(String? value) {
   if (value.length < 12) {
     return "Card number must be at least 12 characters";
   }
+  if (value.length > 19) {
+    return "Card number cant be more than 19 characters";
+  }
   return null;
 }
 
