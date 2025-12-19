@@ -15,7 +15,7 @@ class TitleAndButtonsRow extends StatelessWidget {
               child: Text(
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
-                "House",
+                "Fancy House",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
               ),
             ),

@@ -4,6 +4,7 @@ import 'package:book_it/features/Home/presentation/viewModel/cubit/property_cubi
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 Future<String?> pickBirthDate({required BuildContext context}) async {
   final pickedDate = await showDatePicker(
@@ -48,9 +49,12 @@ Future<String?> pickEndDate({
     return null;
   }
 
-  final DateTime start = DateTime.parse(startDate);
+  final dateFormat = DateFormat('yyyy-M-d');
+  final DateTime start = dateFormat.parse(startDate);
+
   final minEndDate = start.add(const Duration(days: 1));
   final maxEndDate = start.add(const Duration(days: 365));
+
   final pickedDate = await showDatePicker(
     context: context,
     initialDate: minEndDate,
@@ -61,6 +65,7 @@ Future<String?> pickEndDate({
   if (pickedDate != null) {
     return "${pickedDate.year}-${pickedDate.month}-${pickedDate.day}";
   }
+
   return null;
 }
 

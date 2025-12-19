@@ -1,4 +1,4 @@
-import 'package:book_it/features/Home/data/models/confirm_book_data.dart';
+import 'package:book_it/features/Book/data/model/confirm_book_data.dart';
 import 'package:book_it/features/Home/data/models/property_model.dart';
 import 'package:book_it/features/Home/presentation/widgets/book_button.dart';
 import 'package:book_it/features/Home/presentation/widgets/detail_page_location_row.dart';
