@@ -1,11 +1,12 @@
+import 'package:book_it/features/History/data/model/book_model.dart';
 import 'package:book_it/features/History/presentation/widgets/book_date_and_status_row.dart';
 import 'package:book_it/features/History/presentation/widgets/title_and_buttons_row.dart';
 
 import 'package:flutter/material.dart';
 
 class BookingsContainer extends StatelessWidget {
-  const BookingsContainer({super.key, required this.status});
-  final String status;
+  const BookingsContainer({super.key, required this.book});
+  final BookModel book;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,10 +26,10 @@ class BookingsContainer extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: Image.asset(
+                    child: Image.network(
                       height: 100,
                       width: 100,
-                      "assets/images/house.jpg",
+                      book.property.mainImage,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -37,13 +38,13 @@ class BookingsContainer extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TitleAndButtonsRow(status: status),
+                      TitleAndButtonsRow(book: book),
                       SizedBox(
                         width: 185,
                         child: Text(
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
-                          "Damascus, AlShalaan",
+                          "${book.property.governorate}, ${book.property.city}",
                           style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.w400,
@@ -52,11 +53,11 @@ class BookingsContainer extends StatelessWidget {
                       ),
                       SizedBox(height: 3),
                       Text(
-                        "120\$/Night",
+                        "\$${book.property.price}/Night",
                         style: TextStyle(fontWeight: FontWeight.w600),
                       ),
                       SizedBox(height: 10),
-                      BookDateAndStatusRow(status: status),
+                      BookDateAndStatusRow(book: book),
                       SizedBox(height: 10),
                     ],
                   ),

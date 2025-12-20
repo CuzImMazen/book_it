@@ -12,8 +12,8 @@ class PropertyModel {
   final bool availability;
   final String mainImage;
   final List<String>? images;
-  final PropertyFeaturesModel features;
-  final UserModel owner;
+  final PropertyFeaturesModel? features;
+  final UserModel? owner;
 
   const PropertyModel({
     this.images,
@@ -47,10 +47,14 @@ class PropertyModel {
               .toList() ??
           [],
       mainImage: json['main_image_url'] as String,
-      features: PropertyFeaturesModel.fromJson(
-        json['features'] as Map<String, dynamic>,
-      ),
-      owner: UserModel.fromJson(json['user'] as Map<String, dynamic>),
+      features: json['features'] != null
+          ? PropertyFeaturesModel.fromJson(
+              json['features'] as Map<String, dynamic>,
+            )
+          : null,
+      owner: json['user'] != null
+          ? UserModel.fromJson(json['user'] as Map<String, dynamic>)
+          : null,
     );
   }
 }

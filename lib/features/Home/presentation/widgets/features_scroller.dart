@@ -15,19 +15,19 @@ class PropertyFeaturesScroller extends StatelessWidget {
         children: [
           PropertyFeatureContainer(
             icon: Icons.apartment,
-            data: '${property.features.area} m²',
+            data: '${property.features!.area} m²',
           ),
           PropertyFeatureContainer(
             icon: Icons.bathtub,
-            data: "${property.features.numberOfBathrooms} Bathroom",
+            data: "${property.features!.numberOfBathrooms} Bathroom",
           ),
           PropertyFeatureContainer(
             icon: Icons.bed,
-            data: "${property.features.numberOfBedrooms} Bedroom",
+            data: "${property.features!.numberOfBedrooms} Bedroom",
           ),
           PropertyFeatureContainer(
             icon: Icons.kitchen,
-            data: " ${property.features.numberOfKitchens} Kitchen",
+            data: " ${property.features!.numberOfKitchens} Kitchen",
           ),
         ],
       ),

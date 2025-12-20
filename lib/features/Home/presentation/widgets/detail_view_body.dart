@@ -47,7 +47,7 @@ class DetailViewBody extends StatelessWidget {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
                 ),
                 SizedBox(height: 12),
-                OwnerRow(propertyOwner: property.owner),
+                OwnerRow(propertyOwner: property.owner!),
                 SizedBox(height: 25),
                 GestureDetector(
                   onTap: () {

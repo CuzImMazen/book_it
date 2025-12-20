@@ -13,14 +13,13 @@ class BookModel {
   String startDate;
   String endDate;
   PropertyModel property;
-}
-
-BookModel bookModelFromJson(Map<String, dynamic> json) {
-  return BookModel(
-    status: json['status'],
-    id: json['id'],
-    startDate: json['start_date'],
-    endDate: json['end_date'],
-    property: PropertyModel.fromJson(json['property']),
-  );
+  factory BookModel.fromJson(Map<String, dynamic> json, String status) {
+    return BookModel(
+      status: status,
+      id: json['booking_id'],
+      startDate: json['start_date'],
+      endDate: json['end_date'],
+      property: PropertyModel.fromJson(json['property']),
+    );
+  }
 }

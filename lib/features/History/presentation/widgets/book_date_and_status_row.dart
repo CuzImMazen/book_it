@@ -1,17 +1,19 @@
+import 'package:book_it/core/utils/helpers.dart';
+import 'package:book_it/features/History/data/model/book_model.dart';
 import 'package:flutter/material.dart';
 
 class BookDateAndStatusRow extends StatelessWidget {
-  const BookDateAndStatusRow({super.key, required this.status});
-  final String status;
+  const BookDateAndStatusRow({super.key, required this.book});
+  final BookModel book;
 
   @override
   Widget build(BuildContext context) {
     late final MaterialColor statusColor;
-    if (status == "Active") {
+    if (book.status == "Active" || book.status == "Upcoming") {
       statusColor = Colors.green;
-    } else if (status == "Completed") {
+    } else if (book.status == "Completed") {
       statusColor = Colors.grey;
-    } else if (status == "Canceled") {
+    } else if (book.status == "Canceled") {
       statusColor = Colors.red;
     } else {
       statusColor = Colors.grey;
@@ -22,7 +24,7 @@ class BookDateAndStatusRow extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 10.0),
           child: Text(
-            "Oct 25 - Oct 28",
+            formatBookingDates(book.startDate, book.endDate),
             textAlign: TextAlign.end,
             style: TextStyle(fontWeight: FontWeight.w900, fontSize: 14),
           ),
@@ -42,7 +44,7 @@ class BookDateAndStatusRow extends StatelessWidget {
                   vertical: 6.0,
                 ),
                 child: Text(
-                  status,
+                  book.status,
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,

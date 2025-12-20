@@ -200,3 +200,18 @@ Future<dynamic> showDiscardFiltersDialog(BuildContext context) {
     ),
   );
 }
+
+String formatBookingDates(String start, String end) {
+  final startDate = DateTime.parse(start);
+  final endDate = DateTime.parse(end);
+
+  final startFormatted = DateFormat.MMMd().format(startDate);
+  final endFormatted = DateFormat.MMMd().format(endDate);
+
+  return "$startFormatted - $endFormatted";
+}
+
+String capitalize(String text) {
+  if (text.isEmpty) return text;
+  return text[0].toUpperCase() + text.substring(1);
+}
