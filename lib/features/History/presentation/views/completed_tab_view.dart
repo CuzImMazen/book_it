@@ -12,14 +12,14 @@ class CompletedTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BookingHistoryCubit, BookingHistoryState>(
       builder: (context, state) {
-        if (state.isLoading) {
+        if (state.isLoadingCompleted) {
           return const Center(
             child: CircularProgressIndicator(color: kPrimaryColor),
           );
         }
 
-        if (state.error != null) {
-          return Center(child: Text(state.error!));
+        if (state.errorCompleted != null) {
+          return Center(child: Text(state.errorCompleted!));
         }
         if (state.completed.isEmpty) {
           return const Center(child: Text("No Completed bookings"));
@@ -28,12 +28,12 @@ class CompletedTabView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
           child: ListView.separated(
             itemBuilder: (context, index) {
-              final booking = state.ongoing[index];
+              final booking = state.completed[index];
 
               return BookingsContainer(book: booking);
             },
             separatorBuilder: (context, index) => const SizedBox(height: 15),
-            itemCount: 3,
+            itemCount: state.completed.length,
           ),
         );
       },

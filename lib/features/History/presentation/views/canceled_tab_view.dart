@@ -13,14 +13,14 @@ class CanceledTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BookingHistoryCubit, BookingHistoryState>(
       builder: (context, state) {
-        if (state.isLoading) {
+        if (state.isLoadingCanceled) {
           return const Center(
             child: CircularProgressIndicator(color: kPrimaryColor),
           );
         }
 
-        if (state.error != null) {
-          return Center(child: Text(state.error!));
+        if (state.errorCanceled != null) {
+          return Center(child: Text(state.errorCanceled!));
         }
         if (state.canceled.isEmpty) {
           return const Center(child: Text("No Canceled bookings"));
@@ -33,7 +33,7 @@ class CanceledTabView extends StatelessWidget {
               return BookingsContainer(book: booking);
             },
             separatorBuilder: (context, index) => const SizedBox(height: 15),
-            itemCount: 3,
+            itemCount: state.canceled.length,
           ),
         );
       },

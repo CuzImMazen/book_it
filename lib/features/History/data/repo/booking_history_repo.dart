@@ -9,15 +9,12 @@ class BookingHistoryRepo {
       final response = await _service.getCurrentBookings();
       final bookingsRaw = response.data['bookings'] as List<dynamic>? ?? [];
       final bookings = bookingsRaw
-          .whereType<Map<String, dynamic>>() // safely filter only valid maps
+          .whereType<Map<String, dynamic>>()
           .map((b) => BookModel.fromJson(b, 'Active'))
           .toList();
       return (bookings, null);
     } catch (e) {
-      return (
-        <BookModel>[],
-        "Failed to get current bookings: $e",
-      ); // typed empty list
+      return (<BookModel>[], "Failed to get current bookings: $e");
     }
   }
 

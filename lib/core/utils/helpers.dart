@@ -215,3 +215,35 @@ String capitalize(String text) {
   if (text.isEmpty) return text;
   return text[0].toUpperCase() + text.substring(1);
 }
+
+Future<dynamic> showBookingSuccessDialog(BuildContext context) {
+  return showDialog(
+    barrierDismissible: false,
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(
+        "Success",
+        style: TextStyle(
+          color: Colors.green,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      content: Text(
+        "Booking completed successfully!",
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+      actions: [
+        Center(
+          child: TextButton(
+            onPressed: () => context.go("/main"),
+            child: Text(
+              "OK",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}

@@ -9,9 +9,9 @@ import 'package:book_it/core/widgets/primary_text.dart';
 import 'package:book_it/core/widgets/secondary_text.dart';
 import 'package:book_it/features/Book/data/model/confirm_book_data.dart';
 import 'package:book_it/features/Book/presentation/ViewModel/cubit/book_cubit.dart';
+import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class BookConfirmationViewBody extends StatefulWidget {
@@ -85,38 +85,9 @@ class _BookConfirmationViewBodyState extends State<BookConfirmationViewBody> {
           );
         }
         if (state is BookSuccess) {
-          showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text(
-                "Success",
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              content: Text(
-                "Booking completed successfully!",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              actions: [
-                Center(
-                  child: TextButton(
-                    onPressed: () => context.go("/main"),
-                    child: Text(
-                      "OK",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
+          showBookingSuccessDialog(context);
+          final cubit = context.read<BookingHistoryCubit>();
+          cubit.fetchOngoingBookings();
         }
       },
       builder: (context, state) {

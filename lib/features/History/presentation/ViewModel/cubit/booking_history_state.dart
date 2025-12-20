@@ -4,15 +4,25 @@ class BookingHistoryState {
   final List<BookModel> ongoing;
   final List<BookModel> completed;
   final List<BookModel> canceled;
-  final bool isLoading;
-  final String? error;
+
+  final bool isLoadingOngoing;
+  final bool isLoadingCompleted;
+  final bool isLoadingCanceled;
+
+  final String? errorOngoing;
+  final String? errorCompleted;
+  final String? errorCanceled;
 
   const BookingHistoryState({
     required this.ongoing,
     required this.completed,
     required this.canceled,
-    required this.isLoading,
-    this.error,
+    required this.isLoadingOngoing,
+    required this.isLoadingCompleted,
+    required this.isLoadingCanceled,
+    this.errorOngoing,
+    this.errorCompleted,
+    this.errorCanceled,
   });
 
   factory BookingHistoryState.initial() {
@@ -20,8 +30,12 @@ class BookingHistoryState {
       ongoing: [],
       completed: [],
       canceled: [],
-      isLoading: false,
-      error: null,
+      isLoadingOngoing: false,
+      isLoadingCompleted: false,
+      isLoadingCanceled: false,
+      errorOngoing: null,
+      errorCompleted: null,
+      errorCanceled: null,
     );
   }
 
@@ -29,15 +43,23 @@ class BookingHistoryState {
     List<BookModel>? ongoing,
     List<BookModel>? completed,
     List<BookModel>? canceled,
-    bool? isLoading,
-    String? error,
+    bool? isLoadingOngoing,
+    bool? isLoadingCompleted,
+    bool? isLoadingCanceled,
+    String? errorOngoing,
+    String? errorCompleted,
+    String? errorCanceled,
   }) {
     return BookingHistoryState(
       ongoing: ongoing ?? this.ongoing,
       completed: completed ?? this.completed,
       canceled: canceled ?? this.canceled,
-      isLoading: isLoading ?? this.isLoading,
-      error: error,
+      isLoadingOngoing: isLoadingOngoing ?? this.isLoadingOngoing,
+      isLoadingCompleted: isLoadingCompleted ?? this.isLoadingCompleted,
+      isLoadingCanceled: isLoadingCanceled ?? this.isLoadingCanceled,
+      errorOngoing: errorOngoing,
+      errorCompleted: errorCompleted,
+      errorCanceled: errorCanceled,
     );
   }
 }

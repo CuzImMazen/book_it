@@ -39,10 +39,26 @@ class TitleAndButtonsRow extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
                 capitalize(book.property.category),
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
               ),
             ),
-            Icon(Icons.star, color: Colors.yellow, size: 30),
+            GestureDetector(
+              onTap: () {},
+              child: Row(
+                children: [
+                  Text(
+                    "Rate it now!",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.yellow,
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Icon(Icons.star, color: Colors.yellow, size: 24),
+                ],
+              ),
+            ),
           ],
         ),
       );

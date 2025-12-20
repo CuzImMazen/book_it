@@ -4,17 +4,19 @@ import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_hi
 
 class BookingHistoryCubit extends Cubit<BookingHistoryState> {
   final BookingHistoryRepo repository;
-  BookingHistoryCubit(this.repository) : super(BookingHistoryState.initial()) {
-    fetchOngoingBookings();
-    fetchPastBookings();
-    fetchCanceledBookings();
-  }
+
+  BookingHistoryCubit(this.repository) : super(BookingHistoryState.initial());
 
   Future<void> fetchOngoingBookings() async {
-    emit(state.copyWith(isLoading: true, error: null));
+    emit(state.copyWith(isLoadingOngoing: true, errorOngoing: null));
 
-    final current = await repository.getCurrentBookings();
-    final future = await repository.getFutureBookings();
+    final results = await Future.wait([
+      repository.getCurrentBookings(),
+      repository.getFutureBookings(),
+    ]);
+
+    final current = results[0];
+    final future = results[1];
 
     final merged = [...current.$1, ...future.$1];
 
@@ -26,37 +28,41 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
     emit(
       state.copyWith(
         ongoing: merged,
-        isLoading: false,
-        error: errorMessages.isEmpty ? null : errorMessages,
+        isLoadingOngoing: false,
+        errorOngoing: errorMessages.isEmpty ? null : errorMessages,
       ),
     );
   }
 
   Future<void> fetchPastBookings() async {
-    emit(state.copyWith(isLoading: true, error: null));
+    emit(state.copyWith(isLoadingCompleted: true, errorCompleted: null));
 
     final pastResult = await repository.getOldBookings();
 
     emit(
       state.copyWith(
-        completed: pastResult.$1, // typed empty list
-        isLoading: false,
-        error: pastResult.$2,
+        completed: pastResult.$1,
+        isLoadingCompleted: false,
+        errorCompleted: pastResult.$2,
       ),
     );
   }
 
   Future<void> fetchCanceledBookings() async {
-    emit(state.copyWith(isLoading: true, error: null));
+    emit(state.copyWith(isLoadingCanceled: true, errorCanceled: null));
 
     final canceledResult = await repository.getCanceledBookings();
 
     emit(
       state.copyWith(
         canceled: canceledResult.$1,
-        isLoading: false,
-        error: canceledResult.$2,
+        isLoadingCanceled: false,
+        errorCanceled: canceledResult.$2,
       ),
     );
+  }
+
+  void reset() {
+    emit(BookingHistoryState.initial());
   }
 }
