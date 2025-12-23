@@ -66,14 +66,15 @@ class _SignInFormState extends State<SignInForm> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 60),
-                  BackButtonRow(
-                    onTap: () {
-                      if (state is! AuthenticationLoading) {
-                        FocusScope.of(context).unfocus();
-                        context.pop();
-                      }
-                    },
-                  ),
+                  if (state is! AuthenticationSignOutSuccess)
+                    BackButtonRow(
+                      onTap: () {
+                        if (state is! AuthenticationLoading) {
+                          FocusScope.of(context).unfocus();
+                          context.pop();
+                        }
+                      },
+                    ),
                   SizedBox(height: 50),
                   PrimaryText(text: "Welcome Back!"),
                   SizedBox(height: 10),

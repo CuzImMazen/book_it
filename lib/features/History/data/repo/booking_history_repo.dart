@@ -14,7 +14,7 @@ class BookingHistoryRepo {
           .toList();
       return (bookings, null);
     } catch (e) {
-      return (<BookModel>[], "Failed to get current bookings: $e");
+      return (<BookModel>[], "Failed to get current bookings ");
     }
   }
 
@@ -28,7 +28,10 @@ class BookingHistoryRepo {
           .toList();
       return (bookings, null);
     } catch (e) {
-      return (<BookModel>[], "Failed to get upcoming bookings: $e");
+      return (
+        <BookModel>[],
+        "Failed to get upcoming bookings please try again later",
+      );
     }
   }
 
@@ -42,7 +45,10 @@ class BookingHistoryRepo {
           .toList();
       return (bookings, null);
     } catch (e) {
-      return (<BookModel>[], "Failed to get past bookings: $e");
+      return (
+        <BookModel>[],
+        "Failed to get past bookings please try again later",
+      );
     }
   }
 
@@ -56,7 +62,10 @@ class BookingHistoryRepo {
           .toList();
       return (bookings, null);
     } catch (e) {
-      return (<BookModel>[], "Failed to get canceled bookings: $e");
+      return (
+        <BookModel>[],
+        "Failed to get canceled bookings please try again later",
+      );
     }
   }
 

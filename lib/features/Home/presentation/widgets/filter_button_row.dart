@@ -14,6 +14,7 @@ class FilterButtonRow extends StatelessWidget {
           "Category",
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
         ),
+        //  Image.asset("assets/images/logo.png", height: 60),
         Spacer(),
         Container(
           decoration: BoxDecoration(
