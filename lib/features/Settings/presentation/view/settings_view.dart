@@ -31,6 +31,9 @@ class SettingsView extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        final bool isOwner =
+            state is AuthenticationSignInSuccess && state.user.role == "owner";
+
         if (state is AuthenticationLoading) {
           return const Scaffold(
             body: Center(
@@ -61,6 +64,32 @@ class SettingsView extends StatelessWidget {
                         padding: const EdgeInsets.all(15.0),
                         child: Text(
                           "Logout",
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 20),
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      if (isOwner) {
+                        context.push("/myproperties");
+                      } else {
+                        showCantAccessOwnerFeatureDialog(context);
+                      }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          "My Properties",
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                       ),

@@ -7,6 +7,7 @@ import 'package:book_it/features/Home/presentation/widgets/property_container.da
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -56,8 +57,17 @@ class _HomeViewState extends State<HomeView> {
                     padding: EdgeInsets.zero,
                     itemCount: state.properties.length,
                     itemBuilder: (context, index) {
-                      return PropertyContainer(
-                        property: state.properties[index],
+                      return GestureDetector(
+                        onTap: () {
+                          context.push(
+                            "/propertydetail",
+                            extra: state.properties[index],
+                          );
+                        },
+                        child: PropertyContainer(
+                          forOwner: false,
+                          property: state.properties[index],
+                        ),
                       );
                     },
                     separatorBuilder: (context, index) =>

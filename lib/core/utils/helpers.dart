@@ -247,3 +247,86 @@ Future<dynamic> showBookingSuccessDialog(BuildContext context) {
     ),
   );
 }
+
+Future<dynamic> showDeletePropertyDialog(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text(
+          "Are you sure?",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        content: const Text(
+          "Are you sure you want to delete this property?",
+          style: TextStyle(fontSize: 16),
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  "Cancel",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(width: 15),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  "Delete",
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Future<dynamic> showCantAccessOwnerFeatureDialog(BuildContext context) {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text(
+          "You cant access this Feature",
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: const Text(
+          "please create an owner account and try again.",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Center(
+              child: const Text(
+                "OK",
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
+      );
+    },
+  );
+}
