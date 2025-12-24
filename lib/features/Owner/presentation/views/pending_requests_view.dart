@@ -1,4 +1,6 @@
 import 'package:book_it/core/widgets/primary_text.dart';
+import 'package:book_it/features/Owner/presentation/views/bookings_requests_tab.dart';
+import 'package:book_it/features/Owner/presentation/views/modification_requests_tab.dart';
 import 'package:flutter/material.dart';
 
 class PendingRequestsView extends StatelessWidget {
@@ -24,10 +26,7 @@ class PendingRequestsView extends StatelessWidget {
           ),
         ),
         body: TabBarView(
-          children: [
-            Center(child: const Text("Booking Requests")),
-            Center(child: const Text("Modification Requests")),
-          ],
+          children: [BookingsRequestsTab(), ModificationRequestsTab()],
         ),
       ),
     );

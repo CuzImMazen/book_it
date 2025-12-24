@@ -25,8 +25,9 @@ final GoRouter router = GoRouter(
       // builder: (context, state) => const BookConfirmationView(
       //   confirmBookData: ConfirmBookData(propertyId: 1, price: "25"),
       // ),
-      builder: (context, state) => const SplashView(),
+     // builder: (context, state) => const SplashView(),
       // builder: (context, state) => const LayoutView(),
+      builder: (context, state) => const MyPropertiesView(),
     ),
     GoRoute(
       path: '/welcome',
