@@ -84,7 +84,7 @@ String? startDateValidator(String? value) {
   return null;
 }
 
-String? endDateValidator(String? value, String? startDate) {
+String? endDateValidator(String? value) {
   value = value?.trim();
   if (value == null || value.isEmpty) {
     return "Please enter your end date";

@@ -32,7 +32,7 @@ class BookingRequestCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        pendingBooking.property.name,
+                        capitalize(pendingBooking.property.category),
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w900,

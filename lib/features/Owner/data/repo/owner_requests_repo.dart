@@ -48,10 +48,24 @@ class OwnerRequestsRepo {
   Future<(bool, String?)> acceptBookingRequest(int id) async {
     try {
       final response = await _ownerRequestsService.acceptBookingRequest(id);
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         return (true, null);
       }
+
       return (false, "Failed to accept booking request");
+    } on DioException catch (dioError) {
+      if (dioError.response?.statusCode == 422) {
+        return (false, "Booking cant be Accepted due to date conflict");
+      }
+      if (dioError.type == DioExceptionType.connectionTimeout ||
+          dioError.type == DioExceptionType.receiveTimeout) {
+        return (false, "Connection timeout. Please try again.");
+      } else if (dioError.type == DioExceptionType.badResponse) {
+        return (false, "Server error: ${dioError.response?.statusCode}");
+      } else {
+        return (false, "Unexpected error: ${dioError.message}");
+      }
     } catch (e) {
       return (false, "Failed to accept booking request ");
     }

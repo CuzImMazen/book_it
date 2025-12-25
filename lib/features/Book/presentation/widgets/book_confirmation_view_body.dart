@@ -131,9 +131,7 @@ class _BookConfirmationViewBodyState extends State<BookConfirmationViewBody> {
                     onTap: handlePickEndDate,
                     hintText: "Select your end Date",
                     prefixIcon: Icons.calendar_today,
-                    validator: (value) {
-                      return endDateValidator(value, _startDateController.text);
-                    },
+                    validator: endDateValidator,
                     controller: _endDateController,
                     readOnly: true,
                   ),

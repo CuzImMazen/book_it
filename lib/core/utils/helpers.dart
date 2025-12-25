@@ -1,4 +1,8 @@
 import 'package:book_it/core/style/colors.dart';
+import 'package:book_it/features/History/data/model/book_model.dart';
+import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_cubit.dart';
+import 'package:book_it/features/History/presentation/widgets/edit_active_booking_dialog_content.dart';
+import 'package:book_it/features/History/presentation/widgets/edit_upcoming_booking_dialog_content.dart';
 import 'package:book_it/features/Home/presentation/viewModel/cubit/filter_cubit.dart';
 import 'package:book_it/features/Home/presentation/viewModel/cubit/property_cubit.dart';
 import 'package:flutter/material.dart';
@@ -326,6 +330,88 @@ Future<dynamic> showCantAccessOwnerFeatureDialog(BuildContext context) {
             ),
           ),
         ],
+      );
+    },
+  );
+}
+
+Future<dynamic> showCancelBookingDialog(BuildContext context, BookModel book) {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text("Cancel booking"),
+        content: const Text(
+          "Are you sure you want to cancel this booking?",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "No",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(width: 20),
+              TextButton(
+                onPressed: () {
+                  context.read<BookingHistoryCubit>().cancelBooking(book);
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Cancel Booking",
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Future<dynamic> showEditUpcomingBookingDialog(
+  BuildContext context,
+  BookModel book,
+) {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(
+          "Edit Booking",
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        content: EditUpCommingBookingDialogContent(book: book),
+      );
+    },
+  );
+}
+
+Future<dynamic> showEditActiveBookingDialog(
+  BuildContext context,
+  BookModel book,
+) {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(
+          "Edit Booking",
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        content: EditActiveBookingDialogContent(book: book),
       );
     },
   );

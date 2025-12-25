@@ -19,31 +19,37 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     }
   }
 
+  Future<void> refreshPendingRequestsSilently() async {
+    final (bookings, errorMessage) = await _repo.getPendingRequests();
+
+    if (errorMessage == null) {
+      emit(OwnerRequestsLoaded(bookings));
+    }
+  }
+
   Future<void> acceptBookingRequest(int id) async {
     final (success, errorMessage) = await _repo.acceptBookingRequest(id);
 
-    if (success) {
-      emit(AcceptSuccess());
-      await getPendingRequests();
-    } else {
-      _emitActionFailure(errorMessage ?? "Failed to accept booking");
+    if (!success) {
+      emit(ActionFailure(errorMessage ?? "Failed to accept booking"));
+      return;
     }
+
+    emit(AcceptSuccess());
+
+    await refreshPendingRequestsSilently();
   }
 
   Future<void> rejectBookingRequest(int id) async {
     final (success, errorMessage) = await _repo.rejectBookingRequest(id);
 
-    if (success) {
-      emit(RejectSuccess());
-      await getPendingRequests();
-    } else {
-      _emitActionFailure(errorMessage ?? "Failed to reject booking");
+    if (!success) {
+      emit(ActionFailure(errorMessage ?? "Failed to reject booking"));
+      return;
     }
-  }
 
-  void _emitActionFailure(String message) {
-    final currentState = state;
-    emit(ActionFailure(message));
-    emit(currentState);
+    emit(RejectSuccess());
+
+    await refreshPendingRequestsSilently();
   }
 }
