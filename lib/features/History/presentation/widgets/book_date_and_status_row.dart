@@ -11,7 +11,9 @@ class BookDateAndStatusRow extends StatelessWidget {
     late final MaterialColor statusColor;
     if (book.status == "Active" || book.status == "Upcoming") {
       statusColor = Colors.green;
-    } else if (book.status == "Completed") {
+    } else if (book.status == "Completed" ||
+        book.status == "PendingEdit" ||
+        book.status == "Pending") {
       statusColor = Colors.grey;
     } else if (book.status == "Canceled") {
       statusColor = Colors.red;

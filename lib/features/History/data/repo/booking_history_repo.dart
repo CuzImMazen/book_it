@@ -69,6 +69,41 @@ class BookingHistoryRepo {
     }
   }
 
+  Future<(List<BookModel>, String?)> getPendingBookings() async {
+    try {
+      final response = await _service.getPendingBookings();
+      final bookingsRaw = response.data['bookings'] as List<dynamic>? ?? [];
+      final bookings = bookingsRaw
+          .whereType<Map<String, dynamic>>()
+          .map((b) => BookModel.fromJson(b, 'Pending'))
+          .toList();
+      return (bookings, null);
+    } catch (e) {
+      print(e.toString());
+      return (
+        <BookModel>[],
+        "Failed to get Pending bookings please try again later",
+      );
+    }
+  }
+
+  Future<(List<BookModel>, String?)> getPendingEditBookings() async {
+    try {
+      final response = await _service.getPendingEditBookings();
+      final bookingsRaw = response.data['bookings'] as List<dynamic>? ?? [];
+      final bookings = bookingsRaw
+          .whereType<Map<String, dynamic>>()
+          .map((b) => BookModel.fromJson(b, 'PendingEdit'))
+          .toList();
+      return (bookings, null);
+    } catch (e) {
+      return (
+        <BookModel>[],
+        "Failed to get Pending edit bookings please try again later",
+      );
+    }
+  }
+
   Future<(bool, String?)> cancelBooking(int id) async {
     try {
       final response = await _service.cancelBooking(id);

@@ -24,6 +24,9 @@ class BookRepo {
       }
       return "Unexpected status code: ${response.statusCode}";
     } on DioException catch (e) {
+      if (e.response != null && e.response!.statusCode == 403) {
+        return "You cant book your own property";
+      }
       if (e.response != null && e.response!.statusCode == 422) {
         return e.response!.data["message"];
       }

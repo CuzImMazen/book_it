@@ -37,4 +37,12 @@ class BookingHistoryService {
   Future<Response> cancelBooking(int id) async {
     return await _dio.delete("/booking/$id");
   }
+
+  Future<Response> getPendingBookings() async {
+    return await _dio.get("/user/bookings/pending");
+  }
+
+  Future<Response> getPendingEditBookings() async {
+    return await _dio.get("/user/bookings/pending_edit");
+  }
 }

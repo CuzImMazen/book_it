@@ -14,16 +14,27 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
     final results = await Future.wait([
       repository.getCurrentBookings(),
       repository.getFutureBookings(),
+      repository.getPendingEditBookings(),
+      repository.getPendingBookings(),
     ]);
 
     final current = results[0];
     final future = results[1];
+    final pendingEdit = results[2];
+    final pending = results[3];
 
-    final merged = [...current.$1, ...future.$1];
+    final merged = [
+      ...current.$1,
+      ...future.$1,
+      ...pendingEdit.$1,
+      ...pending.$1,
+    ];
 
     final errorMessages = [
       current.$2,
       future.$2,
+      pendingEdit.$2,
+      pending.$2,
     ].where((e) => e != null && e.isNotEmpty).join("\n");
 
     emit(
