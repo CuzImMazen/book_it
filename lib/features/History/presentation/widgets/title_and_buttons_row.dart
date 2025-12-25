@@ -137,6 +137,24 @@ class TitleAndButtonsRow extends StatelessWidget {
           ],
         ),
       );
+    } else if (book.status == "PendingEdit" || book.status == "Pending") {
+      return Padding(
+        padding: const EdgeInsets.only(right: 8.0, bottom: 4),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                capitalize(book.property.category),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+              ),
+            ),
+
+            SizedBox(width: 8),
+          ],
+        ),
+      );
     } else {
       return const Text("Wrong status");
     }

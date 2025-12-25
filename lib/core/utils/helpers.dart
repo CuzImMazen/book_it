@@ -230,7 +230,7 @@ Future<dynamic> showBookingSuccessDialog(BuildContext context) {
         ),
       ),
       content: Text(
-        "Booking completed successfully!",
+        " your Booking request has been sent Successfully",
         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       ),
       actions: [

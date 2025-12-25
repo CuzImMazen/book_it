@@ -16,7 +16,7 @@ class BookModel {
   factory BookModel.fromJson(Map<String, dynamic> json, String status) {
     return BookModel(
       status: status,
-      id: json['booking_id'],
+      id: json['id'],
       startDate: json['start_date'],
       endDate: json['end_date'],
       property: PropertyModel.fromJson(json['property']),

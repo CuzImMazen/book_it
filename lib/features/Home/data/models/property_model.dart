@@ -1,5 +1,4 @@
 import 'package:book_it/features/Authentication/data/models/user_model.dart';
-import 'package:book_it/features/Home/data/models/property_features_model.dart';
 
 class PropertyModel {
   final int id;
@@ -9,10 +8,14 @@ class PropertyModel {
   final String price;
   final String governorate;
   final String city;
+  final int? bedrooms;
+  final int? bathrooms;
+  final int? kitchen;
+  final int? area;
   final bool availability;
   final String mainImage;
   final List<String>? images;
-  final PropertyFeaturesModel? features;
+  // final PropertyFeaturesModel? features;
   final UserModel? owner;
 
   const PropertyModel({
@@ -26,7 +29,11 @@ class PropertyModel {
     required this.city,
     required this.availability,
     required this.mainImage,
-    required this.features,
+    required this.bedrooms,
+    required this.bathrooms,
+    required this.kitchen,
+    required this.area,
+    // required this.features,
     required this.owner,
   });
 
@@ -40,6 +47,10 @@ class PropertyModel {
       governorate: json['governorate'] as String,
       city: json['city'] as String,
       availability: json['is_available'] == 1,
+      bedrooms: json['bedrooms'] as int?,
+      bathrooms: json['bathrooms'] as int?,
+      kitchen: json['kitchens'] as int?,
+      area: json['area'] as int?,
 
       images:
           (json['images'] as List<dynamic>?)
@@ -47,11 +58,11 @@ class PropertyModel {
               .toList() ??
           [],
       mainImage: json['main_image_url'] as String,
-      features: json['features'] != null
-          ? PropertyFeaturesModel.fromJson(
-              json['features'] as Map<String, dynamic>,
-            )
-          : null,
+      // features: json['features'] != null
+      //     ? PropertyFeaturesModel.fromJson(
+      //         json['features'] as Map<String, dynamic>,
+      //       )
+      //     : null,
       owner: json['user'] != null
           ? UserModel.fromJson(json['user'] as Map<String, dynamic>)
           : null,
