@@ -1,5 +1,5 @@
 import 'package:book_it/features/Home/data/models/property_model.dart';
-import 'package:book_it/features/Owner/data/services/owner_service.dart';
+import 'package:book_it/features/Owner/data/services/owner_properties_service.dart';
 import 'package:dio/dio.dart';
 
 class OwnerRepo {
