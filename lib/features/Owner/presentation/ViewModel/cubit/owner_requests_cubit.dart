@@ -1,133 +1,120 @@
+import 'package:bloc/bloc.dart';
 import 'package:book_it/features/Owner/data/repo/owner_requests_repo.dart';
-import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_state.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'owner_requests_state.dart';
 
 class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
-  final OwnerRequestsRepo _repo = OwnerRequestsRepo();
+  OwnerRequestsCubit(this.repo) : super(OwnerRequestsInitial());
 
-  OwnerRequestsCubit() : super(OwnerRequestsInitial());
+  final OwnerRequestsRepo repo;
 
-  /// LOAD ON START
-  Future<void> loadRequests() async {
+  Future<void> getAllRequests() async {
     emit(OwnerRequestsLoading());
+    try {
+      final (bookings, bookingsError) = await repo.getPendingRequests();
+      final (modifications, modificationsError) = await repo
+          .getPendingModificationRequests();
 
-    final bookingsResult = await _repo.getPendingRequests();
-    final modificationsResult = await _repo.getPendingModificationRequests();
+      if (bookingsError != null || modificationsError != null) {
+        emit(
+          OwnerRequestsFailure(
+            bookingsError ?? modificationsError ?? "Unknown error",
+          ),
+        );
+        return;
+      }
 
-    final error = bookingsResult.$2 ?? modificationsResult.$2;
-    if (error != null) {
-      emit(OwnerRequestsFailure(error));
-      return;
+      emit(
+        OwnerRequestsLoaded(bookings: bookings, modifications: modifications),
+      );
+    } catch (e) {
+      emit(OwnerRequestsFailure(e.toString()));
     }
-
-    emit(
-      OwnerRequestsLoaded(
-        bookings: bookingsResult.$1,
-        modifications: modificationsResult.$1,
-      ),
-    );
   }
 
-  /// ---------- BOOKING ----------
   Future<void> acceptBooking(int id) async {
-    _setItemLoading(id, true);
+    final current = state;
+    if (current is! OwnerRequestsLoaded) return;
 
-    final (success, error) = await _repo.acceptBookingRequest(id);
+    emit(current.copyWith(loadingItemId: id));
 
-    _handleResult(
-      success: success,
-      error: error,
-      onSuccess: (s) =>
-          s.copyWith(bookings: s.bookings.where((b) => b.id != id).toList()),
-      successMessage: "Booking accepted",
-      failureMessage: "Failed to accept booking",
-      id: id,
+    final (success, message) = await repo.acceptBookingRequest(id);
+
+    emit(
+      current.copyWith(
+        loadingItemId: null,
+        bookings: success
+            ? current.bookings.where((b) => b.id != id).toList()
+            : current.bookings,
+        snackMessage: message,
+        snackSuccess: success,
+      ),
     );
   }
 
   Future<void> rejectBooking(int id) async {
-    _setItemLoading(id, true);
+    final current = state;
+    if (current is! OwnerRequestsLoaded) return;
 
-    final (success, error) = await _repo.rejectBookingRequest(id);
+    emit(current.copyWith(loadingItemId: id));
 
-    _handleResult(
-      success: success,
-      error: error,
-      onSuccess: (s) =>
-          s.copyWith(bookings: s.bookings.where((b) => b.id != id).toList()),
-      successMessage: "Booking rejected",
-      failureMessage: "Failed to reject booking",
-      id: id,
+    final (success, message) = await repo.rejectBookingRequest(id);
+
+    emit(
+      current.copyWith(
+        loadingItemId: null,
+        bookings: success
+            ? current.bookings.where((b) => b.id != id).toList()
+            : current.bookings,
+        snackMessage: message,
+        snackSuccess: success,
+      ),
     );
   }
 
-  /// ---------- MODIFICATION ----------
   Future<void> acceptModification(int id) async {
-    _setItemLoading(id, true);
+    final current = state;
+    if (current is! OwnerRequestsLoaded) return;
 
-    final (success, error) = await _repo.acceptModificationRequest(id);
+    emit(current.copyWith(loadingItemId: id));
 
-    _handleResult(
-      success: success,
-      error: error,
-      onSuccess: (s) => s.copyWith(
-        modifications: s.modifications.where((m) => m.id != id).toList(),
+    final (success, message) = await repo.acceptModificationRequest(id);
+
+    emit(
+      current.copyWith(
+        loadingItemId: null,
+        modifications: success
+            ? current.modifications.where((m) => m.id != id).toList()
+            : current.modifications,
+        snackMessage: message,
+        snackSuccess: success,
       ),
-      successMessage: "Modification accepted",
-      failureMessage: "Failed to accept modification",
-      id: id,
     );
   }
 
   Future<void> rejectModification(int id) async {
-    _setItemLoading(id, true);
+    final current = state;
+    if (current is! OwnerRequestsLoaded) return;
 
-    final (success, error) = await _repo.rejectModificationRequest(id);
+    emit(current.copyWith(loadingItemId: id));
 
-    _handleResult(
-      success: success,
-      error: error,
-      onSuccess: (s) => s.copyWith(
-        modifications: s.modifications.where((m) => m.id != id).toList(),
+    final (success, message) = await repo.rejectModificationRequest(id);
+
+    emit(
+      current.copyWith(
+        loadingItemId: null,
+        modifications: success
+            ? current.modifications.where((m) => m.id != id).toList()
+            : current.modifications,
+        snackMessage: message,
+        snackSuccess: success,
       ),
-      successMessage: "Modification rejected",
-      failureMessage: "Failed to reject modification",
-      id: id,
     );
   }
 
-  // ---------------- HELPERS ----------------
-
-  void _setItemLoading(int id, bool loading) {
-    final s = state;
-    if (s is! OwnerRequestsLoaded) return;
-
-    final newSet = Set<int>.from(s.loadingIds);
-    loading ? newSet.add(id) : newSet.remove(id);
-
-    emit(s.copyWith(loadingIds: newSet));
-  }
-
-  void _handleResult({
-    required bool success,
-    required String? error,
-    required OwnerRequestsLoaded Function(OwnerRequestsLoaded) onSuccess,
-    required String successMessage,
-    required String failureMessage,
-    required int id,
-  }) {
-    final s = state;
-    if (s is! OwnerRequestsLoaded) return;
-
-    _setItemLoading(id, false);
-
-    if (success) {
-      emit(onSuccess(s));
-      emit(OwnerRequestAction(success: true, message: successMessage));
-    } else {
-      emit(
-        OwnerRequestAction(success: false, message: error ?? failureMessage),
-      );
+  void clearSnackBar() {
+    final current = state;
+    if (current is OwnerRequestsLoaded) {
+      emit(current.copyWith(snackMessage: null, snackSuccess: null));
     }
   }
 }

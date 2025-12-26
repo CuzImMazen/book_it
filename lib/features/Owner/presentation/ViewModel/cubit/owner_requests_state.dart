@@ -7,37 +7,39 @@ class OwnerRequestsInitial extends OwnerRequestsState {}
 class OwnerRequestsLoading extends OwnerRequestsState {}
 
 class OwnerRequestsFailure extends OwnerRequestsState {
-  final String message;
-  OwnerRequestsFailure(this.message);
+  final String error;
+  OwnerRequestsFailure(this.error);
 }
 
 class OwnerRequestsLoaded extends OwnerRequestsState {
   final List<PendingBookingModel> bookings;
   final List<PendingBookingModel> modifications;
-  final Set<int> loadingIds;
+
+  final int? loadingItemId;
+  final String? snackMessage;
+  final bool? snackSuccess;
 
   OwnerRequestsLoaded({
     required this.bookings,
     required this.modifications,
-    this.loadingIds = const {},
+    this.loadingItemId,
+    this.snackMessage,
+    this.snackSuccess,
   });
 
   OwnerRequestsLoaded copyWith({
     List<PendingBookingModel>? bookings,
     List<PendingBookingModel>? modifications,
-    Set<int>? loadingIds,
+    int? loadingItemId,
+    String? snackMessage,
+    bool? snackSuccess,
   }) {
     return OwnerRequestsLoaded(
       bookings: bookings ?? this.bookings,
       modifications: modifications ?? this.modifications,
-      loadingIds: loadingIds ?? this.loadingIds,
+      loadingItemId: loadingItemId,
+      snackMessage: snackMessage,
+      snackSuccess: snackSuccess,
     );
   }
-}
-
-class OwnerRequestAction extends OwnerRequestsState {
-  final bool success;
-  final String message;
-
-  OwnerRequestAction({required this.success, required this.message});
 }
