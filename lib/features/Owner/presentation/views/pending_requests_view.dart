@@ -1,4 +1,5 @@
 import 'package:book_it/core/widgets/primary_text.dart';
+import 'package:book_it/features/Owner/data/repo/owner_requests_repo.dart';
 import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_cubit.dart';
 import 'package:book_it/features/Owner/presentation/views/bookings_requests_tab.dart';
 import 'package:book_it/features/Owner/presentation/views/modification_requests_tab.dart';
@@ -11,7 +12,8 @@ class PendingRequestsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OwnerRequestsCubit()..loadRequests(),
+      create: (context) =>
+          OwnerRequestsCubit(OwnerRequestsRepo())..getAllRequests(),
       child: DefaultTabController(
         length: 2,
         child: Scaffold(

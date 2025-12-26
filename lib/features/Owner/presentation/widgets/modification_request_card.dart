@@ -1,16 +1,19 @@
-import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/features/Owner/data/models/pending_booking.dart';
 import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_cubit.dart';
-import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_state.dart';
 import 'package:book_it/features/Owner/presentation/widgets/accept_button.dart';
 import 'package:book_it/features/Owner/presentation/widgets/reject_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ModificationRequestCard extends StatelessWidget {
-  final PendingBookingModel pendingBooking;
+  const ModificationRequestCard({
+    super.key,
+    required this.pendingBooking,
+    this.isLoading = false,
+  });
 
-  const ModificationRequestCard({super.key, required this.pendingBooking});
+  final PendingBookingModel pendingBooking;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +26,7 @@ class ModificationRequestCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                pendingBooking.property.mainImage,
-
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+              child: Image.network(pendingBooking.property.mainImage),
             ),
             const SizedBox(height: 10),
             Padding(
@@ -37,7 +35,7 @@ class ModificationRequestCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      capitalize(pendingBooking.property.category),
+                      pendingBooking.property.category,
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
@@ -63,8 +61,8 @@ class ModificationRequestCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "${pendingBooking.property.governorate}, ${pendingBooking.property.city}",
                       overflow: TextOverflow.ellipsis,
+                      "${pendingBooking.property.governorate}, ${pendingBooking.property.city}",
                       style: const TextStyle(
                         fontSize: 15,
                         color: Colors.grey,
@@ -87,18 +85,15 @@ class ModificationRequestCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 children: [
-                  const Text(
+                  Text(
                     "Original Date:",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(width: 18),
                   const Icon(Icons.calendar_month_outlined, color: Colors.grey),
                   const SizedBox(width: 5),
                   Text(
-                    formatBookingDates(
-                      pendingBooking.startDate,
-                      pendingBooking.endDate,
-                    ),
+                    "${pendingBooking.startDate} - ${pendingBooking.endDate}",
                     style: const TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
@@ -112,9 +107,9 @@ class ModificationRequestCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 children: [
-                  const Text(
+                  Text(
                     "Adjusted Date:",
-                    style: TextStyle(fontWeight: FontWeight.w800),
+                    style: const TextStyle(fontWeight: FontWeight.w800),
                   ),
                   const SizedBox(width: 10),
                   const Icon(
@@ -123,10 +118,7 @@ class ModificationRequestCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 5),
                   Text(
-                    formatBookingDates(
-                      pendingBooking.editStartDate ?? pendingBooking.startDate,
-                      pendingBooking.editEndDate ?? pendingBooking.endDate,
-                    ),
+                    "${pendingBooking.editStartDate ?? pendingBooking.startDate} - ${pendingBooking.editEndDate ?? pendingBooking.endDate}",
                     style: const TextStyle(
                       color: Colors.black87,
                       fontWeight: FontWeight.bold,
@@ -136,34 +128,31 @@ class ModificationRequestCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            BlocBuilder<OwnerRequestsCubit, OwnerRequestsState>(
-              builder: (context, state) {
-                if (state is OwnerRequestsLoaded &&
-                    state.loadingIds.contains(pendingBooking.id)) {
-                  return const Center(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (isLoading)
+                  const SizedBox(
+                    width: 24,
+                    height: 24,
                     child: CircularProgressIndicator(strokeWidth: 2),
-                  );
-                }
-
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () => context
-                          .read<OwnerRequestsCubit>()
-                          .acceptModification(pendingBooking.id),
-                      child: const AcceptButton(),
-                    ),
-                    const SizedBox(width: 25),
-                    GestureDetector(
-                      onTap: () => context
-                          .read<OwnerRequestsCubit>()
-                          .rejectModification(pendingBooking.id),
-                      child: const RejectButton(),
-                    ),
-                  ],
-                );
-              },
+                  )
+                else ...[
+                  GestureDetector(
+                    onTap: () => context
+                        .read<OwnerRequestsCubit>()
+                        .acceptModification(pendingBooking.id),
+                    child: const AcceptButton(),
+                  ),
+                  const SizedBox(width: 25),
+                  GestureDetector(
+                    onTap: () => context
+                        .read<OwnerRequestsCubit>()
+                        .rejectModification(pendingBooking.id),
+                    child: const RejectButton(),
+                  ),
+                ],
+              ],
             ),
             const SizedBox(height: 20),
           ],
