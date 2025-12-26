@@ -1,12 +1,18 @@
+import 'package:book_it/core/style/colors.dart';
+import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/core/utils/validators.dart';
 import 'package:book_it/core/widgets/custom_text_field.dart';
 import 'package:book_it/core/widgets/label_text.dart';
 import 'package:book_it/core/widgets/primary_button.dart';
 import 'package:book_it/features/History/data/model/book_model.dart';
+import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_cubit.dart';
+import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditUpCommingBookingDialogContent extends StatefulWidget {
   final BookModel book;
+
   const EditUpCommingBookingDialogContent({super.key, required this.book});
 
   @override
@@ -16,9 +22,14 @@ class EditUpCommingBookingDialogContent extends StatefulWidget {
 
 class _EditUpCommingBookingDialogContentState
     extends State<EditUpCommingBookingDialogContent> {
+  final _formKey = GlobalKey<FormState>();
+
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _endDateController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  late DateTime originalStartDate;
+  late DateTime originalEndDate;
+
   DateTime? startDate;
   DateTime? endDate;
 
@@ -26,10 +37,14 @@ class _EditUpCommingBookingDialogContentState
   void initState() {
     super.initState();
 
-    startDate = DateTime.parse(widget.book.startDate);
-    endDate = DateTime.parse(widget.book.endDate);
-    _startDateController.text = formatDate(startDate!);
-    _endDateController.text = formatDate(endDate!);
+    originalStartDate = DateTime.parse(widget.book.startDate);
+    originalEndDate = DateTime.parse(widget.book.endDate);
+
+    startDate = originalStartDate;
+    endDate = originalEndDate;
+
+    _startDateController.text = _formatDate(startDate!);
+    _endDateController.text = _formatDate(endDate!);
   }
 
   @override
@@ -39,50 +54,52 @@ class _EditUpCommingBookingDialogContentState
     super.dispose();
   }
 
-  String formatDate(DateTime date) {
-    return "${date.year}-${date.month}-${date.day}";
+  String _formatDate(DateTime date) {
+    final m = date.month.toString().padLeft(2, '0');
+    final d = date.day.toString().padLeft(2, '0');
+    return "${date.year}-$m-$d";
   }
 
-  Future<void> pickStartDate() async {
+  Future<void> _pickStartDate() async {
     final picked = await showDatePicker(
       context: context,
-      initialDate: startDate ?? DateTime.now().add(Duration(days: 1)),
-      firstDate: DateTime.now().add(Duration(days: 1)),
-      lastDate: DateTime.now().add(Duration(days: 365)),
+      initialDate: startDate!,
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
     );
 
-    if (picked != null) {
-      setState(() {
-        startDate = picked;
-        _startDateController.text = formatDate(picked);
+    if (picked == null) return;
 
-        if (endDate != null && !endDate!.isAfter(picked)) {
-          endDate = null;
-          _endDateController.text = "";
-        }
-      });
-    }
+    setState(() {
+      startDate = picked;
+      _startDateController.text = _formatDate(picked);
+
+      if (endDate != null && !endDate!.isAfter(picked)) {
+        endDate = null;
+        _endDateController.clear();
+      }
+    });
   }
 
-  Future<void> pickEndDate() async {
+  Future<void> _pickEndDate() async {
     final picked = await showDatePicker(
       context: context,
-      initialDate:
-          endDate ??
-          (startDate?.add(Duration(days: 1)) ??
-              DateTime.now().add(Duration(days: 1))),
-      firstDate:
-          startDate?.add(Duration(days: 1)) ??
-          DateTime.now().add(Duration(days: 1)),
-      lastDate: DateTime.now().add(Duration(days: 365)),
+      initialDate: endDate ?? startDate!.add(const Duration(days: 1)),
+      firstDate: startDate!.add(const Duration(days: 1)),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
     );
 
-    if (picked != null) {
-      setState(() {
-        endDate = picked;
-        _endDateController.text = formatDate(picked);
-      });
-    }
+    if (picked == null) return;
+
+    setState(() {
+      endDate = picked;
+      _endDateController.text = _formatDate(picked);
+    });
+  }
+
+  bool _datesUnchanged() {
+    return startDate!.isAtSameMomentAs(originalStartDate) &&
+        endDate!.isAtSameMomentAs(originalEndDate);
   }
 
   @override
@@ -93,35 +110,58 @@ class _EditUpCommingBookingDialogContentState
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          LabelText(text: "Start Date :"),
-          const SizedBox(height: 10),
+          const LabelText(text: "Start Date"),
+          const SizedBox(height: 8),
           CustomTextField(
-            onTap: pickStartDate,
             readOnly: true,
-            validator: startDateValidator,
-            hintText: "Enter Start Date",
             controller: _startDateController,
             prefixIcon: Icons.calendar_month,
+            hintText: "Select start date",
+            validator: startDateValidator,
+            onTap: _pickStartDate,
           ),
-          const SizedBox(height: 10),
-          LabelText(text: "End Date :"),
-          const SizedBox(height: 10),
+          const SizedBox(height: 12),
+          const LabelText(text: "End Date"),
+          const SizedBox(height: 8),
           CustomTextField(
-            validator: endDateValidator,
-            onTap: pickEndDate,
             readOnly: true,
-            hintText: "Enter End Date",
             controller: _endDateController,
             prefixIcon: Icons.calendar_month,
+            hintText: "Select end date",
+            validator: endDateValidator,
+            onTap: _pickEndDate,
           ),
           const SizedBox(height: 20),
-          PrimaryButton(
-            text: "Confirm",
-            onTap: () {
-              if (_formKey.currentState!.validate()) {
-                print("startDate : ${_startDateController.text}");
-                print("endDate : ${_endDateController.text}");
+          BlocBuilder<BookingHistoryCubit, BookingHistoryState>(
+            builder: (context, state) {
+              final isEditing = state.editingIds.contains(widget.book.id);
+
+              if (isEditing) {
+                return const Center(
+                  child: CircularProgressIndicator(color: kPrimaryColor),
+                );
               }
+
+              return PrimaryButton(
+                text: "Confirm",
+                onTap: () {
+                  if (!_formKey.currentState!.validate()) return;
+
+                  if (_datesUnchanged()) {
+                    showSnackBar(
+                      context: context,
+                      message: "You didn’t change anything",
+                    );
+                    return;
+                  }
+
+                  context.read<BookingHistoryCubit>().editBooking(
+                    booking: widget.book,
+                    startDate: _formatDate(startDate!),
+                    endDate: _formatDate(endDate!),
+                  );
+                },
+              );
             },
           ),
         ],

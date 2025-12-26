@@ -12,9 +12,9 @@ class Api {
     dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
-        connectTimeout: Duration(seconds: 30),
-        receiveTimeout: Duration(seconds: 30),
-        sendTimeout: Duration(seconds: 30),
+        connectTimeout: Duration(seconds: 15),
+        receiveTimeout: Duration(seconds: 15),
+        sendTimeout: Duration(seconds: 15),
         headers: {'Accept': 'application/json'},
       ),
     );

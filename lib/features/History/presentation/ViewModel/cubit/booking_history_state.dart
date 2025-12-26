@@ -12,27 +12,27 @@ class BookingHistoryState {
   final String? errorOngoing;
   final String? errorCompleted;
   final String? errorCanceled;
-  final String? errorPending;
-  final String? errorPendingEdit;
 
   final Set<int> cancelingIds;
   final String? cancelError;
+
+  final Set<int> editingIds;
+  final String? editError;
 
   const BookingHistoryState({
     required this.ongoing,
     required this.completed,
     required this.canceled,
-
     required this.isLoadingOngoing,
     required this.isLoadingCompleted,
     required this.isLoadingCanceled,
     required this.cancelingIds,
-    this.cancelError,
+    required this.editingIds,
     this.errorOngoing,
     this.errorCompleted,
     this.errorCanceled,
-    this.errorPending,
-    this.errorPendingEdit,
+    this.cancelError,
+    this.editError,
   });
 
   factory BookingHistoryState.initial() {
@@ -40,15 +40,16 @@ class BookingHistoryState {
       ongoing: [],
       completed: [],
       canceled: [],
-
-      cancelingIds: {},
       isLoadingOngoing: false,
       isLoadingCompleted: false,
       isLoadingCanceled: false,
+      cancelingIds: {},
+      editingIds: {},
       errorOngoing: null,
       errorCompleted: null,
       errorCanceled: null,
       cancelError: null,
+      editError: null,
     );
   }
 
@@ -57,6 +58,7 @@ class BookingHistoryState {
     List<BookModel>? completed,
     List<BookModel>? canceled,
     Set<int>? cancelingIds,
+    Set<int>? editingIds,
     bool? isLoadingOngoing,
     bool? isLoadingCompleted,
     bool? isLoadingCanceled,
@@ -64,13 +66,14 @@ class BookingHistoryState {
     String? errorCompleted,
     String? errorCanceled,
     String? cancelError,
+    String? editError,
   }) {
     return BookingHistoryState(
       ongoing: ongoing ?? this.ongoing,
       completed: completed ?? this.completed,
       canceled: canceled ?? this.canceled,
-
       cancelingIds: cancelingIds ?? this.cancelingIds,
+      editingIds: editingIds ?? this.editingIds,
       isLoadingOngoing: isLoadingOngoing ?? this.isLoadingOngoing,
       isLoadingCompleted: isLoadingCompleted ?? this.isLoadingCompleted,
       isLoadingCanceled: isLoadingCanceled ?? this.isLoadingCanceled,
@@ -78,6 +81,7 @@ class BookingHistoryState {
       errorCompleted: errorCompleted,
       errorCanceled: errorCanceled,
       cancelError: cancelError,
+      editError: editError,
     );
   }
 }

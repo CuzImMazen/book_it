@@ -21,4 +21,17 @@ class OwnerRequestsService {
   Future<Response> rejectBookingRequest(int id) async {
     return await _dio.post("/owner/properties/bookings/$id/reject");
   }
+
+  ///////////////////////////////////////////////////////////////////////////////////////
+  Future<Response> getModificationRequests() async {
+    return await _dio.get("/owner/properties/pendingEditBookings");
+  }
+
+  Future<Response> acceptModificationRequest(int id) async {
+    return await _dio.post("/owner/properties/bookings/$id/accept_edit");
+  }
+
+  Future<Response> rejectModificationRequest(int id) async {
+    return await _dio.post("/owner/properties/bookings/$id/reject_edit");
+  }
 }

@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_cubit.dart';
 import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_state.dart';
 import 'package:book_it/features/Owner/presentation/widgets/booking_request_card.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookingsRequestsTab extends StatelessWidget {
   const BookingsRequestsTab({super.key});
@@ -13,25 +13,11 @@ class BookingsRequestsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<OwnerRequestsCubit, OwnerRequestsState>(
       listener: (context, state) {
-        if (state is AcceptSuccess) {
-          showSnackBar(
-            context: context,
-            message: "Booking request accepted",
-            color: Colors.green,
-          );
-        }
-        if (state is RejectSuccess) {
-          showSnackBar(
-            context: context,
-            message: "Booking request rejected",
-            color: Colors.red,
-          );
-        }
-        if (state is ActionFailure) {
+        if (state is OwnerRequestAction) {
           showSnackBar(
             context: context,
             message: state.message,
-            color: Colors.red,
+            color: state.success ? Colors.green : Colors.red,
           );
         }
       },
@@ -41,25 +27,33 @@ class BookingsRequestsTab extends StatelessWidget {
             child: CircularProgressIndicator(color: kPrimaryColor),
           );
         }
-        if (state is FetchRequestsFailure) {
+
+        if (state is OwnerRequestsFailure) {
           return Center(child: Text(state.message));
         }
+
         if (state is OwnerRequestsLoaded) {
           if (state.bookings.isEmpty) {
             return const Center(child: Text("No pending booking requests"));
           }
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: ListView.builder(
-              itemCount: state.bookings.length,
-              itemBuilder: (context, index) {
-                return BookingRequestCard(
-                  pendingBooking: state.bookings[index],
-                );
-              },
-            ),
+
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  itemCount: state.bookings.length,
+                  itemBuilder: (context, index) {
+                    return BookingRequestCard(
+                      pendingBooking: state.bookings[index],
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         }
+
         return const SizedBox();
       },
     );

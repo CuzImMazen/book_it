@@ -11,7 +11,7 @@ class PendingRequestsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => OwnerRequestsCubit()..getPendingRequests(),
+      create: (context) => OwnerRequestsCubit()..loadRequests(),
       child: DefaultTabController(
         length: 2,
         child: Scaffold(

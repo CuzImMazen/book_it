@@ -1,21 +1,23 @@
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/features/Owner/data/models/pending_booking.dart';
 import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_cubit.dart';
+import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_state.dart';
 import 'package:book_it/features/Owner/presentation/widgets/accept_button.dart';
 import 'package:book_it/features/Owner/presentation/widgets/reject_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookingRequestCard extends StatelessWidget {
-  const BookingRequestCard({super.key, required this.pendingBooking});
   final PendingBookingModel pendingBooking;
+
+  const BookingRequestCard({super.key, required this.pendingBooking});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: SizedBox(
         width: double.infinity,
-
         child: Card(
           elevation: 15,
           child: Column(
@@ -23,9 +25,14 @@ class BookingRequestCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(pendingBooking.property.mainImage),
+                child: Image.network(
+                  pendingBooking.property.mainImage,
+
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
@@ -33,18 +40,17 @@ class BookingRequestCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         capitalize(pendingBooking.property.category),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
                     ),
-
-                    Icon(Icons.person_2),
-                    SizedBox(width: 7),
+                    const Icon(Icons.person_2),
+                    const SizedBox(width: 7),
                     Text(
                       "${pendingBooking.user.firstName} ${pendingBooking.user.lastName}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w900,
                       ),
@@ -52,31 +58,30 @@ class BookingRequestCard extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 3),
+              const SizedBox(height: 3),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
                   children: [
                     Expanded(
                       child: Text(
+                        "${pendingBooking.property.governorate}, ${pendingBooking.property.city}",
                         overflow: TextOverflow.ellipsis,
-                        "${pendingBooking.property.governorate},${pendingBooking.property.city}",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15,
                           color: Colors.grey,
                           fontWeight: FontWeight.w300,
                         ),
                       ),
                     ),
-
-                    Icon(Icons.calendar_month_outlined),
-                    SizedBox(width: 5),
+                    const Icon(Icons.calendar_month_outlined),
+                    const SizedBox(width: 5),
                     Text(
                       formatBookingDates(
                         pendingBooking.startDate,
                         pendingBooking.endDate,
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                       ),
@@ -84,38 +89,48 @@ class BookingRequestCard extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
                   "\$${pendingBooking.property.price}/Night",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      context.read<OwnerRequestsCubit>().acceptBookingRequest(
-                        pendingBooking.id,
-                      );
-                    },
-                    child: AcceptButton(),
-                  ),
-                  SizedBox(width: 25),
-                  GestureDetector(
-                    onTap: () {
-                      context.read<OwnerRequestsCubit>().rejectBookingRequest(
-                        pendingBooking.id,
-                      );
-                    },
-                    child: RejectButton(),
-                  ),
-                ],
+              const SizedBox(height: 20),
+              BlocBuilder<OwnerRequestsCubit, OwnerRequestsState>(
+                builder: (context, state) {
+                  if (state is OwnerRequestsLoaded &&
+                      state.loadingIds.contains(pendingBooking.id)) {
+                    return const Center(
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    );
+                  }
+
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () => context
+                            .read<OwnerRequestsCubit>()
+                            .acceptBooking(pendingBooking.id),
+                        child: const AcceptButton(),
+                      ),
+                      const SizedBox(width: 25),
+                      GestureDetector(
+                        onTap: () => context
+                            .read<OwnerRequestsCubit>()
+                            .rejectBooking(pendingBooking.id),
+                        child: const RejectButton(),
+                      ),
+                    ],
+                  );
+                },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),

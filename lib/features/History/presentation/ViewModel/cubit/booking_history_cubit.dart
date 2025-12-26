@@ -114,4 +114,45 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
   void reset() {
     emit(BookingHistoryState.initial());
   }
+
+  Future<void> editBooking({
+    required BookModel booking,
+    String? startDate,
+    required String endDate,
+  }) async {
+    emit(
+      state.copyWith(
+        editingIds: {...state.editingIds, booking.id},
+        editError: null,
+      ),
+    );
+
+    final (success, error) = await repository.updateBooking(
+      booking.id,
+      startDate,
+      endDate,
+    );
+
+    final updatedEditingIds = state.editingIds..remove(booking.id);
+
+    if (!success) {
+      emit(state.copyWith(editingIds: updatedEditingIds, editError: error));
+      return;
+    }
+
+    final updatedBooking = booking.copyWith(
+      startDate: startDate ?? booking.startDate,
+      endDate: endDate,
+      status: 'PendingEdit',
+    );
+
+    emit(
+      state.copyWith(
+        editingIds: updatedEditingIds,
+        ongoing: state.ongoing
+            .map((b) => b.id == booking.id ? updatedBooking : b)
+            .toList(),
+      ),
+    );
+  }
 }

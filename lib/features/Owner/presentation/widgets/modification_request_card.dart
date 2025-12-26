@@ -1,9 +1,16 @@
+import 'package:book_it/core/utils/helpers.dart';
+import 'package:book_it/features/Owner/data/models/pending_booking.dart';
+import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_cubit.dart';
+import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_state.dart';
 import 'package:book_it/features/Owner/presentation/widgets/accept_button.dart';
 import 'package:book_it/features/Owner/presentation/widgets/reject_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ModificationRequestCard extends StatelessWidget {
-  const ModificationRequestCard({super.key});
+  final PendingBookingModel pendingBooking;
+
+  const ModificationRequestCard({super.key, required this.pendingBooking});
 
   @override
   Widget build(BuildContext context) {
@@ -17,43 +24,48 @@ class ModificationRequestCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                "https://tse3.mm.bing.net/th/id/OIP.JT0tJNPHdzVdaRvnoVfPCgHaE8?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3",
+                pendingBooking.property.mainImage,
+
+                width: double.infinity,
+                fit: BoxFit.cover,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 children: [
                   Expanded(
                     child: Text(
-                      "House",
-                      style: TextStyle(
+                      capitalize(pendingBooking.property.category),
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
                   ),
-
-                  Icon(Icons.person_2),
-                  SizedBox(width: 7),
+                  const Icon(Icons.person_2),
+                  const SizedBox(width: 7),
                   Text(
-                    "Mazen AlRefai",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w900),
+                    "${pendingBooking.user.firstName} ${pendingBooking.user.lastName}",
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 3),
+            const SizedBox(height: 3),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 children: [
                   Expanded(
                     child: Text(
+                      "${pendingBooking.property.governorate}, ${pendingBooking.property.city}",
                       overflow: TextOverflow.ellipsis,
-                      "Damascus,Mazzeh",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 15,
                         color: Colors.grey,
                         fontWeight: FontWeight.w300,
@@ -61,27 +73,33 @@ class ModificationRequestCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "\$120.00/Night",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    "\$${pendingBooking.property.price}/Night",
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 children: [
-                  Text(
+                  const Text(
                     "Original Date:",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(width: 18),
-                  Icon(Icons.calendar_month_outlined, color: Colors.grey),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 18),
+                  const Icon(Icons.calendar_month_outlined, color: Colors.grey),
+                  const SizedBox(width: 5),
                   Text(
-                    "5 Dec - 10 Dec",
-                    style: TextStyle(
+                    formatBookingDates(
+                      pendingBooking.startDate,
+                      pendingBooking.endDate,
+                    ),
+                    style: const TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
                     ),
@@ -89,21 +107,27 @@ class ModificationRequestCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
                 children: [
-                  Text(
+                  const Text(
                     "Adjusted Date:",
                     style: TextStyle(fontWeight: FontWeight.w800),
                   ),
-                  SizedBox(width: 10),
-                  Icon(Icons.calendar_month_outlined, color: Colors.black87),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 10),
+                  const Icon(
+                    Icons.calendar_month_outlined,
+                    color: Colors.black87,
+                  ),
+                  const SizedBox(width: 5),
                   Text(
-                    "12 Dec - 25 Dec",
-                    style: TextStyle(
+                    formatBookingDates(
+                      pendingBooking.editStartDate ?? pendingBooking.startDate,
+                      pendingBooking.editEndDate ?? pendingBooking.endDate,
+                    ),
+                    style: const TextStyle(
                       color: Colors.black87,
                       fontWeight: FontWeight.bold,
                     ),
@@ -111,12 +135,37 @@ class ModificationRequestCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [AcceptButton(), SizedBox(width: 25), RejectButton()],
+            const SizedBox(height: 20),
+            BlocBuilder<OwnerRequestsCubit, OwnerRequestsState>(
+              builder: (context, state) {
+                if (state is OwnerRequestsLoaded &&
+                    state.loadingIds.contains(pendingBooking.id)) {
+                  return const Center(
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  );
+                }
+
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () => context
+                          .read<OwnerRequestsCubit>()
+                          .acceptModification(pendingBooking.id),
+                      child: const AcceptButton(),
+                    ),
+                    const SizedBox(width: 25),
+                    GestureDetector(
+                      onTap: () => context
+                          .read<OwnerRequestsCubit>()
+                          .rejectModification(pendingBooking.id),
+                      child: const RejectButton(),
+                    ),
+                  ],
+                );
+              },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

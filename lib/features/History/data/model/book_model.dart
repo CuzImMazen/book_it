@@ -22,6 +22,15 @@ class BookModel {
       property: PropertyModel.fromJson(json['property']),
     );
   }
+  factory BookModel.fromJson2(Map<String, dynamic> json, String status) {
+    return BookModel(
+      status: status,
+      id: json['id'],
+      startDate: json['edit_start_date'],
+      endDate: json['edit_end_date'],
+      property: PropertyModel.fromJson(json['property']),
+    );
+  }
   BookModel copyWith({
     String? status,
     int? id,

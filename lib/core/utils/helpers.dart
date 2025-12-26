@@ -1,6 +1,7 @@
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/features/History/data/model/book_model.dart';
 import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_cubit.dart';
+import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_state.dart';
 import 'package:book_it/features/History/presentation/widgets/edit_active_booking_dialog_content.dart';
 import 'package:book_it/features/History/presentation/widgets/edit_upcoming_booking_dialog_content.dart';
 import 'package:book_it/features/Home/presentation/viewModel/cubit/filter_cubit.dart';
@@ -206,8 +207,16 @@ Future<dynamic> showDiscardFiltersDialog(BuildContext context) {
 }
 
 String formatBookingDates(String start, String end) {
-  final startDate = DateTime.parse(start);
-  final endDate = DateTime.parse(end);
+  String padDate(String date) {
+    final parts = date.split('-');
+    final year = parts[0];
+    final month = parts[1].padLeft(2, '0');
+    final day = parts[2].padLeft(2, '0');
+    return "$year-$month-$day";
+  }
+
+  final startDate = DateTime.parse(padDate(start));
+  final endDate = DateTime.parse(padDate(end));
 
   final startFormatted = DateFormat.MMMd().format(startDate);
   final endFormatted = DateFormat.MMMd().format(endDate);
@@ -389,11 +398,40 @@ Future<dynamic> showEditUpcomingBookingDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text(
+        title: const Text(
           "Edit Booking",
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        content: EditUpCommingBookingDialogContent(book: book),
+        content: BlocListener<BookingHistoryCubit, BookingHistoryState>(
+          listener: (context, state) {
+            if (!state.editingIds.contains(book.id)) {
+              if (state.editError != null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.editError!),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+                return;
+              }
+
+              final isEdited = state.ongoing.any(
+                (b) => b.id == book.id && b.status == 'PendingEdit',
+              );
+
+              if (isEdited) {
+                showSnackBar(
+                  context: context,
+                  message: "Update Booking request has been sent to Owner",
+                  color: Colors.green,
+                );
+
+                context.pop();
+              }
+            }
+          },
+          child: EditUpCommingBookingDialogContent(book: book),
+        ),
       );
     },
   );
@@ -411,7 +449,28 @@ Future<dynamic> showEditActiveBookingDialog(
           "Edit Booking",
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        content: EditActiveBookingDialogContent(book: book),
+        content: BlocListener<BookingHistoryCubit, BookingHistoryState>(
+          listener: (context, state) {
+            if (!state.editingIds.contains(book.id)) {
+              if (state.editError != null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.editError!),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              } else {
+                showSnackBar(
+                  context: context,
+                  message: "Booking update request has been sent to Owner",
+                  color: Colors.green,
+                );
+                Navigator.of(context).pop();
+              }
+            }
+          },
+          child: EditActiveBookingDialogContent(book: book),
+        ),
       );
     },
   );

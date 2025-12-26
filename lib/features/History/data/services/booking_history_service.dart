@@ -45,4 +45,18 @@ class BookingHistoryService {
   Future<Response> getPendingEditBookings() async {
     return await _dio.get("/user/bookings/pending_edit");
   }
+
+  Future<Response> editBooking({
+    required int id,
+    String? startDate,
+    required String endDate,
+  }) async {
+    final data = <String, dynamic>{'end_date': endDate};
+
+    if (startDate != null) {
+      data['start_date'] = startDate;
+    }
+
+    return await _dio.put("/booking/$id", data: data);
+  }
 }
