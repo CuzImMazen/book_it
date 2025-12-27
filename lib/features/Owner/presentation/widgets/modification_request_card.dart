@@ -1,3 +1,4 @@
+import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/features/Owner/data/models/pending_booking.dart';
 import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_cubit.dart';
 import 'package:book_it/features/Owner/presentation/widgets/accept_button.dart';
@@ -93,7 +94,10 @@ class ModificationRequestCard extends StatelessWidget {
                   const Icon(Icons.calendar_month_outlined, color: Colors.grey),
                   const SizedBox(width: 5),
                   Text(
-                    "${pendingBooking.startDate} - ${pendingBooking.endDate}",
+                    formatBookingDates(
+                      pendingBooking.startDate,
+                      pendingBooking.endDate,
+                    ),
                     style: const TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
@@ -118,7 +122,10 @@ class ModificationRequestCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 5),
                   Text(
-                    "${pendingBooking.editStartDate ?? pendingBooking.startDate} - ${pendingBooking.editEndDate ?? pendingBooking.endDate}",
+                    formatBookingDates(
+                      pendingBooking.editStartDate ?? pendingBooking.startDate,
+                      pendingBooking.editEndDate ?? pendingBooking.endDate,
+                    ),
                     style: const TextStyle(
                       color: Colors.black87,
                       fontWeight: FontWeight.bold,

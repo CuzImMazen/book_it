@@ -35,13 +35,13 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     final current = state;
     if (current is! OwnerRequestsLoaded) return;
 
-    emit(current.copyWith(loadingItemId: id));
+    emit(current.copyWith(loadingBookingId: id));
 
     final (success, message) = await repo.acceptBookingRequest(id);
 
     emit(
       current.copyWith(
-        loadingItemId: null,
+        loadingBookingId: null,
         bookings: success
             ? current.bookings.where((b) => b.id != id).toList()
             : current.bookings,
@@ -55,13 +55,13 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     final current = state;
     if (current is! OwnerRequestsLoaded) return;
 
-    emit(current.copyWith(loadingItemId: id));
+    emit(current.copyWith(loadingBookingId: id));
 
     final (success, message) = await repo.rejectBookingRequest(id);
 
     emit(
       current.copyWith(
-        loadingItemId: null,
+        loadingBookingId: null,
         bookings: success
             ? current.bookings.where((b) => b.id != id).toList()
             : current.bookings,
@@ -75,13 +75,13 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     final current = state;
     if (current is! OwnerRequestsLoaded) return;
 
-    emit(current.copyWith(loadingItemId: id));
+    emit(current.copyWith(loadingModificationId: id));
 
     final (success, message) = await repo.acceptModificationRequest(id);
 
     emit(
       current.copyWith(
-        loadingItemId: null,
+        loadingModificationId: null,
         modifications: success
             ? current.modifications.where((m) => m.id != id).toList()
             : current.modifications,
@@ -95,13 +95,13 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     final current = state;
     if (current is! OwnerRequestsLoaded) return;
 
-    emit(current.copyWith(loadingItemId: id));
+    emit(current.copyWith(loadingModificationId: id));
 
     final (success, message) = await repo.rejectModificationRequest(id);
 
     emit(
       current.copyWith(
-        loadingItemId: null,
+        loadingModificationId: null,
         modifications: success
             ? current.modifications.where((m) => m.id != id).toList()
             : current.modifications,

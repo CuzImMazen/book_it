@@ -15,14 +15,17 @@ class OwnerRequestsLoaded extends OwnerRequestsState {
   final List<PendingBookingModel> bookings;
   final List<PendingBookingModel> modifications;
 
-  final int? loadingItemId;
+  final int? loadingBookingId;
+  final int? loadingModificationId;
+
   final String? snackMessage;
   final bool? snackSuccess;
 
   OwnerRequestsLoaded({
     required this.bookings,
     required this.modifications,
-    this.loadingItemId,
+    this.loadingBookingId,
+    this.loadingModificationId,
     this.snackMessage,
     this.snackSuccess,
   });
@@ -30,14 +33,17 @@ class OwnerRequestsLoaded extends OwnerRequestsState {
   OwnerRequestsLoaded copyWith({
     List<PendingBookingModel>? bookings,
     List<PendingBookingModel>? modifications,
-    int? loadingItemId,
+    int? loadingBookingId,
+    int? loadingModificationId,
     String? snackMessage,
     bool? snackSuccess,
   }) {
     return OwnerRequestsLoaded(
       bookings: bookings ?? this.bookings,
       modifications: modifications ?? this.modifications,
-      loadingItemId: loadingItemId,
+      loadingBookingId: loadingBookingId ?? this.loadingBookingId,
+      loadingModificationId:
+          loadingModificationId ?? this.loadingModificationId,
       snackMessage: snackMessage,
       snackSuccess: snackSuccess,
     );
