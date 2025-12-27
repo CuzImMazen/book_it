@@ -46,7 +46,8 @@ class BookDateAndStatusRow extends StatelessWidget {
                   vertical: 6.0,
                 ),
                 child: Text(
-                  book.status,
+                  book.status == "PendingEdit" ? "Pending Edit" : book.status,
+
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,

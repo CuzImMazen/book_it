@@ -1,3 +1,5 @@
+import 'package:book_it/core/utils/helpers.dart';
+import 'package:book_it/features/Authentication/presentation/ViewModel/cubit/authentication_cubit.dart';
 import 'package:book_it/features/Book/data/model/confirm_book_data.dart';
 import 'package:book_it/features/Home/data/models/property_model.dart';
 import 'package:book_it/features/Home/presentation/widgets/book_button.dart';
@@ -8,6 +10,7 @@ import 'package:book_it/features/Home/presentation/widgets/property_description.
 import 'package:book_it/features/Home/presentation/widgets/property_images_slider.dart';
 import 'package:book_it/features/Home/presentation/widgets/property_owner_row.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class DetailViewBody extends StatelessWidget {
@@ -51,13 +54,24 @@ class DetailViewBody extends StatelessWidget {
                 SizedBox(height: 25),
                 GestureDetector(
                   onTap: () {
-                    context.push(
-                      "/confirm_book",
-                      extra: ConfirmBookData(
-                        propertyId: property.id,
-                        price: property.price,
-                      ),
-                    );
+                    final authState = context.read<AuthenticationCubit>().state;
+                    if (authState is AuthenticationSignInSuccess) {
+                      if (authState.user.id == property.owner!.id) {
+                        showSnackBar(
+                          context: context,
+                          message: "You can't book your own property",
+                          color: Colors.red,
+                        );
+                        return;
+                      }
+                      context.push(
+                        "/confirm_book",
+                        extra: ConfirmBookData(
+                          propertyId: property.id,
+                          price: property.price,
+                        ),
+                      );
+                    }
                   },
                   child: BookButton(),
                 ),

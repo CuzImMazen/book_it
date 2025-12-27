@@ -39,7 +39,6 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     }
   }
 
-  // --- Booking Actions ---
   Future<void> acceptBooking(int id) async {
     final current = state;
     if (current is! OwnerRequestsLoaded) return;
@@ -56,8 +55,7 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
         modifications: current.modifications,
         loadingBookingId: null,
         loadingModificationId: current.loadingModificationId,
-        snackMessage:
-            "$message|${DateTime.now().millisecondsSinceEpoch}", // unique internal
+        snackMessage: "$message|${DateTime.now().millisecondsSinceEpoch}",
         snackSuccess: success,
       ),
     );
@@ -85,7 +83,6 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     );
   }
 
-  // --- Modification Actions ---
   Future<void> acceptModification(int id) async {
     final current = state;
     if (current is! OwnerRequestsLoaded) return;
