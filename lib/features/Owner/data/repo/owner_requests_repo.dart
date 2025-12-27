@@ -50,7 +50,7 @@ class OwnerRequestsRepo {
       final response = await _ownerRequestsService.acceptBookingRequest(id);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return (true, null);
+        return (true, "Booking request accepted successfully");
       }
 
       return (false, "Failed to accept booking request");
@@ -75,7 +75,7 @@ class OwnerRequestsRepo {
     try {
       final response = await _ownerRequestsService.rejectBookingRequest(id);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return (true, null);
+        return (true, "Booking request rejected successfully");
       }
       return (false, "Failed to reject booking request");
     } catch (e) {
@@ -130,7 +130,7 @@ class OwnerRequestsRepo {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return (true, null);
+        return (true, "Modification request accepted successfully");
       }
 
       return (false, "Failed to accept modification request");
@@ -157,7 +157,7 @@ class OwnerRequestsRepo {
         id,
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return (true, null);
+        return (true, "Modification request rejected successfully");
       }
       return (false, "Failed to reject modification request");
     } catch (e) {

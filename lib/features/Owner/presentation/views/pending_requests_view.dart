@@ -16,20 +16,19 @@ class PendingRequestsView extends StatelessWidget {
     return BlocProvider(
       create: (_) => OwnerRequestsCubit(OwnerRequestsRepo())..getAllRequests(),
       child: BlocListener<OwnerRequestsCubit, OwnerRequestsState>(
-        listenWhen: (prev, curr) =>
-            curr is OwnerRequestsLoaded &&
-            curr.snackMessage != null &&
-            curr.snackSuccess != null,
         listener: (context, state) {
-          final loaded = state as OwnerRequestsLoaded;
+          if (state is OwnerRequestsLoaded && state.snackMessage != null) {
+            // Only show the original message (ignore timestamp)
+            final displayMessage = state.snackMessage!.split("|")[0];
 
-          showSnackBar(
-            context: context,
-            message: loaded.snackMessage!,
-            color: loaded.snackSuccess! ? Colors.green : Colors.red,
-          );
+            showSnackBar(
+              context: context,
+              message: displayMessage,
+              color: state.snackSuccess == true ? Colors.green : Colors.red,
+            );
 
-          context.read<OwnerRequestsCubit>().clearSnackBar();
+            context.read<OwnerRequestsCubit>().clearSnackBar();
+          }
         },
         child: DefaultTabController(
           length: 2,

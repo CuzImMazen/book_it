@@ -7,6 +7,9 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
 
   final OwnerRequestsRepo repo;
 
+  int? loadingBookingId;
+  int? loadingModificationId;
+
   Future<void> getAllRequests() async {
     emit(OwnerRequestsLoading());
     try {
@@ -24,13 +27,19 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
       }
 
       emit(
-        OwnerRequestsLoaded(bookings: bookings, modifications: modifications),
+        OwnerRequestsLoaded(
+          bookings: bookings,
+          modifications: modifications,
+          loadingBookingId: null,
+          loadingModificationId: null,
+        ),
       );
     } catch (e) {
       emit(OwnerRequestsFailure(e.toString()));
     }
   }
 
+  // --- Booking Actions ---
   Future<void> acceptBooking(int id) async {
     final current = state;
     if (current is! OwnerRequestsLoaded) return;
@@ -40,12 +49,15 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     final (success, message) = await repo.acceptBookingRequest(id);
 
     emit(
-      current.copyWith(
-        loadingBookingId: null,
+      OwnerRequestsLoaded(
         bookings: success
             ? current.bookings.where((b) => b.id != id).toList()
             : current.bookings,
-        snackMessage: message,
+        modifications: current.modifications,
+        loadingBookingId: null,
+        loadingModificationId: current.loadingModificationId,
+        snackMessage:
+            "$message|${DateTime.now().millisecondsSinceEpoch}", // unique internal
         snackSuccess: success,
       ),
     );
@@ -60,17 +72,20 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     final (success, message) = await repo.rejectBookingRequest(id);
 
     emit(
-      current.copyWith(
-        loadingBookingId: null,
+      OwnerRequestsLoaded(
         bookings: success
             ? current.bookings.where((b) => b.id != id).toList()
             : current.bookings,
-        snackMessage: message,
+        modifications: current.modifications,
+        loadingBookingId: null,
+        loadingModificationId: current.loadingModificationId,
+        snackMessage: "$message|${DateTime.now().millisecondsSinceEpoch}",
         snackSuccess: success,
       ),
     );
   }
 
+  // --- Modification Actions ---
   Future<void> acceptModification(int id) async {
     final current = state;
     if (current is! OwnerRequestsLoaded) return;
@@ -80,12 +95,14 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     final (success, message) = await repo.acceptModificationRequest(id);
 
     emit(
-      current.copyWith(
-        loadingModificationId: null,
+      OwnerRequestsLoaded(
+        bookings: current.bookings,
         modifications: success
             ? current.modifications.where((m) => m.id != id).toList()
             : current.modifications,
-        snackMessage: message,
+        loadingBookingId: current.loadingBookingId,
+        loadingModificationId: null,
+        snackMessage: "$message|${DateTime.now().millisecondsSinceEpoch}",
         snackSuccess: success,
       ),
     );
@@ -100,12 +117,14 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     final (success, message) = await repo.rejectModificationRequest(id);
 
     emit(
-      current.copyWith(
-        loadingModificationId: null,
+      OwnerRequestsLoaded(
+        bookings: current.bookings,
         modifications: success
             ? current.modifications.where((m) => m.id != id).toList()
             : current.modifications,
-        snackMessage: message,
+        loadingBookingId: current.loadingBookingId,
+        loadingModificationId: null,
+        snackMessage: "$message|${DateTime.now().millisecondsSinceEpoch}",
         snackSuccess: success,
       ),
     );
