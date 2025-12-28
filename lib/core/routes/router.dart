@@ -12,6 +12,8 @@ import 'package:book_it/features/Home/presentation/views/filter_view.dart';
 import 'package:book_it/features/Home/presentation/views/property_detail_view.dart';
 import 'package:book_it/features/Introduction/presentation/views/welcome_view.dart';
 import 'package:book_it/features/Layout/presentation/views/layout_view.dart';
+import 'package:book_it/features/Owner/presentation/views/create_property_view.dart';
+import 'package:book_it/features/Owner/presentation/views/create_property_view2.dart';
 import 'package:book_it/features/Owner/presentation/views/my_properties_view.dart';
 import 'package:book_it/features/Owner/presentation/views/pending_requests_view.dart';
 import 'package:book_it/features/Splash/presentation/views/splash_view.dart';
@@ -25,9 +27,11 @@ final GoRouter router = GoRouter(
       // builder: (context, state) => const BookConfirmationView(
       //   confirmBookData: ConfirmBookData(propertyId: 1, price: "25"),
       // ),
-      builder: (context, state) => const SplashView(),
+      // builder: (context, state) => const SplashView(),
       // builder: (context, state) => const LayoutView(),
       //builder: (context, state) => const MyPropertiesView(),
+      builder: (context, state) => const CreatePropertyView(),
+      // builder: (context, state) => const FilterView(),
     ),
     GoRoute(
       path: '/welcome',
@@ -69,6 +73,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: "/pendingrequests",
       builder: (context, state) => const PendingRequestsView(),
+    ),
+    GoRoute(
+      path: "/createproperty",
+      builder: (context, state) => const CreatePropertyView(),
+    ),
+    GoRoute(
+      path: "/createproperty2",
+      builder: (context, state) => const CreatePropertyView2(),
     ),
   ],
 );

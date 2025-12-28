@@ -20,7 +20,12 @@ class MyPropertiesView extends StatelessWidget {
           toolbarHeight: 80,
           title: PrimaryText(text: "My Properties"),
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.add, size: 30)),
+            IconButton(
+              onPressed: () {
+                context.push("/createproperty");
+              },
+              icon: const Icon(Icons.add, size: 30),
+            ),
             IconButton(
               onPressed: () {
                 context.push("/pendingrequests");

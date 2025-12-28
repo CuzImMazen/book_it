@@ -129,7 +129,7 @@ List<String> getCities(String? governorate) {
       return const ["Baniyas", "Safita", "Al-Shaykh Badr", "Duraykish"];
     case "Sweidah":
       return const ["Shahba", "Sahwat al-Khudr", "Shaqqa", "Rweished"];
-    case "Dar'a":
+    case "Dara'a":
       return const ["Da'el", "Nawa", "Izraa", "Al-Shajara"];
     case "Hassakeh":
       return const ["Qamishli", "Amuda", "Al-Malikiyah", "Ras al-Ayn"];
