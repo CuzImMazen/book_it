@@ -1,5 +1,6 @@
 import 'package:book_it/features/Owner/presentation/widgets/create_property_view_body.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CreatePropertyView extends StatelessWidget {
   const CreatePropertyView({super.key});
@@ -18,7 +19,7 @@ class CreatePropertyView extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
         ),
       ),
       body: const CreatePropertyViewBody(),
