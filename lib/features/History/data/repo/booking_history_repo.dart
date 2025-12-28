@@ -94,7 +94,7 @@ class BookingHistoryRepo {
       final bookingsRaw = response.data['bookings'] as List<dynamic>? ?? [];
       final bookings = bookingsRaw
           .whereType<Map<String, dynamic>>()
-          .map((b) => BookModel.fromJson2(b, 'PendingEdit'))
+          .map((b) => BookModel.fromJson(b, 'PendingEdit'))
           .toList();
       return (bookings, null);
     } catch (e) {
@@ -139,6 +139,38 @@ class BookingHistoryRepo {
       return (false, "Failed to update booking");
     } catch (e) {
       return (false, "Failed to update booking");
+    }
+  }
+
+  Future<(bool, String)> addRating(int id, int stars, String? comment) async {
+    try {
+      final response = await _service.addRating(
+        id: id,
+        stars: stars,
+        comment: comment,
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return (true, "Rating added successfully");
+      }
+      return (false, "Failed to add rating");
+    } catch (e) {
+      return (false, "Failed to add rating");
+    }
+  }
+
+  Future<(bool, String)> editRating(int id, int stars, String? comment) async {
+    try {
+      final response = await _service.editRating(
+        id: id,
+        stars: stars,
+        comment: comment,
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return (true, "Rating updated successfully");
+      }
+      return (false, "Failed to update rating");
+    } catch (e) {
+      return (false, "Failed to update rating");
     }
   }
 }

@@ -63,20 +63,26 @@ class TitleAndButtonsRow extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {},
-              child: Row(
-                children: [
-                  Text(
-                    "Rate it now!",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.yellow,
+              child: book.rating == null
+                  ? Row(
+                      children: [
+                        Text(
+                          "Rate it now!",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.yellow,
+                          ),
+                        ),
+                        // SizedBox(width: 8),
+                        Icon(Icons.star, color: Colors.yellow, size: 24),
+                      ],
+                    )
+                  : Row(
+                      children: List.generate(book.rating!.stars, (index) {
+                        return Icon(Icons.star, color: Colors.yellow, size: 24);
+                      }),
                     ),
-                  ),
-                  SizedBox(width: 8),
-                  Icon(Icons.star, color: Colors.yellow, size: 24),
-                ],
-              ),
             ),
           ],
         ),

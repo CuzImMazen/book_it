@@ -59,4 +59,24 @@ class BookingHistoryService {
 
     return await _dio.put("/booking/$id", data: data);
   }
+
+  Future<Response> addRating({
+    required int id,
+    required int stars,
+    String? comment,
+  }) async {
+    final data = {'stars': stars, if (comment != null) 'comment': comment};
+
+    return await _dio.post("/rating/$id", data: data);
+  }
+
+  Future<Response> editRating({
+    required int id,
+    required int stars,
+    String? comment,
+  }) async {
+    final data = {'stars': stars, if (comment != null) 'comment': comment};
+
+    return await _dio.put("/updaterating/$id", data: data);
+  }
 }
