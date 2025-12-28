@@ -164,10 +164,51 @@ List<String> getGovernorates() {
   ];
 }
 
-Future<dynamic> showDiscardFiltersDialog(BuildContext context) {
+// Future<dynamic> showDiscardFiltersDialog(BuildContext context) {
+//   return showDialog(
+//     context: context,
+//     builder: (context) => AlertDialog(
+//       actionsAlignment: MainAxisAlignment.center,
+//       title: const Text("Are you sure?"),
+//       content: const Text(
+//         "You will lose all your filters",
+//         style: TextStyle(fontSize: 16),
+//       ),
+//       actions: [
+//         TextButton(
+//           onPressed: () {
+//             context.pop();
+//           },
+//           child: const Text(
+//             "Cancel",
+//             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+//           ),
+//         ),
+//         SizedBox(width: 10),
+//         TextButton(
+//           onPressed: () {
+//             context.read<FilterCubit>().clearFilters();
+//             context.read<PropertyCubit>().getProperties(const {});
+//             context.pop();
+//             context.pop();
+//           },
+//           child: const Text(
+//             "Yes",
+//             style: TextStyle(
+//               fontWeight: FontWeight.bold,
+//               color: Colors.red,
+//               fontSize: 16,
+//             ),
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }
+Future<dynamic> showDiscardFiltersDialog(BuildContext parentContext) {
   return showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
+    context: parentContext,
+    builder: (_) => AlertDialog(
       actionsAlignment: MainAxisAlignment.center,
       title: const Text("Are you sure?"),
       content: const Text(
@@ -177,20 +218,20 @@ Future<dynamic> showDiscardFiltersDialog(BuildContext context) {
       actions: [
         TextButton(
           onPressed: () {
-            context.pop();
+            parentContext.pop();
           },
           child: const Text(
             "Cancel",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         TextButton(
           onPressed: () {
-            context.read<FilterCubit>().clearFilters();
-            context.read<PropertyCubit>().getProperties(const {});
-            context.pop();
-            context.pop();
+            parentContext.read<FilterCubit>().clearFilters();
+            parentContext.read<PropertyCubit>().getProperties(const {});
+            parentContext.pop(); // close dialog
+            parentContext.pop(); // go back
           },
           child: const Text(
             "Yes",

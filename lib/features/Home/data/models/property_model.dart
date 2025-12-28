@@ -47,7 +47,7 @@ class PropertyModel {
       governorate: json['governorate'] as String,
       city: json['city'] as String,
       availability: json['is_available'] == 1,
-      bedrooms: json['bedrooms'] as int?,
+      bedrooms: json['rooms'] as int?,
       bathrooms: json['bathrooms'] as int?,
       kitchen: json['kitchens'] as int?,
       area: json['area'] as int?,

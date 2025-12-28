@@ -23,6 +23,7 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
   final ImagePicker _picker = ImagePicker();
   late List<File> images;
   int? mainIndex;
+  bool _isPicking = false;
 
   @override
   void initState() {
@@ -32,46 +33,69 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
   }
 
   Future<void> pickImages() async {
-    final pickedFiles = await _picker.pickMultiImage();
-    if (pickedFiles.isNotEmpty) {
-      setState(() {
-        int availableSlots = 9 - images.length;
-        images.addAll(
-          pickedFiles.take(availableSlots).map((x) => File(x.path)),
-        );
-        if (mainIndex == null && images.isNotEmpty) mainIndex = 0;
-      });
-      widget.onPickImages(images, mainIndex);
+    if (_isPicking) return;
+    _isPicking = true;
+
+    try {
+      final pickedFiles = await _picker.pickMultiImage();
+      if (pickedFiles.isNotEmpty) {
+        setState(() {
+          int availableSlots = 9 - images.length;
+          images.addAll(
+            pickedFiles.take(availableSlots).map((x) => File(x.path)),
+          );
+          if (mainIndex == null && images.isNotEmpty) {
+            mainIndex = 0;
+          }
+        });
+        widget.onPickImages(images, mainIndex);
+      }
+    } finally {
+      _isPicking = false;
     }
   }
 
-  void replaceImage(int index) async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        images[index] = File(pickedFile.path);
-      });
-      widget.onPickImages(images, mainIndex);
+  Future<void> replaceImage(int index) async {
+    if (_isPicking) return;
+    _isPicking = true;
+
+    try {
+      final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        setState(() {
+          images[index] = File(pickedFile.path);
+        });
+        widget.onPickImages(images, mainIndex);
+      }
+    } finally {
+      _isPicking = false;
     }
   }
 
   void deleteImage(int index) {
+    if (_isPicking) return;
+
     setState(() {
       images.removeAt(index);
       if (mainIndex != null) {
-        if (mainIndex == index)
+        if (mainIndex == index) {
           mainIndex = null;
-        else if (mainIndex! > index)
+        } else if (mainIndex! > index) {
           mainIndex = mainIndex! - 1;
+        }
       }
     });
+
     widget.onPickImages(images, mainIndex);
   }
 
   void setMainImage(int index) {
+    if (_isPicking) return;
+
     setState(() {
       mainIndex = index;
     });
+
     widget.onPickImages(images, mainIndex);
   }
 

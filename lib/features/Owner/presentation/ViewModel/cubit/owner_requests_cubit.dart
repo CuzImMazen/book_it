@@ -10,33 +10,64 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
   int? loadingBookingId;
   int? loadingModificationId;
 
+  // Future<void> getAllRequests() async {
+  //   emit(OwnerRequestsLoading());
+  //   try {
+  //     final (bookings, bookingsError) = await repo.getPendingRequests();
+  //     if (isClosed) return;
+  //     final (modifications, modificationsError) = await repo
+  //         .getPendingModificationRequests();
+  //     if (isClosed) return;
+  //     if (bookingsError != null || modificationsError != null) {
+  //       emit(
+  //         OwnerRequestsFailure(
+  //           bookingsError ?? modificationsError ?? "Unknown error",
+  //         ),
+  //       );
+  //       return;
+  //     }
+
+  //     emit(
+  //       OwnerRequestsLoaded(
+  //         bookings: bookings,
+  //         modifications: modifications,
+  //         loadingBookingId: null,
+  //         loadingModificationId: null,
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     if (!isClosed) {
+  //       emit(OwnerRequestsFailure(e.toString()));
+  //     }
+  //   }
+  // }
   Future<void> getAllRequests() async {
     emit(OwnerRequestsLoading());
-    try {
-      final (bookings, bookingsError) = await repo.getPendingRequests();
-      final (modifications, modificationsError) = await repo
-          .getPendingModificationRequests();
 
-      if (bookingsError != null || modificationsError != null) {
-        emit(
-          OwnerRequestsFailure(
-            bookingsError ?? modificationsError ?? "Unknown error",
-          ),
-        );
-        return;
-      }
+    final (bookings, bookingsError) = await repo.getPendingRequests();
+    if (isClosed) return;
 
+    final (modifications, modificationsError) = await repo
+        .getPendingModificationRequests();
+    if (isClosed) return;
+
+    if (bookingsError != null || modificationsError != null) {
       emit(
-        OwnerRequestsLoaded(
-          bookings: bookings,
-          modifications: modifications,
-          loadingBookingId: null,
-          loadingModificationId: null,
+        OwnerRequestsFailure(
+          bookingsError ?? modificationsError ?? "Unknown error",
         ),
       );
-    } catch (e) {
-      emit(OwnerRequestsFailure(e.toString()));
+      return;
     }
+
+    emit(
+      OwnerRequestsLoaded(
+        bookings: bookings,
+        modifications: modifications,
+        loadingBookingId: null,
+        loadingModificationId: null,
+      ),
+    );
   }
 
   Future<void> acceptBooking(int id) async {
@@ -46,6 +77,7 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     emit(current.copyWith(loadingBookingId: id));
 
     final (success, message) = await repo.acceptBookingRequest(id);
+    if (isClosed) return;
 
     emit(
       OwnerRequestsLoaded(
@@ -68,6 +100,7 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     emit(current.copyWith(loadingBookingId: id));
 
     final (success, message) = await repo.rejectBookingRequest(id);
+    if (isClosed) return;
 
     emit(
       OwnerRequestsLoaded(
@@ -90,7 +123,7 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     emit(current.copyWith(loadingModificationId: id));
 
     final (success, message) = await repo.acceptModificationRequest(id);
-
+    if (isClosed) return;
     emit(
       OwnerRequestsLoaded(
         bookings: current.bookings,
@@ -112,6 +145,7 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     emit(current.copyWith(loadingModificationId: id));
 
     final (success, message) = await repo.rejectModificationRequest(id);
+    if (isClosed) return;
 
     emit(
       OwnerRequestsLoaded(
@@ -128,6 +162,7 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
   }
 
   void clearSnackBar() {
+    if (isClosed) return;
     final current = state;
     if (current is OwnerRequestsLoaded) {
       emit(current.copyWith(snackMessage: null, snackSuccess: null));

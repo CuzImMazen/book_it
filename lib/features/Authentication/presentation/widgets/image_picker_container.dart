@@ -22,9 +22,14 @@ class ImagePickerContainer extends StatefulWidget {
 
 class _ImagePickerContainerState extends State<ImagePickerContainer> {
   final ImagePicker _picker = ImagePicker();
+  bool _isPicking = false;
+
   File? image;
   String? imageName;
   Future<void> pickImage() async {
+    if (_isPicking) return;
+    _isPicking = true;
+
     try {
       final pickedFile = await _picker.pickImage(
         source: ImageSource.gallery,
@@ -32,23 +37,25 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
         maxHeight: 800,
       );
 
-      if (pickedFile != null) {
-        widget.setImage(
-          image: File(pickedFile.path),
-          isProfile: widget.isProfile,
-        );
+      if (pickedFile != null && mounted) {
+        final file = File(pickedFile.path);
+
+        widget.setImage(image: file, isProfile: widget.isProfile);
+
         setState(() {
-          image = File(pickedFile.path);
+          image = file;
         });
       }
-    } catch (e) {
+    } catch (_) {
       if (mounted) {
         showSnackBar(
           context: context,
-          message: "couldnt upload image",
+          message: "couldn't upload image",
           color: Colors.red,
         );
       }
+    } finally {
+      _isPicking = false;
     }
   }
 

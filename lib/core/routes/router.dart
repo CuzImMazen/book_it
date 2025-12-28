@@ -12,11 +12,19 @@ import 'package:book_it/features/Home/presentation/views/filter_view.dart';
 import 'package:book_it/features/Home/presentation/views/property_detail_view.dart';
 import 'package:book_it/features/Introduction/presentation/views/welcome_view.dart';
 import 'package:book_it/features/Layout/presentation/views/layout_view.dart';
+import 'package:book_it/features/Owner/data/repo/owner_properties_repo.dart';
+import 'package:book_it/features/Owner/data/repo/owner_requests_repo.dart';
+import 'package:book_it/features/Owner/presentation/ViewModel/cubit/create_property_cubit.dart';
+import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_properties_cubit.dart';
+import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_cubit.dart';
 import 'package:book_it/features/Owner/presentation/views/create_property_view.dart';
 import 'package:book_it/features/Owner/presentation/views/create_property_view2.dart';
+import 'package:book_it/features/Owner/presentation/widgets/create_property_view_body.dart';
+import 'package:book_it/features/Owner/presentation/widgets/create_property_view2_body.dart';
 import 'package:book_it/features/Owner/presentation/views/my_properties_view.dart';
 import 'package:book_it/features/Owner/presentation/views/pending_requests_view.dart';
 import 'package:book_it/features/Splash/presentation/views/splash_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
@@ -27,10 +35,10 @@ final GoRouter router = GoRouter(
       // builder: (context, state) => const BookConfirmationView(
       //   confirmBookData: ConfirmBookData(propertyId: 1, price: "25"),
       // ),
-      // builder: (context, state) => const SplashView(),
+      builder: (context, state) => const SplashView(),
       // builder: (context, state) => const LayoutView(),
       //builder: (context, state) => const MyPropertiesView(),
-      builder: (context, state) => const CreatePropertyView(),
+      //  builder: (context, state) => const CreatePropertyView(),
       // builder: (context, state) => const FilterView(),
     ),
     GoRoute(
@@ -68,19 +76,36 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: "/myproperties",
-      builder: (context, state) => const MyPropertiesView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) => OwnerPropertiesCubit()..getOwnerProperties(),
+        child: const MyPropertiesView(),
+      ),
     ),
     GoRoute(
       path: "/pendingrequests",
-      builder: (context, state) => const PendingRequestsView(),
+      builder: (context, state) => BlocProvider(
+        create: (context) =>
+            OwnerRequestsCubit(OwnerRequestsRepo())..getAllRequests(),
+        child: const PendingRequestsView(),
+      ),
     ),
-    GoRoute(
-      path: "/createproperty",
-      builder: (context, state) => const CreatePropertyView(),
-    ),
-    GoRoute(
-      path: "/createproperty2",
-      builder: (context, state) => const CreatePropertyView2(),
+    ShellRoute(
+      builder: (context, state, child) {
+        return BlocProvider(
+          create: (_) => CreatePropertyCubit(OwnerPropertiesRepo()),
+          child: child,
+        );
+      },
+      routes: [
+        GoRoute(
+          path: "/createproperty",
+          builder: (context, state) => const CreatePropertyView(),
+        ),
+        GoRoute(
+          path: "/createproperty2",
+          builder: (context, state) => const CreatePropertyView2(),
+        ),
+      ],
     ),
   ],
 );
