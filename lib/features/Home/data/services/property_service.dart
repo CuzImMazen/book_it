@@ -15,4 +15,9 @@ class PropertyService {
     );
     return response;
   }
+
+  Future<Response> rateProperty(int id, double stars) async {
+    final response = await dio.post("/rating/$id", data: {"stars": stars});
+    return response;
+  }
 }

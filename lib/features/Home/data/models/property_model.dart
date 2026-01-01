@@ -15,7 +15,10 @@ class PropertyModel {
   final bool availability;
   final String mainImage;
   final List<String>? images;
-  // final PropertyFeaturesModel? features;
+  final double? averageRating;
+  final int ratingsCount;
+  final double? userRating;
+
   final UserModel? owner;
 
   const PropertyModel({
@@ -33,8 +36,11 @@ class PropertyModel {
     required this.bathrooms,
     required this.kitchen,
     required this.area,
-    // required this.features,
+
     required this.owner,
+    required this.averageRating,
+    required this.userRating,
+    required this.ratingsCount,
   });
 
   factory PropertyModel.fromJson(Map<String, dynamic> json) {
@@ -58,14 +64,19 @@ class PropertyModel {
               .toList() ??
           [],
       mainImage: json['main_image_url'] as String,
-      // features: json['features'] != null
-      //     ? PropertyFeaturesModel.fromJson(
-      //         json['features'] as Map<String, dynamic>,
-      //       )
-      //     : null,
+
       owner: json['user'] != null
           ? UserModel.fromJson(json['user'] as Map<String, dynamic>)
           : null,
+      averageRating: (json['average_rating'] != null
+          ? (json['average_rating'] as num).toDouble()
+          : null),
+
+      userRating:
+          (json['user_rating'] != null && json['user_rating']['stars'] != null)
+          ? (json['user_rating']['stars'] as num).toDouble()
+          : null,
+      ratingsCount: json['ratings_count'] as int,
     );
   }
 }

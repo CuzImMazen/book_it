@@ -2,6 +2,8 @@
 
 import 'package:book_it/features/Book/data/repo/book_repo.dart';
 import 'package:book_it/features/Book/presentation/ViewModel/cubit/book_cubit.dart';
+import 'package:book_it/features/Home/data/repo/property_repo.dart';
+import 'package:book_it/features/Home/presentation/viewModel/cubit/property_rating_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -66,7 +68,10 @@ final GoRouter router = GoRouter(
     /// MAIN LAYOUT
     GoRoute(
       path: '/main',
-      builder: (_, __) => const LayoutView(),
+      builder: (_, __) => BlocProvider(
+        create: (context) => PropertyRatingCubit(PropertyRepo()),
+        child: const LayoutView(),
+      ),
       routes: [
         /// HOME
         GoRoute(
@@ -88,7 +93,7 @@ final GoRouter router = GoRouter(
           },
         ),
 
-        /// OWNER SHELL (SHARED CUBITS)
+        //Owner
         ShellRoute(
           builder: (context, state, child) {
             return MultiBlocProvider(
@@ -119,7 +124,6 @@ final GoRouter router = GoRouter(
           ],
         ),
 
-        /// OWNER REQUESTS (ISOLATED)
         GoRoute(
           path: 'pendingrequests',
           builder: (_, __) => BlocProvider(

@@ -106,17 +106,30 @@ class SettingsView extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
 
-                  // My Properties
                   SettingsCard(
                     icon: Icons.sync,
                     title: context.loc.myproperties,
-                    onTap: () => context.go("/main/myproperties"),
-                    trailing: Icon(
+                    onTap: () {
+                      final authState = context
+                          .read<AuthenticationCubit>()
+                          .state;
+                      final bool isOwner =
+                          authState is AuthenticationSignInSuccess &&
+                          authState.user.role == "owner";
+
+                      if (isOwner) {
+                        context.go("/main/myproperties");
+                      } else {
+                        showCantAccessOwnerFeatureDialog(context);
+                      }
+                    },
+                    trailing: const Icon(
                       Icons.arrow_forward_ios,
                       size: 18,
-                      color: Colors.grey.shade500,
+                      color: Colors.grey,
                     ),
                   ),
+
                   const SizedBox(height: 16),
 
                   // Logout

@@ -1,5 +1,6 @@
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/features/Home/data/models/property_model.dart';
+import 'package:book_it/features/Home/presentation/widgets/property_rating.dart';
 import 'package:flutter/material.dart';
 
 class PropertyContainer extends StatelessWidget {
@@ -117,6 +118,15 @@ class PropertyContainer extends StatelessWidget {
                         ),
                 ],
               ),
+            ),
+            const SizedBox(height: 10),
+
+            PropertyRatingWidget(
+              propertyId: property.id,
+              ownerId: property.owner?.id,
+              averageRating: property.averageRating,
+              ratingsCount: property.ratingsCount,
+              userRating: property.userRating,
             ),
           ],
         ),

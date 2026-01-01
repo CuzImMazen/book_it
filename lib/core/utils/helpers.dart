@@ -6,10 +6,12 @@ import 'package:book_it/features/History/presentation/widgets/edit_active_bookin
 import 'package:book_it/features/History/presentation/widgets/edit_upcoming_booking_dialog_content.dart';
 import 'package:book_it/features/Home/presentation/viewModel/cubit/filter_cubit.dart';
 import 'package:book_it/features/Home/presentation/viewModel/cubit/property_cubit.dart';
+import 'package:book_it/features/Home/presentation/viewModel/cubit/property_rating_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 Future<String?> pickBirthDate({required BuildContext context}) async {
   final pickedDate = await showDatePicker(
@@ -572,6 +574,7 @@ Future<void> showLogoutDialog(
   required VoidCallback onConfirm,
 }) async {
   await showDialog(
+    barrierDismissible: false,
     context: context,
     builder: (_) => Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -635,5 +638,178 @@ Future<void> showLogoutDialog(
         ),
       ),
     ),
+  );
+}
+
+Future<void> showRatingDialog({
+  required BuildContext context,
+  required BuildContext parentContext,
+  required double? initialRating,
+  required int propertyId,
+}) async {
+  double rating = initialRating ?? 0.0;
+  bool hasRated = initialRating != null && initialRating > 0;
+
+  await showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return BlocConsumer<PropertyRatingCubit, PropertyRatingState>(
+            bloc: parentContext.read<PropertyRatingCubit>(),
+            listener: (context, state) {
+              if (state is PropertyRatingSuccess) {
+                context.read<PropertyCubit>().getProperties(
+                  context.read<FilterCubit>().state.toQueryParameters(),
+                );
+                context.pop();
+                showSnackBar(
+                  context: parentContext,
+                  message: "Rating submitted successfully!",
+                  color: Colors.green,
+                );
+              } else if (state is PropertyRatingFailure) {
+                context.pop();
+                showSnackBar(
+                  context: parentContext,
+                  message: state.message,
+                  color: Colors.red,
+                );
+              }
+            },
+            builder: (context, state) {
+              final isLoading = state is PropertyRatingLoading;
+              final theme = Theme.of(context);
+
+              final isDark = theme.brightness == Brightness.dark;
+
+              return Dialog(
+                backgroundColor: isDark ? Colors.grey[900] : Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        hasRated ? 'Update Your Rating' : 'Rate This Property',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: isDark ? Colors.white : Colors.black87,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        hasRated
+                            ? 'You previously rated this property $initialRating ⭐\nYou can update your rating below.'
+                            : 'How would you rate your experience?',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: isDark ? Colors.white70 : Colors.black54,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 20),
+                      RatingBar.builder(
+                        initialRating: rating,
+                        minRating: 1,
+                        maxRating: 5,
+
+                        itemCount: 5,
+                        itemSize: 40,
+                        glow: false,
+                        itemPadding: const EdgeInsets.symmetric(
+                          horizontal: 4.0,
+                        ),
+                        itemBuilder: (context, _) =>
+                            const Icon(Icons.star, color: Colors.amber),
+                        onRatingUpdate: (value) =>
+                            setState(() => rating = value),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          // Cancel Button
+                          OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: isDark
+                                  ? Colors.grey[800]
+                                  : Colors.grey[200],
+                              foregroundColor: isDark
+                                  ? Colors.white
+                                  : Colors.black87,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 12,
+                              ),
+                            ),
+                            onPressed: isLoading
+                                ? null
+                                : () => Navigator.of(context).pop(),
+                            child: const Text(
+                              'Cancel',
+                              style: TextStyle(fontWeight: FontWeight.w600),
+                            ),
+                          ),
+
+                          // Submit/Update Button
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: rating < 1
+                                  ? Colors.grey
+                                  : Colors.amber,
+                              foregroundColor: Colors.white,
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 12,
+                              ),
+                            ),
+                            onPressed: isLoading || rating < 1
+                                ? null
+                                : () {
+                                    parentContext
+                                        .read<PropertyRatingCubit>()
+                                        .rateProperty(propertyId, rating);
+                                  },
+                            child: isLoading
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : Text(
+                                    hasRated ? 'Update' : 'Submit',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
+      );
+    },
   );
 }
