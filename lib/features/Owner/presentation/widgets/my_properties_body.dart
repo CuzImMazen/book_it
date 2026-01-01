@@ -5,10 +5,20 @@ import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_proper
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MyPropertiesBody extends StatelessWidget {
+class MyPropertiesBody extends StatefulWidget {
   const MyPropertiesBody({super.key});
 
   @override
+  State<MyPropertiesBody> createState() => _MyPropertiesBodyState();
+}
+
+class _MyPropertiesBodyState extends State<MyPropertiesBody> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<OwnerPropertiesCubit>().getOwnerProperties();
+  }
+
   Widget build(BuildContext context) {
     return BlocBuilder<OwnerPropertiesCubit, OwnerPropertiesState>(
       builder: (context, state) {

@@ -156,4 +156,10 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
       ),
     );
   }
+
+  Future<void> fetchAllBookings() async {
+    await fetchOngoingBookings();
+    await fetchPastBookings();
+    await fetchCanceledBookings();
+  }
 }

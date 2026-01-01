@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:book_it/core/style/colors.dart';
 
 class StepperTile extends StatelessWidget {
   const StepperTile({
@@ -17,52 +16,68 @@ class StepperTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       child: Row(
         children: [
+          // Icon container
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: kPrimaryColor.withAlpha(30),
+              color: scheme.primary.withAlpha(30),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(icon, color: kPrimaryColor.withAlpha(150), size: 20),
+            child: Icon(icon, color: scheme.primary.withAlpha(180), size: 20),
           ),
+
           const SizedBox(width: 16),
+
+          // Title
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+              style: theme.textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
+
           _roundBtn(
+            context,
             Icons.remove,
             value > 1 ? () => onChanged(value - 1) : null,
           ),
+
           SizedBox(
             width: 40,
             child: Center(
               child: Text(
                 "$value",
-                style: const TextStyle(
+                style: theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
                 ),
               ),
             ),
           ),
-          _roundBtn(Icons.add, value < 10 ? () => onChanged(value + 1) : null),
+
+          _roundBtn(
+            context,
+            Icons.add,
+            value < 10 ? () => onChanged(value + 1) : null,
+          ),
         ],
       ),
     );
   }
 
-  Widget _roundBtn(IconData icon, VoidCallback? action) {
+  Widget _roundBtn(BuildContext context, IconData icon, VoidCallback? action) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Material(
-      color: action == null
-          ? const Color(0xFFF5F5F5)
-          : kPrimaryColor.withAlpha(150),
+      color: action == null ? scheme.onSurface.withAlpha(20) : scheme.primary,
       shape: const CircleBorder(),
       child: InkWell(
         onTap: action,
@@ -72,7 +87,9 @@ class StepperTile extends StatelessWidget {
           child: Icon(
             icon,
             size: 18,
-            color: action == null ? const Color(0xFFBDBDBD) : Colors.white,
+            color: action == null
+                ? scheme.onSurface.withAlpha(120)
+                : scheme.onPrimary,
           ),
         ),
       ),

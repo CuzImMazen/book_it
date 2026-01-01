@@ -92,3 +92,19 @@ String? endDateValidator(String? value) {
 
   return null;
 }
+
+String? priceValidator(String? value) {
+  if (value == null || value.isEmpty) return "Required";
+  final intValue = int.tryParse(value);
+  if (intValue == null) return "Must be a number";
+  if (intValue < 25 || intValue > 250) return "Price : 25–250 \$";
+  return null;
+}
+
+String? areaValidator(String? value) {
+  if (value == null || value.isEmpty) return "Required";
+  final intValue = int.tryParse(value);
+  if (intValue == null) return "Must be a number";
+  if (intValue < 100 || intValue > 1000) return "Area : 100–1000 m²";
+  return null;
+}

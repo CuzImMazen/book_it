@@ -32,53 +32,59 @@ class ModificationRequestCard extends StatelessWidget {
             const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      pendingBooking.property.category,
+              child: Directionality(
+                textDirection: TextDirection.ltr,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        pendingBooking.property.category,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                    const Icon(Icons.person_2),
+                    const SizedBox(width: 7),
+                    Text(
+                      "${pendingBooking.user.firstName} ${pendingBooking.user.lastName}",
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.w900,
                       ),
                     ),
-                  ),
-                  const Icon(Icons.person_2),
-                  const SizedBox(width: 7),
-                  Text(
-                    "${pendingBooking.user.firstName} ${pendingBooking.user.lastName}",
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 3),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      overflow: TextOverflow.ellipsis,
-                      "${pendingBooking.property.governorate}, ${pendingBooking.property.city}",
-                      style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w300,
+              child: Directionality(
+                textDirection: TextDirection.ltr,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        overflow: TextOverflow.ellipsis,
+                        "${pendingBooking.property.governorate}, ${pendingBooking.property.city}",
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w300,
+                        ),
                       ),
                     ),
-                  ),
-                  Text(
-                    "\$${pendingBooking.property.price}/Night",
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+                    Text(
+                      "\$${pendingBooking.property.price}/Night",
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 20),

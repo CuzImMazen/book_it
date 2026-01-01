@@ -7,7 +7,7 @@ class CreatePropertyView2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFBFBFE),
+      // backgroundColor: const Color(0xFFFBFBFE),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
@@ -15,7 +15,7 @@ class CreatePropertyView2 extends StatelessWidget {
         title: const Text(
           "Create Property",
           style: TextStyle(
-            color: Color(0xFF1A1A1A),
+            //color: Color(0xFF1A1A1A),
             fontWeight: FontWeight.w800,
             fontSize: 20,
           ),

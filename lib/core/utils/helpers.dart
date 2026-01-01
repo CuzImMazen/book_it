@@ -520,3 +520,120 @@ Future<dynamic> showEditActiveBookingDialog(
     },
   );
 }
+
+Future<void> showLanguageDialog(
+  BuildContext context, {
+  required String currentLang,
+  required Function(String) onSelect,
+}) async {
+  String selectedLang = currentLang;
+
+  await showDialog(
+    context: context,
+    builder: (_) => StatefulBuilder(
+      builder: (context, setState) => AlertDialog(
+        title: const Text("Choose Language"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text("English"),
+              trailing: selectedLang == 'en'
+                  ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                  : null,
+              onTap: () {
+                selectedLang = 'en';
+                setState(() {});
+                onSelect('en');
+                context.pop();
+              },
+            ),
+            ListTile(
+              title: const Text("العربية"),
+              trailing: selectedLang == 'ar'
+                  ? Icon(Icons.check, color: Theme.of(context).primaryColor)
+                  : null,
+              onTap: () {
+                selectedLang = 'ar';
+                setState(() {});
+                onSelect('ar');
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+Future<void> showLogoutDialog(
+  BuildContext context, {
+  required VoidCallback onConfirm,
+}) async {
+  await showDialog(
+    context: context,
+    builder: (_) => Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      elevation: 5,
+      backgroundColor: Theme.of(context).cardColor,
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.logout, size: 50, color: kPrimaryColor.withAlpha(125)),
+            const SizedBox(height: 16),
+            const Text(
+              "Logout",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              "Are you sure you want to logout?",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text("Cancel", style: TextStyle(fontSize: 16)),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kPrimaryColor.withAlpha(125),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                  ),
+                  onPressed: () {
+                    onConfirm();
+                    context.pop();
+                  },
+                  child: const Text(
+                    "Logout",
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}

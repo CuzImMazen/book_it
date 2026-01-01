@@ -37,17 +37,23 @@ class DetailViewBody extends StatelessWidget {
                 SizedBox(height: 20),
                 PropertyFeaturesScroller(property: property),
                 SizedBox(height: 20),
-                Text(
-                  "Property Description",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Text(
+                    "Property Description",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                  ),
                 ),
                 SizedBox(height: 10),
 
                 ReadMoreDescription(property: property),
                 SizedBox(height: 20),
-                Text(
-                  "Owner",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Text(
+                    "Owner",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                  ),
                 ),
                 SizedBox(height: 12),
                 OwnerRow(propertyOwner: property.owner!),
@@ -65,7 +71,7 @@ class DetailViewBody extends StatelessWidget {
                         return;
                       }
                       context.push(
-                        "/confirm_book",
+                        '/main/confirm_book',
                         extra: ConfirmBookData(
                           propertyId: property.id,
                           price: property.price,

@@ -17,60 +17,67 @@ class LocationSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final cities = getCities(selectedGovernorate);
+
+    final inputDecoration = InputDecoration(
+      filled: true,
+      fillColor: theme.colorScheme.surfaceVariant,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           "Select Location:",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w500,
+          ),
         ),
         const SizedBox(height: 10),
         DropdownButtonFormField<String>(
-          hint: const Text("Select Governorate"),
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.grey[100],
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 14,
-            ),
-          ),
+          hint: Text("Select Governorate", style: theme.textTheme.bodyMedium),
+          decoration: inputDecoration,
           items: getGovernorates()
               .where((g) => g != "All")
-              .map((gov) => DropdownMenuItem(value: gov, child: Text(gov)))
+              .map(
+                (gov) => DropdownMenuItem(
+                  value: gov,
+                  child: Text(gov, style: theme.textTheme.bodyMedium),
+                ),
+              )
               .toList(),
           onChanged: onGovernorateChanged,
-          dropdownColor: Colors.white,
+          dropdownColor: theme.colorScheme.surface,
           elevation: 4,
+          style: theme.textTheme.bodyMedium,
+          initialValue:
+              selectedGovernorate, // use initialValue instead of deprecated value
         ),
         const SizedBox(height: 10),
         DropdownButtonFormField<String>(
-          hint: const Text("Select City"),
-          initialValue: cities.contains(selectedCity) ? selectedCity : null,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.grey[100],
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 14,
-            ),
-          ),
+          hint: Text("Select City", style: theme.textTheme.bodyMedium),
+          decoration: inputDecoration,
           items: cities
-              .map((c) => DropdownMenuItem(value: c, child: Text(c)))
+              .map(
+                (c) => DropdownMenuItem(
+                  value: c,
+                  child: Text(c, style: theme.textTheme.bodyMedium),
+                ),
+              )
               .toList(),
           onChanged: onCityChanged,
-          dropdownColor: Colors.white,
+          dropdownColor: theme.colorScheme.surface,
           elevation: 4,
+          style: theme.textTheme.bodyMedium,
+          initialValue: cities.contains(selectedCity)
+              ? selectedCity
+              : null, // fixed
         ),
       ],
     );

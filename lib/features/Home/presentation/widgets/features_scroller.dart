@@ -11,25 +11,28 @@ class PropertyFeaturesScroller extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        children: [
-          PropertyFeatureContainer(
-            icon: Icons.apartment,
-            data: '${property.area} m²',
-          ),
-          PropertyFeatureContainer(
-            icon: Icons.bathtub,
-            data: "${property.bathrooms} Bathroom",
-          ),
-          PropertyFeatureContainer(
-            icon: Icons.bed,
-            data: "${property.bedrooms} Bedroom",
-          ),
-          PropertyFeatureContainer(
-            icon: Icons.kitchen,
-            data: " ${property.kitchen} Kitchen",
-          ),
-        ],
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Row(
+          children: [
+            PropertyFeatureContainer(
+              icon: Icons.apartment,
+              data: '${property.area} m²',
+            ),
+            PropertyFeatureContainer(
+              icon: Icons.bathtub,
+              data: "${property.bathrooms} Bathroom",
+            ),
+            PropertyFeatureContainer(
+              icon: Icons.bed,
+              data: "${property.bedrooms} Bedroom",
+            ),
+            PropertyFeatureContainer(
+              icon: Icons.kitchen,
+              data: " ${property.kitchen} Kitchen",
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -42,11 +42,14 @@ class _PropertyImagesState extends State<PropertyImages> {
         Positioned(
           bottom: MediaQuery.of(context).size.height / 2.9,
           left: 1,
-          child: IconButton(
-            onPressed: () {
-              context.pop();
-            },
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+          child: Directionality(
+            textDirection: TextDirection.ltr,
+            child: IconButton(
+              onPressed: () {
+                context.pop();
+              },
+              icon: Icon(Icons.arrow_back, color: Colors.black),
+            ),
           ),
         ),
         Positioned(

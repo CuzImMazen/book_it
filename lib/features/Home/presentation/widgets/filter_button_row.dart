@@ -23,7 +23,7 @@ class FilterButtonRow extends StatelessWidget {
           ),
           child: IconButton(
             onPressed: () {
-              context.push("/filter");
+              context.push("/main/filter");
             },
             icon: Icon(Icons.tune, color: Colors.black),
           ),

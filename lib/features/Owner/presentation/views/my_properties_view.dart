@@ -10,21 +10,31 @@ class MyPropertiesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.pop(),
+        ),
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         actionsPadding: EdgeInsets.all(5),
         toolbarHeight: 80,
-        title: PrimaryText(text: "My Properties"),
+        title: Align(
+          alignment: Alignment.center,
+          child: PrimaryText(text: "My Properties"),
+        ),
         actions: [
           IconButton(
             onPressed: () {
-              context.push("/createproperty");
+              context.push('/main/myproperties/createproperty');
             },
             icon: const Icon(Icons.add, size: 30),
           ),
           IconButton(
             onPressed: () {
-              context.push("/pendingrequests");
+              context.push('/main/pendingrequests');
             },
             icon: Icon(Icons.pending_actions, size: 28),
           ),

@@ -54,54 +54,69 @@ class PropertyContainer extends StatelessWidget {
             SizedBox(height: 10),
 
             // Name and price
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 6.0),
-                  child: Text(
-                    property.name,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 6.0),
+                    child: Text(
+                      property.name,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
                   ),
-                ),
-                Spacer(),
-                Text(
-                  "\$${property.price}/Night",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                ),
-              ],
+                  Spacer(),
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Text(
+                      "\$${property.price}/Night",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 5),
             // Location and availability
-            Row(
-              children: [
-                Icon(Icons.location_on, color: Color(0xff0987b6)),
-                Text(
-                  "${property.governorate}, ${property.city}",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xff0987b6),
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: Row(
+                children: [
+                  Icon(Icons.location_on, color: Color(0xff0987b6)),
+                  Text(
+                    "${property.governorate}, ${property.city}",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff0987b6),
+                    ),
                   ),
-                ),
-                Spacer(),
-                property.availability
-                    ? Text(
-                        "Available",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.green,
-                          fontWeight: FontWeight.w600,
+                  Spacer(),
+                  property.availability
+                      ? Text(
+                          "Available",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.green,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )
+                      : Text(
+                          "Unavailable",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.red,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      )
-                    : Text(
-                        "Unavailable",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.red,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

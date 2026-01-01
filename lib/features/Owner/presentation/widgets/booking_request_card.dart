@@ -34,68 +34,80 @@ class BookingRequestCard extends StatelessWidget {
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        capitalize(pendingBooking.property.category),
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          capitalize(pendingBooking.property.category),
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                      const Icon(Icons.person_2),
+                      const SizedBox(width: 7),
+                      Text(
+                        "${pendingBooking.user.firstName} ${pendingBooking.user.lastName}",
                         style: const TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
-                    ),
-                    const Icon(Icons.person_2),
-                    const SizedBox(width: 7),
-                    Text(
-                      "${pendingBooking.user.firstName} ${pendingBooking.user.lastName}",
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 3),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        overflow: TextOverflow.ellipsis,
-                        "${pendingBooking.property.governorate}, ${pendingBooking.property.city}",
-                        style: const TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w300,
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            overflow: TextOverflow.ellipsis,
+                            "${pendingBooking.property.governorate}, ${pendingBooking.property.city}",
+                            style: const TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
                         ),
-                      ),
+                        const Icon(Icons.calendar_month_outlined),
+                        const SizedBox(width: 5),
+                        Text(
+                          formatBookingDates(
+                            pendingBooking.startDate,
+                            pendingBooking.endDate,
+                          ),
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
-                    const Icon(Icons.calendar_month_outlined),
-                    const SizedBox(width: 5),
-                    Text(
-                      formatBookingDates(
-                        pendingBooking.startDate,
-                        pendingBooking.endDate,
-                      ),
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  "\$${pendingBooking.property.price}/Night",
-                  style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Text(
+                    "\$${pendingBooking.property.price}/Night",
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

@@ -60,7 +60,7 @@ class _HomeViewState extends State<HomeView> {
                       return GestureDetector(
                         onTap: () {
                           context.push(
-                            "/propertydetail",
+                            '/main/propertydetail',
                             extra: state.properties[index],
                           );
                         },

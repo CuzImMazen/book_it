@@ -77,7 +77,8 @@ class OwnerPropertiesRepo {
 
       return null;
     } on DioException catch (e) {
-      return "Failed to create property : ${e.message}";
+      print(e.message);
+      return "Failed to create property  : ${e.message}";
     } catch (e) {
       return "Failed to create property: $e";
     }

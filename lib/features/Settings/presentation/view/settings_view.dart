@@ -1,6 +1,11 @@
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/features/Authentication/presentation/ViewModel/cubit/authentication_cubit.dart';
+import 'package:book_it/core/extensions/localization_extension.dart';
+import 'package:book_it/features/Settings/presentation/viewModel/cubit/darkmode_cubit.dart';
+import 'package:book_it/features/Settings/presentation/viewModel/cubit/darkmode_state.dart';
+import 'package:book_it/features/Settings/presentation/viewModel/cubit/language_cubit.dart';
+import 'package:book_it/features/Settings/presentation/widgets/settings_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -10,97 +15,132 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthenticationCubit, AuthenticationState>(
-      listener: (context, state) {
-        if (state is AuthenticationSignOutSuccess) {
-          showSnackBar(
-            context: context,
-            message: "Successfully logged out",
-            color: Colors.green,
-            duration: Duration(seconds: 2),
-          );
-          context.go("/signin");
-        }
-        if (state is AuthenticationSignOutFailure) {
-          showSnackBar(
-            context: context,
-            message: state.message,
-            color: Colors.red,
-            duration: Duration(seconds: 2),
-          );
-        }
-      },
-      builder: (context, state) {
-        final bool isOwner =
-            state is AuthenticationSignInSuccess && state.user.role == "owner";
-
-        if (state is AuthenticationLoading) {
-          return const Scaffold(
-            body: Center(
+    return Scaffold(
+      body: BlocConsumer<AuthenticationCubit, AuthenticationState>(
+        listener: (context, state) {
+          if (state is AuthenticationSignOutFailure) {
+            showSnackBar(
+              context: context,
+              message: state.message,
+              color: Colors.red,
+              duration: const Duration(seconds: 3),
+            );
+          }
+          if (state is AuthenticationSignOutSuccess) {
+            context.go("/signin");
+            showSnackBar(
+              context: context,
+              message: "You logged out successfully",
+              color: Colors.green,
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state is AuthenticationLoading) {
+            return const Center(
               child: CircularProgressIndicator(color: kPrimaryColor),
+            );
+          }
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: ListView(
+                children: [
+                  const SizedBox(height: 40),
+                  Center(
+                    child: Text(
+                      context.loc.settingsName,
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+
+                  // Dark Mode
+                  SettingsCard(
+                    icon: Icons.dark_mode,
+                    title: context.loc.darkMode,
+                    trailing: BlocBuilder<DarkmodedCubit, DarkmodeState>(
+                      builder: (context, state) {
+                        final isDark =
+                            state.themeMode == ThemeMode.dark ||
+                            (state.themeMode == ThemeMode.system &&
+                                MediaQuery.of(context).platformBrightness ==
+                                    Brightness.dark);
+
+                        return Switch.adaptive(
+                          activeThumbColor: kPrimaryColor,
+                          value: isDark,
+                          onChanged: (value) {
+                            context.read<DarkmodedCubit>().toggleTheme(value);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Language Selection
+                  SettingsCard(
+                    icon: Icons.language,
+                    title: context.loc.languaSett,
+                    onTap: () => showLanguageDialog(
+                      context,
+                      currentLang: context
+                          .read<LanguageCubit>()
+                          .state
+                          .languageCode,
+                      onSelect: (lang) async {
+                        await context.read<LanguageCubit>().changeLanguage(
+                          lang,
+                        );
+                      },
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 18,
+                      color: Colors.grey.shade500,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // My Properties
+                  SettingsCard(
+                    icon: Icons.sync,
+                    title: context.loc.myproperties,
+                    onTap: () => context.go("/main/myproperties"),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 18,
+                      color: Colors.grey.shade500,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Logout
+                  SettingsCard(
+                    icon: Icons.logout,
+                    title: context.loc.logOute,
+                    onTap: () => showLogoutDialog(
+                      context,
+                      onConfirm: () =>
+                          context.read<AuthenticationCubit>().signOut(),
+                    ),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 18,
+                      color: Colors.grey.shade500,
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                ],
+              ),
             ),
           );
-        }
-        return Scaffold(
-          body: Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 50),
-                Text("Settings", style: TextStyle(fontSize: 30)),
-                SizedBox(height: MediaQuery.of(context).size.height / 3),
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      context.read<AuthenticationCubit>().signOut();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Text(
-                          "Logout",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 20),
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      if (isOwner) {
-                        context.push("/myproperties");
-                      } else {
-                        showCantAccessOwnerFeatureDialog(context);
-                      }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Text(
-                          "My Properties",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+        },
+      ),
     );
   }
 }

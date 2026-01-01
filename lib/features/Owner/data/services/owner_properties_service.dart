@@ -28,28 +28,31 @@ class OwnerService {
     required int kitchens,
     required List<File> images,
   }) async {
-    final formData = FormData.fromMap({
-      "name": name,
-      "description": description,
-      "category": category,
-      "governorate": governorate,
-      "city": city,
-      "price_per_day": pricePerDay,
-      "area": area,
-      "rooms": rooms,
-      "bathrooms": bathrooms,
-      "kitchens": kitchens,
-      "is_available": 1,
+    final formData = FormData();
 
-      "images[]": images
-          .map(
-            (image) => MultipartFile.fromFileSync(
-              image.path,
-              filename: image.path.split('/').last,
-            ),
-          )
-          .toList(),
-    });
+    formData.fields
+      ..add(MapEntry("name", name))
+      ..add(MapEntry("description", description))
+      ..add(MapEntry("category", category))
+      ..add(MapEntry("governorate", governorate))
+      ..add(MapEntry("city", city))
+      ..add(MapEntry("price_per_day", pricePerDay.toString()))
+      ..add(MapEntry("area", area.toString()))
+      ..add(MapEntry("rooms", rooms.toString()))
+      ..add(MapEntry("bathrooms", bathrooms.toString()))
+      ..add(MapEntry("kitchens", kitchens.toString()))
+      ..add(MapEntry("is_available", "1"));
+
+    final fileList = await Future.wait(
+      images.map(
+        (image) => MultipartFile.fromFile(
+          image.path,
+          filename: image.path.split('/').last,
+        ),
+      ),
+    );
+
+    formData.files.addAll(fileList.map((file) => MapEntry("images[]", file)));
 
     return await _dio.post(
       "/property",

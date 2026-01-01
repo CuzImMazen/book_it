@@ -15,29 +15,40 @@ class CategorySelectorChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final unselectedColor =
+        theme.colorScheme.surface; // replaces deprecated surfaceVariant
+    final selectedTextColor = Colors.white; // always white on primary
+    final unselectedTextColor = theme.colorScheme.onSurface.withOpacity(0.8);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           "Select Property Category:",
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.w500,
+          ),
         ),
         const SizedBox(height: 10),
         Wrap(
           spacing: 10,
           children: categories.map((category) {
+            final isSelected = selectedCategory == category;
             return ChoiceChip(
-              label: Text(category),
-              selected: selectedCategory == category,
+              label: Text(
+                category,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: isSelected ? selectedTextColor : unselectedTextColor,
+                ),
+              ),
+              selected: isSelected,
               onSelected: (selected) =>
                   onCategorySelected(selected ? category : null),
-              selectedColor: kPrimaryColor.withAlpha(150),
-              backgroundColor: Colors.grey[200],
-              labelStyle: TextStyle(
-                color: selectedCategory == category
-                    ? Colors.white
-                    : Colors.black87,
-              ),
+              selectedColor: kPrimaryColor,
+              backgroundColor: unselectedColor,
+              elevation: isSelected ? 4 : 0,
+              shadowColor: Colors.black45,
             );
           }).toList(),
         ),

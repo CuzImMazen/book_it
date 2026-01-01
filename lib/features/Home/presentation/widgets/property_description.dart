@@ -10,23 +10,26 @@ class ReadMoreDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ReadMoreText(
-        trimLines: 3,
-        trimMode: TrimMode.Line,
-        moreStyle: TextStyle(
-          fontSize: 14,
-          color: kPrimaryColor,
-          fontWeight: FontWeight.bold,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: SizedBox(
+        width: double.infinity,
+        child: ReadMoreText(
+          trimLines: 3,
+          trimMode: TrimMode.Line,
+          moreStyle: TextStyle(
+            fontSize: 14,
+            color: kPrimaryColor,
+            fontWeight: FontWeight.bold,
+          ),
+          lessStyle: TextStyle(
+            fontSize: 14,
+            color: kPrimaryColor,
+            fontWeight: FontWeight.bold,
+          ),
+          property.description,
+          colorClickableText: kPrimaryColor,
         ),
-        lessStyle: TextStyle(
-          fontSize: 14,
-          color: kPrimaryColor,
-          fontWeight: FontWeight.bold,
-        ),
-        property.description,
-        colorClickableText: kPrimaryColor,
       ),
     );
   }

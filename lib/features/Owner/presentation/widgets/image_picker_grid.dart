@@ -44,9 +44,7 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
           images.addAll(
             pickedFiles.take(availableSlots).map((x) => File(x.path)),
           );
-          if (mainIndex == null && images.isNotEmpty) {
-            mainIndex = 0;
-          }
+          mainIndex ??= 0;
         });
         widget.onPickImages(images, mainIndex);
       }
@@ -62,9 +60,7 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
     try {
       final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
-        setState(() {
-          images[index] = File(pickedFile.path);
-        });
+        setState(() => images[index] = File(pickedFile.path));
         widget.onPickImages(images, mainIndex);
       }
     } finally {
@@ -78,29 +74,27 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
     setState(() {
       images.removeAt(index);
       if (mainIndex != null) {
-        if (mainIndex == index) {
+        if (mainIndex == index)
           mainIndex = null;
-        } else if (mainIndex! > index) {
+        else if (mainIndex! > index)
           mainIndex = mainIndex! - 1;
-        }
       }
     });
-
     widget.onPickImages(images, mainIndex);
   }
 
   void setMainImage(int index) {
     if (_isPicking) return;
 
-    setState(() {
-      mainIndex = index;
-    });
-
+    setState(() => mainIndex = index);
     widget.onPickImages(images, mainIndex);
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -116,19 +110,20 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
             onTap: pickImages,
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: scheme.surfaceVariant,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.add_a_photo,
                 size: 40,
-                color: Colors.grey,
+                color: scheme.onSurface.withAlpha(120),
               ),
             ),
           );
         }
 
-        bool isMain = mainIndex == index;
+        final isMain = mainIndex == index;
+
         return Stack(
           fit: StackFit.expand,
           children: [
@@ -138,7 +133,7 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: isMain
-                      ? Border.all(color: Colors.blueAccent, width: 3)
+                      ? Border.all(color: kPrimaryColor, width: 3)
                       : null,
                   image: DecorationImage(
                     image: FileImage(images[index]),
@@ -147,6 +142,7 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
                 ),
               ),
             ),
+            // Delete button
             Positioned(
               top: 6,
               right: 6,
@@ -154,14 +150,15 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
                 onTap: () => deleteImage(index),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.black54,
+                    color: scheme.onSurface.withAlpha(80),
                     shape: BoxShape.circle,
                   ),
                   padding: const EdgeInsets.all(6),
-                  child: const Icon(Icons.close, color: Colors.white, size: 18),
+                  child: Icon(Icons.close, color: scheme.onSurface, size: 18),
                 ),
               ),
             ),
+            // Main image button
             Positioned(
               bottom: 6,
               left: 6,
@@ -170,8 +167,8 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: isMain
-                        ? kPrimaryColor.withAlpha(150)
-                        : Colors.black54,
+                        ? kPrimaryColor
+                        : scheme.onSurface.withAlpha(80),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   padding: const EdgeInsets.symmetric(
@@ -180,9 +177,9 @@ class _ImagePickerGridState extends State<ImagePickerGrid> {
                   ),
                   child: Text(
                     isMain ? "MAIN" : "Set Main",
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: theme.textTheme.bodySmall?.copyWith(
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                       fontSize: 12,
                     ),
                   ),

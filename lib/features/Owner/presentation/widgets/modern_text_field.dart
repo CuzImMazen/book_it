@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:book_it/core/style/colors.dart';
 
 class ModernTextField extends StatelessWidget {
   const ModernTextField({
@@ -32,6 +31,9 @@ class ModernTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+
     return Container(
       key: fieldKey,
       margin: const EdgeInsets.only(bottom: 8),
@@ -42,49 +44,65 @@ class ModernTextField extends StatelessWidget {
         keyboardType: keyboard,
         validator: validator,
         inputFormatters: inputFormatters,
-        style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+        style: theme.textTheme.bodyMedium?.copyWith(
+          fontWeight: FontWeight.w600,
+        ),
         decoration: InputDecoration(
           hintText: hint,
+
           prefixIcon: icon != null
-              ? Icon(icon, color: kPrimaryColor.withAlpha(150), size: 20)
+              ? Icon(icon, color: scheme.primary.withAlpha(160), size: 20)
               : null,
-          prefixText: prefix,
-          suffixText: suffix,
-          suffixStyle: TextStyle(
-            color: kPrimaryColor.withAlpha(150),
-            fontWeight: FontWeight.bold,
+          // prefixText: prefix,
+          // suffixText: suffix,
+          // suffixStyle: TextStyle(
+          //   color: scheme.primary.withAlpha(160),
+          //   fontWeight: FontWeight.bold,
+          // ),
+          suffix: suffix != null
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: Text(
+                    suffix!,
+                    style: TextStyle(
+                      color: scheme.primary.withAlpha(160),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                )
+              : null,
+
+          hintStyle: theme.textTheme.bodySmall?.copyWith(
+            color: scheme.onSurface.withAlpha(120),
           ),
-          hintStyle: const TextStyle(
-            color: Color(0xFFBDBDBD),
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
+
           filled: true,
-          fillColor: Colors.white,
+          fillColor: scheme.surface,
+
           counterText: "",
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 18,
           ),
+
           errorStyle: const TextStyle(
             color: Colors.redAccent,
             fontSize: 11,
             fontWeight: FontWeight.w500,
           ),
+
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
             borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: const BorderSide(color: Color(0xFFF5F5F5)),
+            borderSide: BorderSide(color: scheme.onSurface.withAlpha(40)),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(
-              color: kPrimaryColor.withAlpha(150),
-              width: 1.5,
-            ),
+            borderSide: BorderSide(color: scheme.primary, width: 1.5),
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),

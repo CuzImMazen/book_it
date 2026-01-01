@@ -22,17 +22,20 @@ class RoomSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: scheme.surface,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFF5F5F5)),
-        boxShadow: const [
+        border: Border.all(color: scheme.onSurface.withAlpha(40)),
+        boxShadow: [
           BoxShadow(
-            color: Color(0x0A000000),
-            blurRadius: 10,
-            offset: Offset(0, 4),
+            color: Colors.black.withAlpha(25),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -44,14 +47,14 @@ class RoomSelector extends StatelessWidget {
             value: bedrooms,
             onChanged: onBedroomsChanged,
           ),
-          _divider(),
+          _divider(context),
           StepperTile(
             title: "Bathrooms",
             icon: Icons.hot_tub_outlined,
             value: bathrooms,
             onChanged: onBathroomsChanged,
           ),
-          _divider(),
+          _divider(context),
           StepperTile(
             title: "Kitchens",
             icon: Icons.flatware_rounded,
@@ -63,6 +66,14 @@ class RoomSelector extends StatelessWidget {
     );
   }
 
-  Widget _divider() =>
-      const Divider(color: Color(0xFFFAFAFA), indent: 50, endIndent: 20);
+  Widget _divider(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Divider(
+      color: scheme.onSurface.withAlpha(30),
+      indent: 50,
+      endIndent: 20,
+      height: 16,
+    );
+  }
 }

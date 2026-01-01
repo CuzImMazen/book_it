@@ -99,7 +99,12 @@ class _CreatePropertyViewBodyState extends State<CreatePropertyViewBody> {
                     showSnackBar(
                       context: context,
                       message: "Please select a category",
-                      color: kPrimaryColor.withAlpha(200),
+                      color: const Color.fromARGB(
+                        255,
+                        54,
+                        24,
+                        59,
+                      ).withAlpha(200),
                     );
                     return;
                   }
@@ -122,7 +127,7 @@ class _CreatePropertyViewBodyState extends State<CreatePropertyViewBody> {
                 }
 
                 context.push(
-                  "/createproperty2",
+                  "/main/myproperties/createproperty2",
                   extra: {
                     "images": _imagesWithMainFirst(),
                     "category": selectedCategory,

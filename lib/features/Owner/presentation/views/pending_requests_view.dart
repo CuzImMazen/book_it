@@ -7,15 +7,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:book_it/core/utils/helpers.dart';
 
-class PendingRequestsView extends StatelessWidget {
+class PendingRequestsView extends StatefulWidget {
   const PendingRequestsView({super.key});
+
+  @override
+  State<PendingRequestsView> createState() => _PendingRequestsViewState();
+}
+
+class _PendingRequestsViewState extends State<PendingRequestsView> {
+  @override
+  void initState() {
+    context.read<OwnerRequestsCubit>().getAllRequests();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<OwnerRequestsCubit, OwnerRequestsState>(
       listener: (context, state) {
         if (state is OwnerRequestsLoaded && state.snackMessage != null) {
-          // Only show the original message (ignore timestamp)
           final displayMessage = state.snackMessage!.split("|")[0];
 
           showSnackBar(

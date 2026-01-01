@@ -19,50 +19,53 @@ class BookingsContainer extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                      height: 100,
-                      width: 100,
-                      book.property.mainImage,
-                      fit: BoxFit.cover,
+            child: Directionality(
+              textDirection: TextDirection.ltr,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        height: 100,
+                        width: 100,
+                        book.property.mainImage,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TitleAndButtonsRow(book: book),
-                      SizedBox(
-                        width: 185,
-                        child: Text(
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                          "${book.property.governorate}, ${book.property.city}",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w400,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TitleAndButtonsRow(book: book),
+                        SizedBox(
+                          width: 185,
+                          child: Text(
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            "${book.property.governorate}, ${book.property.city}",
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 3),
-                      Text(
-                        "\$${book.property.price}/Night",
-                        style: TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(height: 10),
-                      BookDateAndStatusRow(book: book),
-                      SizedBox(height: 10),
-                    ],
+                        SizedBox(height: 3),
+                        Text(
+                          "\$${book.property.price}/Night",
+                          style: TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(height: 10),
+                        BookDateAndStatusRow(book: book),
+                        SizedBox(height: 10),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

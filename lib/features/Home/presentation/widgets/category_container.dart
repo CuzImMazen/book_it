@@ -21,8 +21,8 @@ class CategoryContainer extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.grey.withAlpha(50)),
           color: isSelected
-              ? kPrimaryColor.withAlpha(125)
-              : Colors.grey.withAlpha(50),
+              ? kPrimaryColor.withAlpha(200)
+              : Colors.grey.withAlpha(125),
           borderRadius: BorderRadius.circular(15),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 20),
