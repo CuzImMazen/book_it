@@ -764,7 +764,9 @@ Future<void> showRatingDialog({
                           // Submit/Update Button
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: rating < 1
+                              backgroundColor:
+                                  (rating < 1 ||
+                                      (hasRated && rating == initialRating))
                                   ? Colors.grey
                                   : Colors.amber,
                               foregroundColor: Colors.white,
@@ -777,7 +779,10 @@ Future<void> showRatingDialog({
                                 vertical: 12,
                               ),
                             ),
-                            onPressed: isLoading || rating < 1
+                            onPressed:
+                                isLoading ||
+                                    rating < 1 ||
+                                    (hasRated && rating == initialRating)
                                 ? null
                                 : () {
                                     parentContext
