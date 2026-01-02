@@ -1,3 +1,4 @@
+import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:flutter/material.dart';
 
 class RoleSelector extends StatefulWidget {
@@ -15,15 +16,15 @@ class _RoleSelectorState extends State<RoleSelector> {
   @override
   Widget build(BuildContext context) {
     return SegmentedButton<String>(
-      segments: const [
+      segments: [
         ButtonSegment(
           value: "owner",
-          label: Text("Owner"),
+          label: Text(context.auth.auth_owner),
           icon: Icon(Icons.home_outlined),
         ),
         ButtonSegment(
           value: "renter",
-          label: Text("Renter"),
+          label: Text(context.auth.auth_renter),
           icon: Icon(Icons.person_outline),
         ),
       ],

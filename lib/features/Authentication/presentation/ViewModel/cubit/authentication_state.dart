@@ -1,45 +1,44 @@
 part of 'authentication_cubit.dart';
 
-@immutable
-sealed class AuthenticationState {
+abstract class AuthenticationState {
   const AuthenticationState();
 }
 
-final class AuthenticationInitial extends AuthenticationState {
+class AuthenticationInitial extends AuthenticationState {
   const AuthenticationInitial();
 }
 
-final class AuthenticationLoading extends AuthenticationState {
+class AuthenticationLoading extends AuthenticationState {
   const AuthenticationLoading();
 }
 
-final class AuthenticationSignUpSuccess extends AuthenticationState {
+// Sign Up
+class AuthenticationSignUpSuccess extends AuthenticationState {
   const AuthenticationSignUpSuccess();
 }
 
-final class AuthenticationSignInSuccess extends AuthenticationState {
-  final UserModel user;
-  const AuthenticationSignInSuccess(this.user);
-  AuthenticationSignInSuccess copyWith({UserModel? user}) {
-    return AuthenticationSignInSuccess(user ?? this.user);
-  }
-}
-
-final class AuthenticationSignUpFailure extends AuthenticationState {
+class AuthenticationSignUpFailure extends AuthenticationState {
   final String message;
   const AuthenticationSignUpFailure(this.message);
 }
 
-final class AuthenticationSignInFailure extends AuthenticationState {
+// Sign In
+class AuthenticationSignInSuccess extends AuthenticationState {
+  final UserModel user;
+  const AuthenticationSignInSuccess(this.user);
+}
+
+class AuthenticationSignInFailure extends AuthenticationState {
   final String message;
   const AuthenticationSignInFailure(this.message);
 }
 
-final class AuthenticationSignOutSuccess extends AuthenticationState {
+// Sign Out
+class AuthenticationSignOutSuccess extends AuthenticationState {
   const AuthenticationSignOutSuccess();
 }
 
-final class AuthenticationSignOutFailure extends AuthenticationState {
+class AuthenticationSignOutFailure extends AuthenticationState {
   final String message;
   const AuthenticationSignOutFailure(this.message);
 }

@@ -1,55 +1,61 @@
-String? phoneValidator(String? value) {
+import 'package:book_it/core/extensions/localization_extension.dart';
+import 'package:flutter/material.dart';
+
+String? phoneValidator(BuildContext context, String? value) {
   value = value?.trim();
   if (value == null || value.isEmpty) {
-    return "Please enter your phone number";
+    return context.auth.errPhoneEmpty;
   }
   if (value.length != 10) {
-    return "Phone number must be 10 characters";
+    return context.auth.errPhoneLength;
   }
   if (!value.startsWith("09")) {
-    return "Please enter a valid phone number";
+    return context.auth.errPhoneInvalid;
   }
   return null;
 }
 
-String? passwordValidator(String? value) {
+String? passwordValidator(BuildContext context, String? value) {
   value = value?.trim();
-
   if (value == null || value.isEmpty) {
-    return "Please enter your password";
+    return context.auth.errPasswordEmpty;
   }
   if (value.length < 8) {
-    return "Password must be at least 8 characters";
+    return context.auth.errPasswordLength;
   }
   return null;
 }
 
-String? nameValidator(String? value) {
+String? nameValidator(BuildContext context, String? value) {
   value = value?.trim();
   if (value == null || value.isEmpty) {
-    return "Please enter your name";
+    return context.auth.errNameEmpty;
   }
   if (value.length > 20) {
-    return "That name is too long";
+    return context.auth.errNameTooLong;
   }
   return null;
 }
 
-String? confirmPasswordValidator(String? value, String password) {
+String? confirmPasswordValidator(
+  BuildContext context,
+  String? value,
+  String password,
+) {
   value = value?.trim();
   if (value == null || value.isEmpty) {
-    return "Please confirm your password";
+    return context.auth.errConfirmPasswordEmpty;
   }
   if (value != password.trim()) {
-    return "Passwords do not match";
+    return context.auth.errPasswordsNotMatch;
   }
   return null;
 }
 
-String? dateOfBirthValidator(String? value) {
+String? dateOfBirthValidator(BuildContext context, String? value) {
   value = value?.trim();
   if (value == null || value.isEmpty) {
-    return "Please Enter your birth date";
+    return context.auth.errBirthDateEmpty;
   }
   return null;
 }

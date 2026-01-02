@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
       if (mounted) {
         showSnackBar(
           context: context,
-          message: "couldn't upload image",
+          message: context.auth.auth_couldntUploadImage,
           color: Colors.red,
         );
       }
@@ -62,8 +63,8 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
   @override
   Widget build(BuildContext context) {
     final placeholder = widget.isProfile
-        ? "Tap to upload your profile image"
-        : "Tap to upload your ID image";
+        ? context.auth.auth_uploadProfile
+        : context.auth.auth_uploadId;
 
     return GestureDetector(
       onTap: pickImage,

@@ -121,12 +121,15 @@ class PropertyContainer extends StatelessWidget {
             ),
             const SizedBox(height: 10),
 
-            PropertyRatingWidget(
-              propertyId: property.id,
-              ownerId: property.owner?.id,
-              averageRating: property.averageRating,
-              ratingsCount: property.ratingsCount,
-              userRating: property.userRating,
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: PropertyRatingWidget(
+                propertyId: property.id,
+                ownerId: property.owner?.id,
+                averageRating: property.averageRating,
+                ratingsCount: property.ratingsCount,
+                userRating: property.userRating,
+              ),
             ),
           ],
         ),

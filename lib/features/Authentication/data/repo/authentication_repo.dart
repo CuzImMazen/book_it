@@ -1,14 +1,24 @@
 import 'dart:io';
-
 import 'package:book_it/core/storage/token/token_storage.dart';
 import 'package:book_it/features/Authentication/data/models/user_model.dart';
 import 'package:book_it/features/Authentication/data/services/authentication_service.dart';
 import 'package:dio/dio.dart';
 
+enum AuthError {
+  phoneAlreadyRegistered,
+  invalidPassword,
+  accountNotApproved,
+  phoneNotRegistered,
+  networkError,
+  serverError,
+  unknown,
+}
+
 class AuthenticationRepo {
   final AuthenticationService _authService = AuthenticationService.instance;
 
-  Future<String?> signUp({
+  /// Sign Up
+  Future<AuthError?> signUp({
     required String firstName,
     required String lastName,
     required String birthDate,
@@ -32,24 +42,28 @@ class AuthenticationRepo {
         idImage: idImage,
       );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return null;
-      }
+      if (response.statusCode == 200 || response.statusCode == 201) return null;
 
-      return "Unexpected server error: ${response.statusCode}";
+      return AuthError.unknown;
     } on DioException catch (e) {
-      if (e.response?.statusCode == 422) {
-        return e.response?.data["message"] ??
-            "This Phone number is already registered";
+      final status = e.response?.statusCode;
+      if (status == 422) return AuthError.phoneAlreadyRegistered;
+      if (status == 403) return AuthError.accountNotApproved;
+
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.sendTimeout ||
+          e.type == DioExceptionType.connectionError) {
+        return AuthError.networkError;
       }
 
-      return "Unexpected error: ${e.response?.statusCode ?? "Network or server error"}";
-    } catch (e) {
-      return "Network or server error: $e";
+      return AuthError.unknown;
+    } catch (_) {
+      return AuthError.unknown;
     }
   }
 
-  Future<(UserModel?, String?)> signIn({
+  Future<(UserModel?, AuthError?)> signIn({
     required String phoneNumber,
     required String password,
   }) async {
@@ -62,61 +76,48 @@ class AuthenticationRepo {
       if (response.statusCode == 200) {
         final token = response.data["token"];
         final userData = response.data["user"];
-
-        if (token != null) {
-          await TokenStorage.saveToken(token);
-        }
-
+        if (token != null) await TokenStorage.saveToken(token);
         return (UserModel.fromJson(userData), null);
       }
 
-      return (null, "Unexpected error: ${response.statusCode}");
+      return (null, AuthError.unknown);
     } on DioException catch (e) {
       final status = e.response?.statusCode;
-      final data = e.response?.data;
-      if (status == 403) {
-        return (null, "your account isnt approved yet");
-      }
-      if (status == 404 || status == 401) {
-        if (data is Map && data['message'] is String) {
-          return (null, data['message'] as String);
-        }
 
-        if (data is String) {
-          return (null, "Server is down or ofline, please try again later");
-        }
+      if (status == 403) return (null, AuthError.accountNotApproved);
+      if (status == 404) return (null, AuthError.phoneNotRegistered);
+      if (status == 401) return (null, AuthError.invalidPassword);
 
-        return (null, "Request failed");
-      }
       if (e.type == DioExceptionType.connectionTimeout ||
           e.type == DioExceptionType.receiveTimeout ||
-          e.type == DioExceptionType.sendTimeout) {
-        return (null, "Server not responding, please try again later");
-      }
-      if (e.type == DioExceptionType.connectionError) {
-        return (null, "No internet connection or Server cant be reached");
+          e.type == DioExceptionType.sendTimeout ||
+          e.type == DioExceptionType.connectionError) {
+        return (null, AuthError.networkError);
       }
 
-      return (
-        null,
-        "Unexpected error: ${e.response?.statusCode ?? "Network or server error"}",
-      );
-    } catch (e) {
-      return (null, "Network or server error: $e");
+      return (null, AuthError.unknown);
+    } catch (_) {
+      return (null, AuthError.unknown);
     }
   }
 
-  Future<String?> signOut() async {
+  /// Sign Out
+  Future<AuthError?> signOut() async {
     try {
       final response = await _authService.signOut();
-      if (response.statusCode == 200) {
-        return null;
-      }
-      return "Unexpected error: ${response.statusCode}";
+      if (response.statusCode == 200) return null;
+
+      return AuthError.unknown;
     } on DioException catch (e) {
-      return "Unexpected error: ${e.response?.statusCode ?? "Network or server error"}";
-    } catch (e) {
-      return "Network or server error: $e";
+      if (e.type == DioExceptionType.connectionTimeout ||
+          e.type == DioExceptionType.receiveTimeout ||
+          e.type == DioExceptionType.sendTimeout ||
+          e.type == DioExceptionType.connectionError) {
+        return AuthError.networkError;
+      }
+      return AuthError.unknown;
+    } catch (_) {
+      return AuthError.unknown;
     }
   }
 }

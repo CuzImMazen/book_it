@@ -1,3 +1,4 @@
+import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,7 +11,7 @@ class DontHaveAccountRow extends StatelessWidget {
     return Row(
       children: [
         Text(
-          "Don't have an account?",
+          context.auth.auth_noAccount,
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
         ),
         SizedBox(width: 5),
@@ -19,7 +20,7 @@ class DontHaveAccountRow extends StatelessWidget {
             context.push('/signup');
           },
           child: Text(
-            "Create new account",
+            context.auth.auth_createAccount,
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w800,

@@ -1,3 +1,4 @@
+import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/core/utils/validators.dart';
@@ -54,7 +55,7 @@ class _SignInFormState extends State<SignInForm> {
           ]);
           showSnackBar(
             context: context,
-            message: "you Signed in Successfully",
+            message: context.auth.auth_signedInSuccess,
             color: Colors.green,
             duration: Duration(seconds: 2),
           );
@@ -82,31 +83,28 @@ class _SignInFormState extends State<SignInForm> {
                       },
                     ),
                   SizedBox(height: 50),
-                  PrimaryText(text: "Welcome Back!"),
+                  PrimaryText(text: context.auth.auth_welcomeBack),
                   SizedBox(height: 10),
-                  SecondaryText(
-                    text:
-                        "Log in to your account to explore your dream to live the best life.",
-                  ),
+                  SecondaryText(text: context.auth.auth_loginSubtitle),
 
                   SizedBox(height: 80),
-                  LabelText(text: "Phone Number"),
+                  LabelText(text: context.auth.auth_phoneNumber),
                   SizedBox(height: 15),
                   CustomTextField(
                     isNumber: true,
                     controller: _phoneController,
-                    validator: phoneValidator,
-                    hintText: "Enter your phone number",
+                    validator: (value) => phoneValidator(context, value),
+                    hintText: context.auth.auth_enterPhone,
                     prefixIcon: Icons.phone,
                   ),
                   SizedBox(height: 20),
-                  LabelText(text: "Password"),
+                  LabelText(text: context.auth.auth_password),
                   SizedBox(height: 15),
                   CustomTextField(
                     controller: _passwordController,
-                    validator: passwordValidator,
+                    validator: (value) => passwordValidator(context, value),
                     isPassword: true,
-                    hintText: "Enter your password",
+                    hintText: context.auth.auth_enterPassword,
                     prefixIcon: Icons.lock,
                   ),
 
@@ -119,7 +117,7 @@ class _SignInFormState extends State<SignInForm> {
                     Column(
                       children: [
                         PrimaryButton(
-                          text: "Sign In",
+                          text: context.auth.auth_signIn,
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
                               FocusScope.of(context).unfocus();

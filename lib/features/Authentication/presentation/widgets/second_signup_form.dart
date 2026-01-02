@@ -1,3 +1,4 @@
+import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/core/utils/validators.dart';
@@ -58,7 +59,7 @@ class _SecondSignupFormState extends State<SecondSignupForm> {
         if (state is AuthenticationSignUpSuccess) {
           showSnackBar(
             context: context,
-            message: " Account created Successfully you can Sign in now",
+            message: context.auth.auth_accountCreated,
             color: Colors.green,
             duration: Duration(seconds: 2),
           );
@@ -85,42 +86,40 @@ class _SecondSignupFormState extends State<SecondSignupForm> {
                     },
                   ),
                   SizedBox(height: 30),
-                  PrimaryText(text: "Finish Your Account!"),
+                  PrimaryText(text: context.auth.auth_finishAccount),
                   SizedBox(height: 10),
-                  SecondaryText(
-                    text:
-                        "Welcome aboard! Your account is almost done.  Discover homes, list properties, and get started today.",
-                  ),
+                  SecondaryText(text: context.auth.auth_finishSubtitle),
                   SizedBox(height: 60),
-                  LabelText(text: "Phone Number"),
+                  LabelText(text: context.auth.auth_phoneNumber),
                   SizedBox(height: 10),
                   CustomTextField(
-                    hintText: " Enter your phone number",
+                    hintText: context.auth.auth_enterPhone,
                     prefixIcon: Icons.phone,
 
-                    validator: phoneValidator,
+                    validator: (value) => phoneValidator(context, value),
                     controller: _phoneController,
                     isNumber: true,
                   ),
                   const SizedBox(height: 20),
-                  LabelText(text: "Password"),
+                  LabelText(text: context.auth.auth_password),
                   SizedBox(height: 10),
                   CustomTextField(
-                    hintText: "Enter your Password",
+                    hintText: context.auth.auth_enterPassword,
                     prefixIcon: Icons.lock,
                     isPassword: true,
-                    validator: passwordValidator,
+                    validator: (value) => passwordValidator(context, value),
                     controller: _passwordController,
                   ),
                   const SizedBox(height: 20),
-                  LabelText(text: "Confirm Password"),
+                  LabelText(text: context.auth.auth_confirmPassword),
                   SizedBox(height: 10),
                   CustomTextField(
-                    hintText: "Confirm your Password",
+                    hintText: context.auth.auth_confirmPassword,
                     prefixIcon: Icons.lock,
                     isPassword: true,
                     validator: (value) {
                       return confirmPasswordValidator(
+                        context,
                         value,
                         _passwordController.text,
                       );
@@ -138,7 +137,7 @@ class _SecondSignupFormState extends State<SecondSignupForm> {
                     )
                   else
                     PrimaryButton(
-                      text: "SignUp",
+                      text: context.auth.auth_signUp,
                       onTap: () {
                         FocusScope.of(context).unfocus();
                         if (_formKey.currentState!.validate()) {

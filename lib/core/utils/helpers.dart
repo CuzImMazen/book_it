@@ -1,3 +1,4 @@
+import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/features/History/data/model/book_model.dart';
 import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_cubit.dart';
@@ -361,16 +362,16 @@ Future<dynamic> showCantAccessOwnerFeatureDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text(
-          "You cant access this Feature",
+        title: Text(
+          context.settings.settings_cant_access_owner_feature,
           style: TextStyle(
             fontSize: 24,
             color: Colors.red,
             fontWeight: FontWeight.bold,
           ),
         ),
-        content: const Text(
-          "please create an owner account and try again.",
+        content: Text(
+          context.settings.error_create_owner_account,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
         ),
         actions: [

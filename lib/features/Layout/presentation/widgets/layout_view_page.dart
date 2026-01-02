@@ -1,3 +1,4 @@
+import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/features/Authentication/presentation/ViewModel/cubit/authentication_cubit.dart';
 import 'package:book_it/features/Favourites/presentation/views/favourites_view.dart';
@@ -53,10 +54,19 @@ class LayoutViewPage extends StatelessWidget {
                   );
                 },
                 tabs: [
-                  GButton(icon: Icons.home, text: "Home"),
-                  GButton(icon: Icons.favorite, text: "Favorites"),
-                  GButton(icon: Icons.history, text: "History"),
-                  GButton(icon: Icons.settings, text: "Settings"),
+                  GButton(icon: Icons.home, text: context.layout.nav_home),
+                  GButton(
+                    icon: Icons.favorite,
+                    text: context.layout.nav_favorites,
+                  ),
+                  GButton(
+                    icon: Icons.history,
+                    text: context.layout.nav_history,
+                  ),
+                  GButton(
+                    icon: Icons.settings,
+                    text: context.layout.nav_settings,
+                  ),
                 ],
               ),
             ),

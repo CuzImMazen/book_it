@@ -1,16 +1,40 @@
 import 'dart:io';
 import 'package:bloc/bloc.dart';
+import 'package:book_it/core/Localization/auth_localization.dart';
 import 'package:book_it/features/Authentication/data/models/user_model.dart';
 import 'package:book_it/features/Authentication/data/repo/authentication_repo.dart';
-import 'package:meta/meta.dart';
 
 part 'authentication_state.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
   final AuthenticationRepo _authRepo;
+  final AuthLocalization _loc; // injected localization
 
-  AuthenticationCubit(this._authRepo) : super(const AuthenticationInitial());
+  AuthenticationCubit(this._authRepo, this._loc)
+    : super(const AuthenticationInitial());
 
+  String _mapErrorToMessage(AuthError error) {
+    switch (error) {
+      case AuthError.phoneAlreadyRegistered:
+        return _loc.errPhoneAlreadyRegistered;
+      case AuthError.invalidPassword:
+        return _loc.errInvalidPassword;
+      case AuthError.accountNotApproved:
+        return _loc.errAccountNotApproved;
+
+      case AuthError.phoneNotRegistered:
+        return _loc.errPhoneNotRegistered;
+      case AuthError.networkError:
+        return _loc.errNoInternet;
+      case AuthError.serverError:
+        return _loc.errServerOffline;
+
+      case AuthError.unknown:
+        return _loc.errUnexpected;
+    }
+  }
+
+  /// Sign Up
   Future<void> signUp({
     required String firstName,
     required String lastName,
@@ -24,7 +48,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   }) async {
     emit(const AuthenticationLoading());
 
-    final errorMessage = await _authRepo.signUp(
+    final error = await _authRepo.signUp(
       firstName: firstName,
       lastName: lastName,
       birthDate: birthDate,
@@ -36,40 +60,46 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       idImage: idImage,
     );
 
-    if (errorMessage == null) {
+    if (error == null) {
       emit(const AuthenticationSignUpSuccess());
     } else {
-      emit(AuthenticationSignUpFailure(errorMessage));
+      emit(AuthenticationSignUpFailure(_mapErrorToMessage(error)));
     }
   }
 
+  /// Sign In
   Future<void> signIn({
     required String phoneNumber,
     required String password,
   }) async {
     emit(const AuthenticationLoading());
 
-    final (user, errorMessage) = await _authRepo.signIn(
+    final (user, error) = await _authRepo.signIn(
       phoneNumber: phoneNumber,
       password: password,
     );
 
-    if (user != null && errorMessage == null) {
+    if (user != null) {
       emit(AuthenticationSignInSuccess(user));
     } else {
-      emit(AuthenticationSignInFailure(errorMessage ?? "Unknown error"));
+      emit(
+        AuthenticationSignInFailure(
+          _mapErrorToMessage(error ?? AuthError.unknown),
+        ),
+      );
     }
   }
 
+  /// Sign Out
   Future<void> signOut() async {
     emit(const AuthenticationLoading());
 
-    final errorMessage = await _authRepo.signOut();
+    final error = await _authRepo.signOut();
 
-    if (errorMessage == null) {
+    if (error == null) {
       emit(const AuthenticationSignOutSuccess());
     } else {
-      emit(AuthenticationSignOutFailure(errorMessage));
+      emit(AuthenticationSignOutFailure(_mapErrorToMessage(error)));
     }
   }
 }

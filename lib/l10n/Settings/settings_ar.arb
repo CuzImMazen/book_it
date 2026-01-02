@@ -1,0 +1,12 @@
+{
+  "@@locale": "ar",
+
+  "settings_title": "الإعدادات",
+  "settings_dark_mode": "الوضع الداكن",
+  "settings_language": "اللغة",
+  "settings_my_properties": "عقاراتي",
+  "settings_logout": "تسجيل الخروج",
+  "settings_logout_success": "تم تسجيل الخروج بنجاح",
+  "settings_cant_access_owner_feature": "لا يمكنك الوصول إلى هذه الميزة",
+   "error_create_owner_account": "يرجى إنشاء حساب مالك والمحاولة مرة أخرى"
+}

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/core/utils/validators.dart';
@@ -70,34 +71,31 @@ class _FirstSignupFormState extends State<FirstSignupForm> {
               const SizedBox(height: 60),
               BackButtonRow(),
               const SizedBox(height: 30),
-              const PrimaryText(text: "Let's explore together!"),
+              PrimaryText(text: context.auth.auth_signupTitle),
               const SizedBox(height: 10),
-              const SecondaryText(
-                text:
-                    "Create your account to start listing or renting homes instantly.",
-              ),
+              SecondaryText(text: context.auth.auth_signupSubtitle),
               const SizedBox(height: 40),
 
               CustomTextField(
-                hintText: "Enter your first name",
+                hintText: context.auth.auth_enterFirstName,
                 prefixIcon: Icons.person,
 
-                validator: nameValidator,
+                validator: (value) => nameValidator(context, value),
                 controller: nameController,
               ),
               const SizedBox(height: 20),
               CustomTextField(
-                hintText: "Enter your last name",
+                hintText: context.auth.auth_enterLastName,
                 prefixIcon: Icons.person,
 
-                validator: nameValidator,
+                validator: (value) => nameValidator(context, value),
                 controller: lastNameController,
               ),
 
               const SizedBox(height: 20),
               CustomTextField(
-                validator: dateOfBirthValidator,
-                hintText: "Select your birth date",
+                validator: (value) => dateOfBirthValidator(context, value),
+                hintText: context.auth.auth_selectBirthDate,
                 prefixIcon: Icons.calendar_today,
 
                 controller: birthDateController,
@@ -114,13 +112,13 @@ class _FirstSignupFormState extends State<FirstSignupForm> {
               ImagePickerContainer(setImage: setImage),
               SizedBox(height: 40),
               PrimaryButton(
-                text: 'Continue',
+                text: context.auth.auth_continue,
                 onTap: () {
                   if (_formKey.currentState!.validate()) {
                     if (profileImage == null) {
                       showSnackBar(
                         context: context,
-                        message: "Please upload a profile image",
+                        message: context.auth.auth_pleaseUploadProfile,
                         color: kPrimaryColor.withAlpha(200),
                       );
 
@@ -130,7 +128,7 @@ class _FirstSignupFormState extends State<FirstSignupForm> {
                     if (idImage == null) {
                       showSnackBar(
                         context: context,
-                        message: "Please upload an ID image",
+                        message: context.auth.auth_pleaseUploadId,
                         color: kPrimaryColor.withAlpha(200),
                       );
 

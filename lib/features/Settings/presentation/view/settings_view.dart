@@ -1,7 +1,7 @@
+import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/features/Authentication/presentation/ViewModel/cubit/authentication_cubit.dart';
-import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/features/Settings/presentation/viewModel/cubit/darkmode_cubit.dart';
 import 'package:book_it/features/Settings/presentation/viewModel/cubit/darkmode_state.dart';
 import 'package:book_it/features/Settings/presentation/viewModel/cubit/language_cubit.dart';
@@ -30,7 +30,7 @@ class SettingsView extends StatelessWidget {
             context.go("/signin");
             showSnackBar(
               context: context,
-              message: "You logged out successfully",
+              message: context.settings.settings_logout_success,
               color: Colors.green,
             );
           }
@@ -49,7 +49,7 @@ class SettingsView extends StatelessWidget {
                   const SizedBox(height: 40),
                   Center(
                     child: Text(
-                      context.loc.settingsName,
+                      "Settings",
                       style: const TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -61,7 +61,7 @@ class SettingsView extends StatelessWidget {
                   // Dark Mode
                   SettingsCard(
                     icon: Icons.dark_mode,
-                    title: context.loc.darkMode,
+                    title: context.settings.settings_dark_mode,
                     trailing: BlocBuilder<DarkmodedCubit, DarkmodeState>(
                       builder: (context, state) {
                         final isDark =
@@ -85,7 +85,7 @@ class SettingsView extends StatelessWidget {
                   // Language Selection
                   SettingsCard(
                     icon: Icons.language,
-                    title: context.loc.languaSett,
+                    title: context.settings.settings_language,
                     onTap: () => showLanguageDialog(
                       context,
                       currentLang: context
@@ -108,7 +108,7 @@ class SettingsView extends StatelessWidget {
 
                   SettingsCard(
                     icon: Icons.sync,
-                    title: context.loc.myproperties,
+                    title: context.settings.settings_my_properties,
                     onTap: () {
                       final authState = context
                           .read<AuthenticationCubit>()
@@ -135,7 +135,7 @@ class SettingsView extends StatelessWidget {
                   // Logout
                   SettingsCard(
                     icon: Icons.logout,
-                    title: context.loc.logOute,
+                    title: context.settings.settings_logout,
                     onTap: () => showLogoutDialog(
                       context,
                       onConfirm: () =>

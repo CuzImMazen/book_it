@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+
+  "settings_title": "Settings",
+  "settings_dark_mode": "Dark Mode",
+  "settings_language": "Language",
+  "settings_my_properties": "My Properties",
+  "settings_logout": "Logout",
+  "settings_logout_success": "You logged out successfully",
+  "settings_cant_access_owner_feature": "You can't access this feature",
+  "error_create_owner_account": "Please create an owner account and try again."
+}
