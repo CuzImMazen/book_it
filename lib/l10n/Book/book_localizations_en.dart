@@ -72,4 +72,19 @@ class BookLocalizationsEn extends BookLocalizations {
 
   @override
   String get endDateRequired => 'Please enter your end date';
+
+  @override
+  String get bookErrorCannotBookOwnProperty => 'You cannot book your own property.';
+
+  @override
+  String get bookErrorDateConflict => 'The selected dates conflict with an existing booking.';
+
+  @override
+  String get bookErrorNetworkError => 'Network error. Please check your connection.';
+
+  @override
+  String get bookErrorServerError => 'Server error. Please try again later.';
+
+  @override
+  String get bookErrorUnknown => 'Unexpected error occurred. Please try again.';
 }

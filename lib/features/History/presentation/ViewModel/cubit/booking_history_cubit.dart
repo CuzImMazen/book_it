@@ -1,20 +1,22 @@
 import 'package:bloc/bloc.dart';
 import 'package:book_it/features/History/data/model/book_model.dart';
 import 'package:book_it/features/History/data/repo/booking_history_repo.dart';
-import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_state.dart';
+import 'booking_history_state.dart';
 
 class BookingHistoryCubit extends Cubit<BookingHistoryState> {
   final BookingHistoryRepo repository;
 
   BookingHistoryCubit(this.repository) : super(BookingHistoryState.initial());
 
+  /// =========================
+  /// Fetch Ongoing Bookings
+  /// =========================
   Future<void> fetchOngoingBookings() async {
     emit(state.copyWith(isLoadingOngoing: true, errorOngoing: null));
 
     final results = await Future.wait([
       repository.getCurrentBookings(),
       repository.getFutureBookings(),
-
       repository.getPendingEditBookings(),
       repository.getPendingBookings(),
     ]);
@@ -31,22 +33,20 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
       ...pending.$1,
     ];
 
-    final errorMessages = [
-      current.$2,
-      future.$2,
-      pendingEdit.$2,
-      pending.$2,
-    ].where((e) => e != null && e.isNotEmpty).join("\n");
+    final error = current.$2 ?? future.$2 ?? pendingEdit.$2 ?? pending.$2;
 
     emit(
       state.copyWith(
         ongoing: merged,
         isLoadingOngoing: false,
-        errorOngoing: errorMessages.isEmpty ? null : errorMessages,
+        errorOngoing: error,
       ),
     );
   }
 
+  /// =========================
+  /// Fetch Past Bookings
+  /// =========================
   Future<void> fetchPastBookings() async {
     emit(state.copyWith(isLoadingCompleted: true, errorCompleted: null));
 
@@ -61,6 +61,9 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
     );
   }
 
+  /// =========================
+  /// Fetch Canceled Bookings
+  /// =========================
   Future<void> fetchCanceledBookings() async {
     emit(state.copyWith(isLoadingCanceled: true, errorCanceled: null));
 
@@ -75,6 +78,9 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
     );
   }
 
+  /// =========================
+  /// Cancel a Booking
+  /// =========================
   Future<void> cancelBooking(BookModel booking) async {
     emit(
       state.copyWith(
@@ -90,9 +96,7 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
       emit(
         state.copyWith(
           ongoing: [...state.ongoing, booking],
-          cancelingIds: state.cancelingIds
-              .where((id) => id != booking.id)
-              .toSet(),
+          cancelingIds: state.cancelingIds..remove(booking.id),
           cancelError: error,
         ),
       );
@@ -105,17 +109,14 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
           booking.copyWith(status: 'Canceled'),
           ...state.canceled,
         ],
-        cancelingIds: state.cancelingIds
-            .where((id) => id != booking.id)
-            .toSet(),
+        cancelingIds: state.cancelingIds..remove(booking.id),
       ),
     );
   }
 
-  void reset() {
-    emit(BookingHistoryState.initial());
-  }
-
+  /// =========================
+  /// Edit a Booking
+  /// =========================
   Future<void> editBooking({
     required BookModel booking,
     String? startDate,
@@ -157,6 +158,14 @@ class BookingHistoryCubit extends Cubit<BookingHistoryState> {
     );
   }
 
+  /// =========================
+  /// Reset all state
+  /// =========================
+  void reset() => emit(BookingHistoryState.initial());
+
+  /// =========================
+  /// Fetch all bookings
+  /// =========================
   Future<void> fetchAllBookings() async {
     await fetchOngoingBookings();
     await fetchPastBookings();

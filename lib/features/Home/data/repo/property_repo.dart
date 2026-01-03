@@ -2,26 +2,34 @@ import 'package:book_it/features/Home/data/models/property_model.dart';
 import 'package:book_it/features/Home/data/services/property_service.dart';
 import 'package:dio/dio.dart';
 
+enum PropertyError {
+  connectionTimeout,
+  serverError,
+  unauthorizedRating,
+  noPropertiesFound,
+  unknown,
+}
+
 class PropertyRepo {
   final PropertyService _propertyService = PropertyService.instance;
 
-  Future<(List<PropertyModel> properties, String? errorMessage)> getProperties(
+  /// =========================
+  /// Get Properties
+  /// =========================
+  Future<(List<PropertyModel> properties, PropertyError? error)> getProperties(
     Map<String, String> queryParameters,
   ) async {
     try {
       final response = await _propertyService.getProperties(queryParameters);
 
       if (response.statusCode != 200) {
-        return (
-          <PropertyModel>[],
-          'Failed to fetch properties: ${response.statusCode}',
-        );
+        return (<PropertyModel>[], PropertyError.serverError);
       }
 
       final propertiesJson = response.data['properties'] as List<dynamic>?;
 
-      if (propertiesJson == null) {
-        return (<PropertyModel>[], 'No properties found.');
+      if (propertiesJson == null || propertiesJson.isEmpty) {
+        return (<PropertyModel>[], PropertyError.noPropertiesFound);
       }
 
       final properties = propertiesJson
@@ -30,23 +38,23 @@ class PropertyRepo {
 
       return (properties, null);
     } on DioException catch (dioError) {
-      String message;
       if (dioError.type == DioExceptionType.connectionTimeout ||
           dioError.type == DioExceptionType.receiveTimeout) {
-        message = 'Connection timeout. Please try again.';
-      } else if (dioError.type == DioExceptionType.badResponse) {
-        message = 'Server error: ${dioError.response?.statusCode}';
-      } else {
-        message = 'Unexpected error: ${dioError.message}';
+        return (<PropertyModel>[], PropertyError.connectionTimeout);
       }
-
-      return (<PropertyModel>[], message);
-    } catch (e) {
-      return (<PropertyModel>[], 'Failed to fetch properties: $e');
+      if (dioError.type == DioExceptionType.badResponse) {
+        return (<PropertyModel>[], PropertyError.serverError);
+      }
+      return (<PropertyModel>[], PropertyError.unknown);
+    } catch (_) {
+      return (<PropertyModel>[], PropertyError.unknown);
     }
   }
 
-  Future<(bool success, String? errorMessage)> rateProperty(
+  /// =========================
+  /// Rate Property
+  /// =========================
+  Future<(bool success, PropertyError? error)> rateProperty(
     int propertyId,
     double stars,
   ) async {
@@ -55,26 +63,23 @@ class PropertyRepo {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return (true, null);
-      } else {
-        return (false, 'Failed to submit rating: ${response.statusCode}');
       }
+
+      return (false, PropertyError.unknown);
     } on DioException catch (dioError) {
-      String message;
-
       if (dioError.response?.statusCode == 403) {
-        message = 'You can’t rate a property you haven’t booked before.';
-      } else if (dioError.type == DioExceptionType.connectionTimeout ||
-          dioError.type == DioExceptionType.receiveTimeout) {
-        message = 'Connection timeout. Please try again.';
-      } else if (dioError.type == DioExceptionType.badResponse) {
-        message = 'Server error: ${dioError.response?.statusCode}';
-      } else {
-        message = 'Unexpected error: ${dioError.message}';
+        return (false, PropertyError.unauthorizedRating);
       }
-
-      return (false, message);
-    } catch (e) {
-      return (false, 'Failed to submit rating: $e');
+      if (dioError.type == DioExceptionType.connectionTimeout ||
+          dioError.type == DioExceptionType.receiveTimeout) {
+        return (false, PropertyError.connectionTimeout);
+      }
+      if (dioError.type == DioExceptionType.badResponse) {
+        return (false, PropertyError.serverError);
+      }
+      return (false, PropertyError.unknown);
+    } catch (_) {
+      return (false, PropertyError.unknown);
     }
   }
 }

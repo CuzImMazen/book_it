@@ -1,3 +1,4 @@
+import 'package:book_it/core/error/property_error_mapper.dart';
 import 'package:book_it/core/style/colors.dart';
 
 import 'package:book_it/features/Home/presentation/viewModel/cubit/property_cubit.dart';
@@ -47,8 +48,8 @@ class _HomeViewState extends State<HomeView> {
                   return const Center(
                     child: CircularProgressIndicator(color: kPrimaryColor),
                   );
-                } else if (state is PropertyError) {
-                  return Center(child: Text(state.message));
+                } else if (state is PropertyErrorState) {
+                  return Center(child: Text(state.error.localized(context)));
                 } else if (state is PropertyLoaded) {
                   if (state.properties.isEmpty) {
                     return const Center(child: Text("No properties found"));

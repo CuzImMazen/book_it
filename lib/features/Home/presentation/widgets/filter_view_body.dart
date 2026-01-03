@@ -6,10 +6,10 @@ import 'package:book_it/core/widgets/primary_button.dart';
 import 'package:book_it/features/Home/data/models/filter_model.dart';
 import 'package:book_it/features/Home/presentation/viewModel/cubit/filter_cubit.dart';
 import 'package:book_it/features/Home/presentation/viewModel/cubit/property_cubit.dart';
-import 'package:book_it/features/Home/presentation/widgets/drop_down_button_row.dart';
 import 'package:book_it/features/Home/presentation/widgets/feature_counter_row.dart';
 import 'package:book_it/features/Home/presentation/widgets/only_available_properties_row.dart';
 import 'package:book_it/features/Home/presentation/widgets/range_slider_container.dart';
+import 'package:book_it/core/widgets/location_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -50,47 +50,16 @@ class FilterViewBody extends StatelessWidget {
 
               const SizedBox(height: 10),
 
-              BlocSelector<FilterCubit, FilterModel, String?>(
-                selector: (state) => state.selectedGovernorate,
-                builder: (context, selectedGovernorate) {
-                  return DropDownButtonRow(
-                    isCity: false,
-                    text: context.home.filters_governorate,
-                    hintText: context.home.filters_select_governorate,
-                    items: getGovernorates(),
-                    currentValue: selectedGovernorate,
-                    onChanged: (value) {
-                      context.read<FilterCubit>().updateGovernorate(value);
-                    },
-                  );
-                },
-              ),
-
-              const SizedBox(height: 10),
-
               BlocBuilder<FilterCubit, FilterModel>(
-                buildWhen: (prev, curr) =>
-                    prev.selectedGovernorate != curr.selectedGovernorate ||
-                    prev.selectedCity != curr.selectedCity,
                 builder: (context, state) {
-                  final gov = state.selectedGovernorate;
-                  final cities = getCities(gov);
-
-                  final currentCity =
-                      (state.selectedCity != null &&
-                          cities.contains(state.selectedCity))
-                      ? state.selectedCity
-                      : null;
-
-                  return DropDownButtonRow(
-                    governorate: state.selectedGovernorate,
-                    isCity: true,
-                    text: context.home.filters_choose_city,
-                    hintText: context.home.filters_select_city,
-                    items: cities,
-                    currentValue: currentCity,
-                    onChanged: (value) =>
-                        context.read<FilterCubit>().updateCity(value),
+                  return LocationSelector(
+                    showAllOption: true,
+                    selectedGovernorate: state.selectedGovernorate,
+                    selectedCity: state.selectedCity,
+                    onGovernorateChanged: (val) =>
+                        context.read<FilterCubit>().updateGovernorate(val),
+                    onCityChanged: (val) =>
+                        context.read<FilterCubit>().updateCity(val),
                   );
                 },
               ),

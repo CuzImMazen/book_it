@@ -1,20 +1,17 @@
 part of 'property_cubit.dart';
 
-@immutable
-abstract class PropertyState {}
+sealed class PropertyState {}
 
-class PropertyInitial extends PropertyState {}
+final class PropertyInitial extends PropertyState {}
 
-class PropertyLoading extends PropertyState {}
+final class PropertyLoading extends PropertyState {}
 
-class PropertyLoaded extends PropertyState {
+final class PropertyLoaded extends PropertyState {
   final List<PropertyModel> properties;
-
   PropertyLoaded(this.properties);
 }
 
-class PropertyError extends PropertyState {
-  final String message;
-
-  PropertyError(this.message);
+final class PropertyErrorState extends PropertyState {
+  final PropertyError error;
+  PropertyErrorState(this.error);
 }

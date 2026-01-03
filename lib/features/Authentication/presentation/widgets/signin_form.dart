@@ -1,3 +1,4 @@
+import 'package:book_it/core/error/auth_error_mapper.dart';
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/core/utils/helpers.dart';
@@ -43,7 +44,7 @@ class _SignInFormState extends State<SignInForm> {
         if (state is AuthenticationSignInFailure) {
           showSnackBar(
             context: context,
-            message: state.message,
+            message: state.error.localized(context),
             duration: Duration(seconds: 2),
             color: Colors.red,
           );

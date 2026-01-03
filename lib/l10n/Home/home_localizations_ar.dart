@@ -386,4 +386,19 @@ class HomeLocalizationsAr extends HomeLocalizations {
 
   @override
   String get ratingNotAllowed => 'لا يمكنك تقييم عقار لم تقم بحجزه مسبقًا.';
+
+  @override
+  String get propertyErrorConnectionTimeout => 'انتهت مهلة الاتصال. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get propertyErrorServerError => 'حدث خطأ في الخادم. يرجى المحاولة لاحقًا.';
+
+  @override
+  String get propertyErrorUnauthorizedRating => 'لا يمكنك تقييم عقار لم تحجزه من قبل.';
+
+  @override
+  String get propertyErrorNoPropertiesFound => 'لم يتم العثور على عقارات.';
+
+  @override
+  String get propertyErrorUnknown => 'حدث خطأ غير متوقع.';
 }

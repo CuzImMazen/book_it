@@ -1,3 +1,4 @@
+import 'package:book_it/core/error/auth_error_mapper.dart';
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/core/utils/helpers.dart';
@@ -21,7 +22,7 @@ class SettingsView extends StatelessWidget {
           if (state is AuthenticationSignOutFailure) {
             showSnackBar(
               context: context,
-              message: state.message,
+              message: state.error.localized(context),
               color: Colors.red,
               duration: const Duration(seconds: 3),
             );

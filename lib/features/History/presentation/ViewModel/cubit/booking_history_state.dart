@@ -1,4 +1,5 @@
 import 'package:book_it/features/History/data/model/book_model.dart';
+import 'package:book_it/features/History/data/repo/booking_history_repo.dart';
 
 class BookingHistoryState {
   final List<BookModel> ongoing;
@@ -9,15 +10,15 @@ class BookingHistoryState {
   final bool isLoadingCompleted;
   final bool isLoadingCanceled;
 
-  final String? errorOngoing;
-  final String? errorCompleted;
-  final String? errorCanceled;
+  final BookingError? errorOngoing;
+  final BookingError? errorCompleted;
+  final BookingError? errorCanceled;
 
   final Set<int> cancelingIds;
-  final String? cancelError;
+  final BookingError? cancelError;
 
   final Set<int> editingIds;
-  final String? editError;
+  final BookingError? editError;
 
   const BookingHistoryState({
     required this.ongoing,
@@ -62,11 +63,11 @@ class BookingHistoryState {
     bool? isLoadingOngoing,
     bool? isLoadingCompleted,
     bool? isLoadingCanceled,
-    String? errorOngoing,
-    String? errorCompleted,
-    String? errorCanceled,
-    String? cancelError,
-    String? editError,
+    BookingError? errorOngoing,
+    BookingError? errorCompleted,
+    BookingError? errorCanceled,
+    BookingError? cancelError,
+    BookingError? editError,
   }) {
     return BookingHistoryState(
       ongoing: ongoing ?? this.ongoing,

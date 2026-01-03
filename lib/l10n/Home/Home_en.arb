@@ -163,7 +163,12 @@
   "timeout": "Connection timeout. Please try again.",
   "serverError": "Server error occurred.",
   "unexpectedError": "Something went wrong.",
-  "ratingNotAllowed": "You can’t rate a property you haven’t booked before."
+  "ratingNotAllowed": "You can’t rate a property you haven’t booked before.",
+  "propertyErrorConnectionTimeout": "Connection timeout. Please try again.",
+  "propertyErrorServerError": "Server error occurred. Please try again later.",
+  "propertyErrorUnauthorizedRating": "You cannot rate a property you haven't booked before.",
+  "propertyErrorNoPropertiesFound": "No properties found.",
+  "propertyErrorUnknown": "An unexpected error occurred."
 
 }
 

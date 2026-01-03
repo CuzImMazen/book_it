@@ -1,3 +1,4 @@
+import 'package:book_it/core/error/auth_error_mapper.dart';
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/core/utils/helpers.dart';
@@ -50,7 +51,7 @@ class _SecondSignupFormState extends State<SecondSignupForm> {
         if (state is AuthenticationSignUpFailure) {
           showSnackBar(
             context: context,
-            message: state.message,
+            message: state.error.localized(context),
             color: Colors.red,
             duration: Duration(seconds: 2),
           );

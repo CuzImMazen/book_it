@@ -49,5 +49,64 @@
   "cancelBooking_confirm": "Cancel Booking",
   "@cancelBooking_confirm": {
     "description": "Confirm/cancel button text in cancel booking dialog"
+  },
+  "bookingErrorFailedCurrentBookings": "Failed to load current bookings",
+  "@bookingErrorFailedCurrentBookings": {
+    "description": "Error when fetching current bookings fails"
+  },
+
+  "bookingErrorFailedFutureBookings": "Failed to load upcoming bookings",
+  "@bookingErrorFailedFutureBookings": {
+    "description": "Error when fetching future bookings fails"
+  },
+
+  "bookingErrorFailedOldBookings": "Failed to load past bookings",
+  "@bookingErrorFailedOldBookings": {
+    "description": "Error when fetching old bookings fails"
+  },
+
+  "bookingErrorFailedCanceledBookings": "Failed to load canceled bookings",
+  "@bookingErrorFailedCanceledBookings": {
+    "description": "Error when fetching canceled bookings fails"
+  },
+
+  "bookingErrorFailedPendingBookings": "Failed to load pending bookings",
+  "@bookingErrorFailedPendingBookings": {
+    "description": "Error when fetching pending bookings fails"
+  },
+
+  "bookingErrorFailedPendingEditBookings": "Failed to load pending edit bookings",
+  "@bookingErrorFailedPendingEditBookings": {
+    "description": "Error when fetching pending edit bookings fails"
+  },
+
+  "bookingErrorFailedCancelBooking": "Failed to cancel the booking",
+  "@bookingErrorFailedCancelBooking": {
+    "description": "Error when canceling a booking fails"
+  },
+
+  "bookingErrorFailedUpdateBooking": "Failed to update the booking",
+  "@bookingErrorFailedUpdateBooking": {
+    "description": "Error when updating a booking fails"
+  },
+
+  "bookingErrorDateConflict": "Cannot update booking due to date conflict",
+  "@bookingErrorDateConflict": {
+    "description": "Error when booking update fails because dates overlap"
+  },
+
+  "bookingErrorFailedAddRating": "Failed to add rating",
+  "@bookingErrorFailedAddRating": {
+    "description": "Error when adding a rating fails"
+  },
+
+  "bookingErrorFailedEditRating": "Failed to edit rating",
+  "@bookingErrorFailedEditRating": {
+    "description": "Error when editing a rating fails"
+  },
+
+  "bookingErrorUnknown": "Unexpected error occurred",
+  "@bookingErrorUnknown": {
+    "description": "Generic unknown error message"
   }
 }

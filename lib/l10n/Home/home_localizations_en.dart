@@ -386,4 +386,19 @@ class HomeLocalizationsEn extends HomeLocalizations {
 
   @override
   String get ratingNotAllowed => 'You can’t rate a property you haven’t booked before.';
+
+  @override
+  String get propertyErrorConnectionTimeout => 'Connection timeout. Please try again.';
+
+  @override
+  String get propertyErrorServerError => 'Server error occurred. Please try again later.';
+
+  @override
+  String get propertyErrorUnauthorizedRating => 'You cannot rate a property you haven\'t booked before.';
+
+  @override
+  String get propertyErrorNoPropertiesFound => 'No properties found.';
+
+  @override
+  String get propertyErrorUnknown => 'An unexpected error occurred.';
 }

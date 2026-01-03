@@ -1,3 +1,4 @@
+import 'package:book_it/core/error/book_error_mapper.dart';
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/core/utils/helpers.dart';
@@ -10,6 +11,7 @@ import 'package:book_it/core/widgets/primary_text.dart';
 import 'package:book_it/core/widgets/secondary_text.dart';
 import 'package:book_it/features/Book/data/model/confirm_book_data.dart';
 import 'package:book_it/features/Book/presentation/ViewModel/cubit/book_cubit.dart';
+import 'package:book_it/features/Book/presentation/ViewModel/cubit/book_state.dart';
 import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,7 +83,7 @@ class _BookConfirmationViewBodyState extends State<BookConfirmationViewBody> {
         if (state is BookFailure) {
           showSnackBar(
             context: context,
-            message: state.message,
+            message: state.error.localized(context),
             color: Colors.red,
           );
         }
@@ -165,11 +167,11 @@ class _BookConfirmationViewBodyState extends State<BookConfirmationViewBody> {
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
                         context.read<BookCubit>().createBook(
-                          widget.confirmBookData.propertyId,
-                          _startDateController.text,
-                          _endDateController.text,
-                          _cardNumberController.text,
-                          _addressController.text,
+                          id: widget.confirmBookData.propertyId,
+                          startDate: _startDateController.text,
+                          endDate: _endDateController.text,
+                          cardNumber: _cardNumberController.text,
+                          billingAddress: _addressController.text,
                         );
                       }
                     },

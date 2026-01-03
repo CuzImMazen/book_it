@@ -4,7 +4,7 @@ import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/core/widgets/primary_button.dart';
 import 'package:book_it/features/Owner/presentation/widgets/category_selector_chips.dart';
 import 'package:book_it/features/Owner/presentation/widgets/image_picker_grid.dart';
-import 'package:book_it/features/Owner/presentation/widgets/location_selector.dart';
+import 'package:book_it/core/widgets/location_selector.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -74,6 +74,7 @@ class _CreatePropertyViewBodyState extends State<CreatePropertyViewBody> {
             ),
             const SizedBox(height: 20),
             LocationSelector(
+              showAllOption: false,
               selectedGovernorate: selectedGovernorate,
               selectedCity: selectedCity,
               onGovernorateChanged: (gov) => setState(() {

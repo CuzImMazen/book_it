@@ -1,3 +1,4 @@
+import 'package:book_it/core/error/history_error_mapper.dart';
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_cubit.dart';
@@ -20,7 +21,7 @@ class OnGoingTabView extends StatelessWidget {
         }
 
         if (state.errorOngoing != null) {
-          return Center(child: Text(state.errorOngoing!));
+          return Center(child: Text(state.errorOngoing!.localized(context)));
         }
         if (state.ongoing.isEmpty) {
           return Center(

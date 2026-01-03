@@ -226,6 +226,78 @@ abstract class HistoryLocalizations {
   /// In en, this message translates to:
   /// **'Cancel Booking'**
   String get cancelBooking_confirm;
+
+  /// Error when fetching current bookings fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load current bookings'**
+  String get bookingErrorFailedCurrentBookings;
+
+  /// Error when fetching future bookings fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load upcoming bookings'**
+  String get bookingErrorFailedFutureBookings;
+
+  /// Error when fetching old bookings fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load past bookings'**
+  String get bookingErrorFailedOldBookings;
+
+  /// Error when fetching canceled bookings fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load canceled bookings'**
+  String get bookingErrorFailedCanceledBookings;
+
+  /// Error when fetching pending bookings fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load pending bookings'**
+  String get bookingErrorFailedPendingBookings;
+
+  /// Error when fetching pending edit bookings fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load pending edit bookings'**
+  String get bookingErrorFailedPendingEditBookings;
+
+  /// Error when canceling a booking fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to cancel the booking'**
+  String get bookingErrorFailedCancelBooking;
+
+  /// Error when updating a booking fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to update the booking'**
+  String get bookingErrorFailedUpdateBooking;
+
+  /// Error when booking update fails because dates overlap
+  ///
+  /// In en, this message translates to:
+  /// **'Cannot update booking due to date conflict'**
+  String get bookingErrorDateConflict;
+
+  /// Error when adding a rating fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add rating'**
+  String get bookingErrorFailedAddRating;
+
+  /// Error when editing a rating fails
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to edit rating'**
+  String get bookingErrorFailedEditRating;
+
+  /// Generic unknown error message
+  ///
+  /// In en, this message translates to:
+  /// **'Unexpected error occurred'**
+  String get bookingErrorUnknown;
 }
 
 class _HistoryLocalizationsDelegate extends LocalizationsDelegate<HistoryLocalizations> {

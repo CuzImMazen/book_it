@@ -36,4 +36,10 @@
   "billingAddressRequired": "Please enter your billing address",
   "startDateRequired": "Please enter your start date",
   "endDateRequired": "Please enter your end date"
+,
+  "bookErrorCannotBookOwnProperty": "You cannot book your own property.",
+  "bookErrorDateConflict": "The selected dates conflict with an existing booking.",
+  "bookErrorNetworkError": "Network error. Please check your connection.",
+  "bookErrorServerError": "Server error. Please try again later.",
+  "bookErrorUnknown": "Unexpected error occurred. Please try again."
 }
