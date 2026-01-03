@@ -31,25 +31,13 @@ class Bookit extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // =====================
-        // Authentication
-        // =====================
         BlocProvider(create: (_) => AuthenticationCubit(AuthenticationRepo())),
 
-        // =====================
-        // Home
-        // =====================
         BlocProvider(create: (_) => FilterCubit()),
         BlocProvider(create: (_) => PropertyCubit(PropertyRepo())),
 
-        // =====================
-        // History
-        // =====================
         BlocProvider(create: (_) => BookingHistoryCubit(BookingHistoryRepo())),
 
-        // =====================
-        // Settings
-        // =====================
         BlocProvider(create: (_) => DarkmodedCubit()),
         BlocProvider(create: (_) => LanguageCubit()),
       ],
