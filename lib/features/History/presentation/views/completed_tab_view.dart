@@ -1,3 +1,4 @@
+import 'package:book_it/core/error/history_error_mapper.dart';
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_cubit.dart';
@@ -20,7 +21,7 @@ class CompletedTabView extends StatelessWidget {
         }
 
         if (state.errorCompleted != null) {
-          return Center(child: Text(state.errorCompleted!));
+          return Center(child: Text(state.errorCompleted!.localized(context)));
         }
         if (state.completed.isEmpty) {
           return Center(

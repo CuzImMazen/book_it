@@ -1,6 +1,6 @@
 part of 'authentication_cubit.dart';
 
-abstract class AuthenticationState {
+sealed class AuthenticationState {
   const AuthenticationState();
 }
 
@@ -12,33 +12,43 @@ class AuthenticationLoading extends AuthenticationState {
   const AuthenticationLoading();
 }
 
-// Sign Up
+/// =========================
+/// Sign Up
+/// =========================
 class AuthenticationSignUpSuccess extends AuthenticationState {
   const AuthenticationSignUpSuccess();
 }
 
 class AuthenticationSignUpFailure extends AuthenticationState {
-  final String message;
-  const AuthenticationSignUpFailure(this.message);
+  final AuthError error;
+
+  const AuthenticationSignUpFailure(this.error);
 }
 
-// Sign In
+/// =========================
+/// Sign In
+/// =========================
 class AuthenticationSignInSuccess extends AuthenticationState {
   final UserModel user;
+
   const AuthenticationSignInSuccess(this.user);
 }
 
 class AuthenticationSignInFailure extends AuthenticationState {
-  final String message;
-  const AuthenticationSignInFailure(this.message);
+  final AuthError error;
+
+  const AuthenticationSignInFailure(this.error);
 }
 
-// Sign Out
+/// =========================
+/// Sign Out
+/// =========================
 class AuthenticationSignOutSuccess extends AuthenticationState {
   const AuthenticationSignOutSuccess();
 }
 
 class AuthenticationSignOutFailure extends AuthenticationState {
-  final String message;
-  const AuthenticationSignOutFailure(this.message);
+  final AuthError error;
+
+  const AuthenticationSignOutFailure(this.error);
 }

@@ -1,3 +1,5 @@
+import 'package:book_it/core/error/history_error_mapper.dart';
+import 'package:book_it/core/error/property_error_mapper.dart';
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/features/History/data/model/book_model.dart';
@@ -456,7 +458,7 @@ Future<dynamic> showEditUpcomingBookingDialog(
               if (state.editError != null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(state.editError!),
+                    content: Text(state.editError!.localized(context)),
                     backgroundColor: Colors.red,
                   ),
                 );
@@ -503,7 +505,7 @@ Future<dynamic> showEditActiveBookingDialog(
               if (state.editError != null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(state.editError!),
+                    content: Text(state.editError!.localized(context)),
                     backgroundColor: Colors.red,
                   ),
                 );
@@ -674,19 +676,10 @@ Future<void> showRatingDialog({
                   color: Colors.green,
                 );
               } else if (state is PropertyRatingFailure) {
-                if (state.message.contains("booked")) {
-                  context.pop();
-                  showSnackBar(
-                    context: parentContext,
-                    message: context.home.ratingNotAllowed,
-                    color: Colors.red,
-                  );
-                  return;
-                }
                 context.pop();
                 showSnackBar(
                   context: parentContext,
-                  message: state.message,
+                  message: state.error.localized(context),
                   color: Colors.red,
                 );
               }

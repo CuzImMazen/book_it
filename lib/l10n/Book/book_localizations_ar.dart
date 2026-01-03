@@ -72,4 +72,19 @@ class BookLocalizationsAr extends BookLocalizations {
 
   @override
   String get endDateRequired => 'يرجى إدخال تاريخ الانتهاء';
+
+  @override
+  String get bookErrorCannotBookOwnProperty => 'لا يمكنك حجز عقارك الخاص.';
+
+  @override
+  String get bookErrorDateConflict => 'تاريخ الحجز المختار يتعارض مع حجز موجود.';
+
+  @override
+  String get bookErrorNetworkError => 'خطأ في الشبكة. يرجى التحقق من الاتصال.';
+
+  @override
+  String get bookErrorServerError => 'خطأ في الخادم. يرجى المحاولة لاحقًا.';
+
+  @override
+  String get bookErrorUnknown => 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.';
 }

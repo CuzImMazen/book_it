@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:book_it/core/storage/token/token_storage.dart';
 import 'package:book_it/features/Authentication/data/models/user_model.dart';
 import 'package:book_it/features/Authentication/data/services/authentication_service.dart';
@@ -17,7 +18,9 @@ enum AuthError {
 class AuthenticationRepo {
   final AuthenticationService _authService = AuthenticationService.instance;
 
+  /// =========================
   /// Sign Up
+  /// =========================
   Future<AuthError?> signUp({
     required String firstName,
     required String lastName,
@@ -42,27 +45,21 @@ class AuthenticationRepo {
         idImage: idImage,
       );
 
-      if (response.statusCode == 200 || response.statusCode == 201) return null;
-
-      return AuthError.unknown;
-    } on DioException catch (e) {
-      final status = e.response?.statusCode;
-      if (status == 422) return AuthError.phoneAlreadyRegistered;
-      if (status == 403) return AuthError.accountNotApproved;
-
-      if (e.type == DioExceptionType.connectionTimeout ||
-          e.type == DioExceptionType.receiveTimeout ||
-          e.type == DioExceptionType.sendTimeout ||
-          e.type == DioExceptionType.connectionError) {
-        return AuthError.networkError;
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return null;
       }
 
       return AuthError.unknown;
+    } on DioException catch (e) {
+      return _mapDioErrorToAuthError(e);
     } catch (_) {
       return AuthError.unknown;
     }
   }
 
+  /// =========================
+  /// Sign In
+  /// =========================
   Future<(UserModel?, AuthError?)> signIn({
     required String phoneNumber,
     required String password,
@@ -73,51 +70,75 @@ class AuthenticationRepo {
         password: password,
       );
 
-      if (response.statusCode == 200) {
-        final token = response.data["token"];
-        final userData = response.data["user"];
-        if (token != null) await TokenStorage.saveToken(token);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final token = response.data['token'];
+        final userData = response.data['user'];
+
+        if (token != null) {
+          await TokenStorage.saveToken(token);
+        }
+
         return (UserModel.fromJson(userData), null);
       }
 
       return (null, AuthError.unknown);
     } on DioException catch (e) {
-      final status = e.response?.statusCode;
-
-      if (status == 403) return (null, AuthError.accountNotApproved);
-      if (status == 404) return (null, AuthError.phoneNotRegistered);
-      if (status == 401) return (null, AuthError.invalidPassword);
-
-      if (e.type == DioExceptionType.connectionTimeout ||
-          e.type == DioExceptionType.receiveTimeout ||
-          e.type == DioExceptionType.sendTimeout ||
-          e.type == DioExceptionType.connectionError) {
-        return (null, AuthError.networkError);
-      }
-
-      return (null, AuthError.unknown);
+      return (null, _mapDioErrorToAuthError(e));
     } catch (_) {
       return (null, AuthError.unknown);
     }
   }
 
+  /// =========================
   /// Sign Out
+  /// =========================
   Future<AuthError?> signOut() async {
     try {
       final response = await _authService.signOut();
-      if (response.statusCode == 200) return null;
+
+      if (response.statusCode == 200) {
+        return null;
+      }
 
       return AuthError.unknown;
     } on DioException catch (e) {
-      if (e.type == DioExceptionType.connectionTimeout ||
-          e.type == DioExceptionType.receiveTimeout ||
-          e.type == DioExceptionType.sendTimeout ||
-          e.type == DioExceptionType.connectionError) {
-        return AuthError.networkError;
-      }
-      return AuthError.unknown;
+      return _mapDioErrorToAuthError(e);
     } catch (_) {
       return AuthError.unknown;
     }
+  }
+
+  /// =========================
+  /// Error Mapper (PRIVATE)
+  /// =========================
+  AuthError _mapDioErrorToAuthError(DioException e) {
+    final status = e.response?.statusCode;
+
+    // Domain / validation errors
+    switch (status) {
+      case 401:
+        return AuthError.invalidPassword;
+      case 403:
+        return AuthError.accountNotApproved;
+      case 404:
+        return AuthError.phoneNotRegistered;
+      case 422:
+        return AuthError.phoneAlreadyRegistered;
+    }
+
+    // Server errors
+    if (status != null && status >= 500) {
+      return AuthError.serverError;
+    }
+
+    // Network errors
+    if (e.type == DioExceptionType.connectionTimeout ||
+        e.type == DioExceptionType.receiveTimeout ||
+        e.type == DioExceptionType.sendTimeout ||
+        e.type == DioExceptionType.connectionError) {
+      return AuthError.networkError;
+    }
+
+    return AuthError.unknown;
   }
 }

@@ -49,5 +49,64 @@
   "cancelBooking_confirm": "إلغاء الحجز",
   "@cancelBooking_confirm": {
     "description": "نص زر تأكيد/إلغاء في مربع الحوار لإلغاء الحجز"
+  },
+  "bookingErrorFailedCurrentBookings": "فشل في تحميل الحجوزات الحالية",
+  "@bookingErrorFailedCurrentBookings": {
+    "description": "رسالة خطأ عند فشل جلب الحجوزات الحالية"
+  },
+
+  "bookingErrorFailedFutureBookings": "فشل في تحميل الحجوزات القادمة",
+  "@bookingErrorFailedFutureBookings": {
+    "description": "رسالة خطأ عند فشل جلب الحجوزات المستقبلية"
+  },
+
+  "bookingErrorFailedOldBookings": "فشل في تحميل الحجوزات السابقة",
+  "@bookingErrorFailedOldBookings": {
+    "description": "رسالة خطأ عند فشل جلب الحجوزات القديمة"
+  },
+
+  "bookingErrorFailedCanceledBookings": "فشل في تحميل الحجوزات الملغاة",
+  "@bookingErrorFailedCanceledBookings": {
+    "description": "رسالة خطأ عند فشل جلب الحجوزات الملغاة"
+  },
+
+  "bookingErrorFailedPendingBookings": "فشل في تحميل الحجوزات المعلقة",
+  "@bookingErrorFailedPendingBookings": {
+    "description": "رسالة خطأ عند فشل جلب الحجوزات المعلقة"
+  },
+
+  "bookingErrorFailedPendingEditBookings": "فشل في تحميل الحجوزات المعلقة للتعديل",
+  "@bookingErrorFailedPendingEditBookings": {
+    "description": "رسالة خطأ عند فشل جلب الحجوزات المعلقة للتعديل"
+  },
+
+  "bookingErrorFailedCancelBooking": "فشل في إلغاء الحجز",
+  "@bookingErrorFailedCancelBooking": {
+    "description": "رسالة خطأ عند فشل إلغاء الحجز"
+  },
+
+  "bookingErrorFailedUpdateBooking": "فشل في تحديث الحجز",
+  "@bookingErrorFailedUpdateBooking": {
+    "description": "رسالة خطأ عند فشل تحديث الحجز"
+  },
+
+  "bookingErrorDateConflict": "لا يمكن تحديث الحجز بسبب تعارض التواريخ",
+  "@bookingErrorDateConflict": {
+    "description": "رسالة خطأ عند فشل تحديث الحجز بسبب تداخل التواريخ"
+  },
+
+  "bookingErrorFailedAddRating": "فشل في إضافة التقييم",
+  "@bookingErrorFailedAddRating": {
+    "description": "رسالة خطأ عند فشل إضافة التقييم"
+  },
+
+  "bookingErrorFailedEditRating": "فشل في تعديل التقييم",
+  "@bookingErrorFailedEditRating": {
+    "description": "رسالة خطأ عند فشل تعديل التقييم"
+  },
+
+  "bookingErrorUnknown": "حدث خطأ غير متوقع",
+  "@bookingErrorUnknown": {
+    "description": "رسالة خطأ عام عند حدوث خطأ غير معروف"
   }
 }

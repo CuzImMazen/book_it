@@ -35,5 +35,10 @@
   "cardNumberTooLong": "لا يمكن أن يكون رقم البطاقة أكثر من 19 حرفًا",
   "billingAddressRequired": "يرجى إدخال عنوان الفوترة",
   "startDateRequired": "يرجى إدخال تاريخ البدء",
-  "endDateRequired": "يرجى إدخال تاريخ الانتهاء"
+  "endDateRequired": "يرجى إدخال تاريخ الانتهاء",
+  "bookErrorCannotBookOwnProperty": "لا يمكنك حجز عقارك الخاص.",
+  "bookErrorDateConflict": "تاريخ الحجز المختار يتعارض مع حجز موجود.",
+  "bookErrorNetworkError": "خطأ في الشبكة. يرجى التحقق من الاتصال.",
+  "bookErrorServerError": "خطأ في الخادم. يرجى المحاولة لاحقًا.",
+  "bookErrorUnknown": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى."
 }

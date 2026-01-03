@@ -844,6 +844,36 @@ abstract class HomeLocalizations {
   /// In en, this message translates to:
   /// **'You can’t rate a property you haven’t booked before.'**
   String get ratingNotAllowed;
+
+  /// No description provided for @propertyErrorConnectionTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timeout. Please try again.'**
+  String get propertyErrorConnectionTimeout;
+
+  /// No description provided for @propertyErrorServerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error occurred. Please try again later.'**
+  String get propertyErrorServerError;
+
+  /// No description provided for @propertyErrorUnauthorizedRating.
+  ///
+  /// In en, this message translates to:
+  /// **'You cannot rate a property you haven\'t booked before.'**
+  String get propertyErrorUnauthorizedRating;
+
+  /// No description provided for @propertyErrorNoPropertiesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No properties found.'**
+  String get propertyErrorNoPropertiesFound;
+
+  /// No description provided for @propertyErrorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred.'**
+  String get propertyErrorUnknown;
 }
 
 class _HomeLocalizationsDelegate extends LocalizationsDelegate<HomeLocalizations> {

@@ -1,19 +1,14 @@
 part of 'property_rating_cubit.dart';
 
-sealed class PropertyRatingState extends Equatable {
-  const PropertyRatingState();
-
-  @override
-  List<Object> get props => [];
-}
+sealed class PropertyRatingState {}
 
 final class PropertyRatingInitial extends PropertyRatingState {}
 
-class PropertyRatingLoading extends PropertyRatingState {}
+final class PropertyRatingLoading extends PropertyRatingState {}
 
-class PropertyRatingSuccess extends PropertyRatingState {}
+final class PropertyRatingSuccess extends PropertyRatingState {}
 
-class PropertyRatingFailure extends PropertyRatingState {
-  final String message;
-  const PropertyRatingFailure(this.message);
+final class PropertyRatingFailure extends PropertyRatingState {
+  final PropertyError error;
+  PropertyRatingFailure(this.error);
 }

@@ -75,4 +75,40 @@ class HistoryLocalizationsEn extends HistoryLocalizations {
 
   @override
   String get cancelBooking_confirm => 'Cancel Booking';
+
+  @override
+  String get bookingErrorFailedCurrentBookings => 'Failed to load current bookings';
+
+  @override
+  String get bookingErrorFailedFutureBookings => 'Failed to load upcoming bookings';
+
+  @override
+  String get bookingErrorFailedOldBookings => 'Failed to load past bookings';
+
+  @override
+  String get bookingErrorFailedCanceledBookings => 'Failed to load canceled bookings';
+
+  @override
+  String get bookingErrorFailedPendingBookings => 'Failed to load pending bookings';
+
+  @override
+  String get bookingErrorFailedPendingEditBookings => 'Failed to load pending edit bookings';
+
+  @override
+  String get bookingErrorFailedCancelBooking => 'Failed to cancel the booking';
+
+  @override
+  String get bookingErrorFailedUpdateBooking => 'Failed to update the booking';
+
+  @override
+  String get bookingErrorDateConflict => 'Cannot update booking due to date conflict';
+
+  @override
+  String get bookingErrorFailedAddRating => 'Failed to add rating';
+
+  @override
+  String get bookingErrorFailedEditRating => 'Failed to edit rating';
+
+  @override
+  String get bookingErrorUnknown => 'Unexpected error occurred';
 }

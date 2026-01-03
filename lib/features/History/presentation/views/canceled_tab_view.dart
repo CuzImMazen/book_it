@@ -1,3 +1,4 @@
+import 'package:book_it/core/error/history_error_mapper.dart';
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_cubit.dart';
@@ -21,7 +22,7 @@ class CanceledTabView extends StatelessWidget {
         }
 
         if (state.errorCanceled != null) {
-          return Center(child: Text(state.errorCanceled!));
+          return Center(child: Text(state.errorCanceled!.localized(context)));
         }
         if (state.canceled.isEmpty) {
           return Center(

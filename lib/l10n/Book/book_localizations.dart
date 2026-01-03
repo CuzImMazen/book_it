@@ -220,6 +220,36 @@ abstract class BookLocalizations {
   /// In en, this message translates to:
   /// **'Please enter your end date'**
   String get endDateRequired;
+
+  /// No description provided for @bookErrorCannotBookOwnProperty.
+  ///
+  /// In en, this message translates to:
+  /// **'You cannot book your own property.'**
+  String get bookErrorCannotBookOwnProperty;
+
+  /// No description provided for @bookErrorDateConflict.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected dates conflict with an existing booking.'**
+  String get bookErrorDateConflict;
+
+  /// No description provided for @bookErrorNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Network error. Please check your connection.'**
+  String get bookErrorNetworkError;
+
+  /// No description provided for @bookErrorServerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error. Please try again later.'**
+  String get bookErrorServerError;
+
+  /// No description provided for @bookErrorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unexpected error occurred. Please try again.'**
+  String get bookErrorUnknown;
 }
 
 class _BookLocalizationsDelegate extends LocalizationsDelegate<BookLocalizations> {

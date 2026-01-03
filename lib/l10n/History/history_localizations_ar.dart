@@ -75,4 +75,40 @@ class HistoryLocalizationsAr extends HistoryLocalizations {
 
   @override
   String get cancelBooking_confirm => 'إلغاء الحجز';
+
+  @override
+  String get bookingErrorFailedCurrentBookings => 'فشل في تحميل الحجوزات الحالية';
+
+  @override
+  String get bookingErrorFailedFutureBookings => 'فشل في تحميل الحجوزات القادمة';
+
+  @override
+  String get bookingErrorFailedOldBookings => 'فشل في تحميل الحجوزات السابقة';
+
+  @override
+  String get bookingErrorFailedCanceledBookings => 'فشل في تحميل الحجوزات الملغاة';
+
+  @override
+  String get bookingErrorFailedPendingBookings => 'فشل في تحميل الحجوزات المعلقة';
+
+  @override
+  String get bookingErrorFailedPendingEditBookings => 'فشل في تحميل الحجوزات المعلقة للتعديل';
+
+  @override
+  String get bookingErrorFailedCancelBooking => 'فشل في إلغاء الحجز';
+
+  @override
+  String get bookingErrorFailedUpdateBooking => 'فشل في تحديث الحجز';
+
+  @override
+  String get bookingErrorDateConflict => 'لا يمكن تحديث الحجز بسبب تعارض التواريخ';
+
+  @override
+  String get bookingErrorFailedAddRating => 'فشل في إضافة التقييم';
+
+  @override
+  String get bookingErrorFailedEditRating => 'فشل في تعديل التقييم';
+
+  @override
+  String get bookingErrorUnknown => 'حدث خطأ غير متوقع';
 }

@@ -1,3 +1,4 @@
+import 'package:book_it/core/error/history_error_mapper.dart';
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_cubit.dart';
@@ -20,7 +21,7 @@ class HistoryView extends StatelessWidget {
         if (state.cancelError != null) {
           showSnackBar(
             context: context,
-            message: state.cancelError!,
+            message: state.cancelError!.localized(context),
             color: Colors.red,
             duration: const Duration(seconds: 2),
           );

@@ -169,7 +169,11 @@
   "timeout": "انتهت مهلة الاتصال، حاول مرة أخرى.",
   "serverError": "حدث خطأ في الخادم.",
   "unexpectedError": "حدث خطأ غير متوقع.",
-  "ratingNotAllowed": "لا يمكنك تقييم عقار لم تقم بحجزه مسبقًا."
+  "ratingNotAllowed": "لا يمكنك تقييم عقار لم تقم بحجزه مسبقًا.", "propertyErrorConnectionTimeout": "انتهت مهلة الاتصال. يرجى المحاولة مرة أخرى.",
+  "propertyErrorServerError": "حدث خطأ في الخادم. يرجى المحاولة لاحقًا.",
+  "propertyErrorUnauthorizedRating": "لا يمكنك تقييم عقار لم تحجزه من قبل.",
+  "propertyErrorNoPropertiesFound": "لم يتم العثور على عقارات.",
+  "propertyErrorUnknown": "حدث خطأ غير متوقع."
 
 }
 
