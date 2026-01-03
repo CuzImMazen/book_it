@@ -181,4 +181,61 @@ class OwnerLocalizationsEn extends OwnerLocalizations {
 
   @override
   String get property_created_successfully => 'Property created Successfully';
+
+  @override
+  String get ownerPropertyErrorConnectionTimeout => 'Connection timed out. Please try again.';
+
+  @override
+  String get ownerPropertyErrorServerError => 'Server error. Please try again later.';
+
+  @override
+  String get ownerPropertyErrorFailedCreateProperty => 'Failed to create the property.';
+
+  @override
+  String get ownerPropertyErrorFailedDeleteProperty => 'Failed to delete the property.';
+
+  @override
+  String get ownerPropertyErrorNoPropertiesFound => 'No properties found.';
+
+  @override
+  String get ownerPropertyErrorUnknown => 'An unexpected error occurred.';
+
+  @override
+  String get ownerRequestsErrorConnectionTimeout => 'Connection timeout. Please try again.';
+
+  @override
+  String get ownerRequestsErrorServerError => 'Server error. Please try again later.';
+
+  @override
+  String get ownerRequestsErrorFailedAcceptBooking => 'Failed to accept booking.';
+
+  @override
+  String get ownerRequestsErrorFailedRejectBooking => 'Failed to reject booking.';
+
+  @override
+  String get ownerRequestsErrorFailedAcceptModification => 'Failed to accept modification.';
+
+  @override
+  String get ownerRequestsErrorFailedRejectModification => 'Failed to reject modification.';
+
+  @override
+  String get ownerRequestsErrorNoRequestsFound => 'No requests found.';
+
+  @override
+  String get ownerRequestsErrorFailedFetchPending => 'Failed to fetch pending bookings.';
+
+  @override
+  String get ownerRequestsErrorFailedFetchModification => 'Failed to fetch modification requests.';
+
+  @override
+  String get ownerRequestsErrorFailedAcceptRequest => 'Failed to accept request.';
+
+  @override
+  String get ownerRequestsErrorFailedRejectRequest => 'Failed to reject request.';
+
+  @override
+  String get ownerRequestsErrorDateConflict => 'Request cannot be accepted due to date conflict.';
+
+  @override
+  String get ownerRequestsErrorUnknown => 'Unexpected error.';
 }

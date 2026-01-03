@@ -6,17 +6,19 @@ import 'package:meta/meta.dart';
 part 'owner_properties_state.dart';
 
 class OwnerPropertiesCubit extends Cubit<OwnerPropertiesState> {
-  OwnerPropertiesCubit() : super(OwnerInitial());
-  final OwnerPropertiesRepo _ownerRepo = OwnerPropertiesRepo();
+  final OwnerPropertiesRepo _ownerRepo;
+
+  OwnerPropertiesCubit(this._ownerRepo) : super(OwnerInitial());
 
   Future<void> getOwnerProperties() async {
     if (isClosed) return;
     emit(OwnerPropertiesLoading());
-    final (properties, errorMessage) = await _ownerRepo.getOwnerProperties();
+
+    final (properties, error) = await _ownerRepo.getOwnerProperties();
     if (isClosed) return;
 
-    if (errorMessage != null) {
-      emit(OwnerPropertiesError(errorMessage));
+    if (error != null) {
+      emit(OwnerPropertiesErrorState(error));
     } else {
       emit(OwnerPropertiesLoaded(properties));
     }
@@ -24,22 +26,21 @@ class OwnerPropertiesCubit extends Cubit<OwnerPropertiesState> {
 
   Future<void> deleteProperty(int propertyId) async {
     if (isClosed) return;
-
     final currentState = state;
     if (currentState is! OwnerPropertiesLoaded) return;
 
+    // Optimistic update
     final updatedList = currentState.properties
         .where((p) => p.id != propertyId)
         .toList();
-
     emit(OwnerPropertiesLoaded(updatedList));
 
-    final errorMessage = await _ownerRepo.deleteProperty(propertyId);
-
+    final error = await _ownerRepo.deleteProperty(propertyId);
     if (isClosed) return;
 
-    if (errorMessage != null) {
-      emit(OwnerPropertiesError(errorMessage));
+    if (error != null) {
+      // Rollback on failure
+      emit(OwnerPropertiesErrorState(error));
       emit(currentState);
     }
   }

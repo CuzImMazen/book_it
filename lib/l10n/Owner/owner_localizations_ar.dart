@@ -181,4 +181,61 @@ class OwnerLocalizationsAr extends OwnerLocalizations {
 
   @override
   String get property_created_successfully => 'تم إنشاء العقار بنجاح';
+
+  @override
+  String get ownerPropertyErrorConnectionTimeout => 'انتهت مهلة الاتصال. الرجاء المحاولة مرة أخرى.';
+
+  @override
+  String get ownerPropertyErrorServerError => 'خطأ في الخادم. الرجاء المحاولة لاحقًا.';
+
+  @override
+  String get ownerPropertyErrorFailedCreateProperty => 'فشل في إنشاء العقار.';
+
+  @override
+  String get ownerPropertyErrorFailedDeleteProperty => 'فشل في حذف العقار.';
+
+  @override
+  String get ownerPropertyErrorNoPropertiesFound => 'لم يتم العثور على أي عقارات.';
+
+  @override
+  String get ownerPropertyErrorUnknown => 'حدث خطأ غير متوقع.';
+
+  @override
+  String get ownerRequestsErrorConnectionTimeout => 'انتهت مهلة الاتصال. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get ownerRequestsErrorServerError => 'خطأ في الخادم. يرجى المحاولة لاحقًا.';
+
+  @override
+  String get ownerRequestsErrorFailedAcceptBooking => 'فشل في قبول الحجز.';
+
+  @override
+  String get ownerRequestsErrorFailedRejectBooking => 'فشل في رفض الحجز.';
+
+  @override
+  String get ownerRequestsErrorFailedAcceptModification => 'فشل في قبول التعديل.';
+
+  @override
+  String get ownerRequestsErrorFailedRejectModification => 'فشل في رفض التعديل.';
+
+  @override
+  String get ownerRequestsErrorNoRequestsFound => 'لا توجد طلبات.';
+
+  @override
+  String get ownerRequestsErrorFailedFetchPending => 'فشل في جلب الحجوزات المعلقة.';
+
+  @override
+  String get ownerRequestsErrorFailedFetchModification => 'فشل في جلب طلبات التعديل.';
+
+  @override
+  String get ownerRequestsErrorFailedAcceptRequest => 'فشل في قبول الطلب.';
+
+  @override
+  String get ownerRequestsErrorFailedRejectRequest => 'فشل في رفض الطلب.';
+
+  @override
+  String get ownerRequestsErrorDateConflict => 'لا يمكن قبول الطلب بسبب تعارض التواريخ.';
+
+  @override
+  String get ownerRequestsErrorUnknown => 'حدث خطأ غير متوقع.';
 }

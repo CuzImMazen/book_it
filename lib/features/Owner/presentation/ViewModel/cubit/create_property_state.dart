@@ -9,7 +9,7 @@ class CreatePropertyLoading extends CreatePropertyState {}
 
 class CreatePropertySuccess extends CreatePropertyState {}
 
-class CreatePropertyError extends CreatePropertyState {
-  final String message;
-  CreatePropertyError(this.message);
+class CreatePropertyErrorState extends CreatePropertyState {
+  final OwnerPropertyError error;
+  CreatePropertyErrorState(this.error);
 }

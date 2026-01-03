@@ -121,5 +121,24 @@
   "no_pending_bookings" : "لا توجد حجوزات معلقة"
   ,
   "no_pending_modifications" : "لا توجد تعديلات معلقة",
-  "property_created_successfully": "تم إنشاء العقار بنجاح"
+  "property_created_successfully": "تم إنشاء العقار بنجاح",
+  "ownerPropertyErrorConnectionTimeout": "انتهت مهلة الاتصال. الرجاء المحاولة مرة أخرى.",
+  "ownerPropertyErrorServerError": "خطأ في الخادم. الرجاء المحاولة لاحقًا.",
+  "ownerPropertyErrorFailedCreateProperty": "فشل في إنشاء العقار.",
+  "ownerPropertyErrorFailedDeleteProperty": "فشل في حذف العقار.",
+  "ownerPropertyErrorNoPropertiesFound": "لم يتم العثور على أي عقارات.",
+  "ownerPropertyErrorUnknown": "حدث خطأ غير متوقع.",
+   "ownerRequestsErrorConnectionTimeout": "انتهت مهلة الاتصال. يرجى المحاولة مرة أخرى.",
+  "ownerRequestsErrorServerError": "خطأ في الخادم. يرجى المحاولة لاحقًا.",
+  "ownerRequestsErrorFailedAcceptBooking": "فشل في قبول الحجز.",
+  "ownerRequestsErrorFailedRejectBooking": "فشل في رفض الحجز.",
+  "ownerRequestsErrorFailedAcceptModification": "فشل في قبول التعديل.",
+  "ownerRequestsErrorFailedRejectModification": "فشل في رفض التعديل.",
+  "ownerRequestsErrorNoRequestsFound": "لا توجد طلبات.",
+  "ownerRequestsErrorFailedFetchPending": "فشل في جلب الحجوزات المعلقة.",
+  "ownerRequestsErrorFailedFetchModification": "فشل في جلب طلبات التعديل.",
+  "ownerRequestsErrorFailedAcceptRequest": "فشل في قبول الطلب.",
+  "ownerRequestsErrorFailedRejectRequest": "فشل في رفض الطلب.",
+  "ownerRequestsErrorDateConflict": "لا يمكن قبول الطلب بسبب تعارض التواريخ.",
+  "ownerRequestsErrorUnknown": "حدث خطأ غير متوقع."
 }

@@ -1,49 +1,61 @@
 import 'dart:io';
-
 import 'package:book_it/features/Home/data/models/property_model.dart';
 import 'package:book_it/features/Owner/data/services/owner_properties_service.dart';
 import 'package:dio/dio.dart';
 
+enum OwnerPropertyError {
+  connectionTimeout,
+  serverError,
+  failedCreateProperty,
+  failedDeleteProperty,
+  noPropertiesFound,
+  unknown,
+}
+
 class OwnerPropertiesRepo {
   final OwnerService _ownerService = OwnerService.instance;
 
-  Future<(List<PropertyModel> properties, String? errorMessage)>
+  /// =========================
+  /// Get Owner Properties
+  /// =========================
+  Future<(List<PropertyModel> properties, OwnerPropertyError? error)>
   getOwnerProperties() async {
     try {
       final response = await _ownerService.getOwnerProperties();
+
       if (response.statusCode != 200) {
-        return (
-          <PropertyModel>[],
-          "Failed to fetch properties: ${response.statusCode}",
-        );
+        return (<PropertyModel>[], OwnerPropertyError.serverError);
       }
+
       final propertiesJson = response.data['properties'] as List<dynamic>?;
-      if (propertiesJson == null) {
-        return (<PropertyModel>[], "No properties found.");
+
+      if (propertiesJson == null || propertiesJson.isEmpty) {
+        return (<PropertyModel>[], OwnerPropertyError.noPropertiesFound);
       }
+
       final properties = propertiesJson
           .map((json) => PropertyModel.fromJson(json as Map<String, dynamic>))
           .toList();
 
       return (properties, null);
     } on DioException catch (dioError) {
-      String message;
       if (dioError.type == DioExceptionType.connectionTimeout ||
           dioError.type == DioExceptionType.receiveTimeout) {
-        message = "Connection timeout. Please try again.";
-      } else if (dioError.type == DioExceptionType.badResponse) {
-        message = "Server error: ${dioError.response?.statusCode}";
-      } else {
-        message = "Unexpected error: ${dioError.message}";
+        return (<PropertyModel>[], OwnerPropertyError.connectionTimeout);
       }
-
-      return (<PropertyModel>[], message);
-    } catch (e) {
-      return (<PropertyModel>[], "Failed to fetch properties: $e");
+      if (dioError.type == DioExceptionType.badResponse) {
+        return (<PropertyModel>[], OwnerPropertyError.serverError);
+      }
+      return (<PropertyModel>[], OwnerPropertyError.unknown);
+    } catch (_) {
+      return (<PropertyModel>[], OwnerPropertyError.unknown);
     }
   }
 
-  Future<String?> createProperty({
+  /// =========================
+  /// Create Property
+  /// =========================
+  Future<OwnerPropertyError?> createProperty({
     required String name,
     required String description,
     required String category,
@@ -72,44 +84,40 @@ class OwnerPropertiesRepo {
       );
 
       if (response.statusCode != 200 && response.statusCode != 201) {
-        return "Failed to create property";
+        return OwnerPropertyError.failedCreateProperty;
       }
 
       return null;
-    } on DioException catch (e) {
-      print(e.message);
-      return "Failed to create property  : ${e.message}";
-    } catch (e) {
-      return "Failed to create property: $e";
+    } on DioException catch (_) {
+      return OwnerPropertyError.failedCreateProperty;
+    } catch (_) {
+      return OwnerPropertyError.failedCreateProperty;
     }
   }
 
-  Future<String?> deleteProperty(int propertyId) async {
+  /// =========================
+  /// Delete Property
+  /// =========================
+  Future<OwnerPropertyError?> deleteProperty(int propertyId) async {
     try {
       final response = await _ownerService.deleteProperty(propertyId);
 
       if (response.statusCode != 200) {
-        return "Failed to delete property: ${response.statusCode}";
+        return OwnerPropertyError.failedDeleteProperty;
       }
 
       return null;
     } on DioException catch (dioError) {
-      String message;
-
       if (dioError.type == DioExceptionType.connectionTimeout ||
           dioError.type == DioExceptionType.receiveTimeout) {
-        message = "Connection timeout. Please try again.";
-      } else if (dioError.type == DioExceptionType.badResponse) {
-        message =
-            dioError.response?.data['message'] ??
-            "Server error: ${dioError.response?.statusCode}";
-      } else {
-        message = "Unexpected error: ${dioError.message}";
+        return OwnerPropertyError.connectionTimeout;
       }
-
-      return message;
-    } catch (e) {
-      return "Failed to delete property: $e";
+      if (dioError.type == DioExceptionType.badResponse) {
+        return OwnerPropertyError.serverError;
+      }
+      return OwnerPropertyError.unknown;
+    } catch (_) {
+      return OwnerPropertyError.unknown;
     }
   }
 }
