@@ -117,5 +117,27 @@
   "setMainImageLabel": "Set Main",
   "no_pending_bookings" : "No pending bookings",
   "no_pending_modifications" : "No pending modifications",
-  "property_created_successfully": "Property created Successfully"
+  "property_created_successfully": "Property created Successfully",
+   "ownerPropertyErrorConnectionTimeout": "Connection timed out. Please try again.",
+  "ownerPropertyErrorServerError": "Server error. Please try again later.",
+  "ownerPropertyErrorFailedCreateProperty": "Failed to create the property.",
+  "ownerPropertyErrorFailedDeleteProperty": "Failed to delete the property.",
+  "ownerPropertyErrorNoPropertiesFound": "No properties found.",
+  "ownerPropertyErrorUnknown": "An unexpected error occurred.",
+  "ownerRequestsErrorConnectionTimeout": "Connection timeout. Please try again.",
+  "ownerRequestsErrorServerError": "Server error. Please try again later.",
+  "ownerRequestsErrorFailedAcceptBooking": "Failed to accept booking.",
+  "ownerRequestsErrorFailedRejectBooking": "Failed to reject booking.",
+  "ownerRequestsErrorFailedAcceptModification": "Failed to accept modification.",
+  "ownerRequestsErrorFailedRejectModification": "Failed to reject modification.",
+  "ownerRequestsErrorNoRequestsFound": "No requests found.",
+ 
+  "ownerRequestsErrorFailedFetchPending": "Failed to fetch pending bookings.",
+  "ownerRequestsErrorFailedFetchModification": "Failed to fetch modification requests.",
+  "ownerRequestsErrorFailedAcceptRequest": "Failed to accept request.",
+  "ownerRequestsErrorFailedRejectRequest": "Failed to reject request.",
+  "ownerRequestsErrorDateConflict": "Request cannot be accepted due to date conflict.",
+  "ownerRequestsErrorUnknown": "Unexpected error."
+ 
+  
 }

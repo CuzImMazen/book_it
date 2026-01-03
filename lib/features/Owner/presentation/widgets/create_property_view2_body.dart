@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:book_it/core/error/owner_properties_error_mapper.dart';
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/core/utils/helpers.dart';
@@ -79,8 +80,11 @@ class _CreatePropertyView2BodyState extends State<CreatePropertyView2Body> {
 
     return BlocConsumer<CreatePropertyCubit, CreatePropertyState>(
       listener: (context, state) {
-        if (state is CreatePropertyError) {
-          showSnackBar(context: context, message: state.message);
+        if (state is CreatePropertyErrorState) {
+          showSnackBar(
+            context: context,
+            message: state.error.localized(context),
+          );
         }
 
         if (state is CreatePropertySuccess) {

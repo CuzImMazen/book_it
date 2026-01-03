@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:book_it/features/Owner/data/repo/owner_properties_repo.dart';
 import 'package:meta/meta.dart';
@@ -7,9 +6,9 @@ import 'package:meta/meta.dart';
 part 'create_property_state.dart';
 
 class CreatePropertyCubit extends Cubit<CreatePropertyState> {
-  CreatePropertyCubit(this._repo) : super(CreatePropertyInitial());
-
   final OwnerPropertiesRepo _repo;
+
+  CreatePropertyCubit(this._repo) : super(CreatePropertyInitial());
 
   Future<void> createProperty({
     required String name,
@@ -41,7 +40,7 @@ class CreatePropertyCubit extends Cubit<CreatePropertyState> {
     );
 
     if (error != null) {
-      emit(CreatePropertyError(error));
+      emit(CreatePropertyErrorState(error));
     } else {
       emit(CreatePropertySuccess());
     }

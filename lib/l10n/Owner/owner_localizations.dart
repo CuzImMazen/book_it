@@ -442,6 +442,120 @@ abstract class OwnerLocalizations {
   /// In en, this message translates to:
   /// **'Property created Successfully'**
   String get property_created_successfully;
+
+  /// No description provided for @ownerPropertyErrorConnectionTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timed out. Please try again.'**
+  String get ownerPropertyErrorConnectionTimeout;
+
+  /// No description provided for @ownerPropertyErrorServerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error. Please try again later.'**
+  String get ownerPropertyErrorServerError;
+
+  /// No description provided for @ownerPropertyErrorFailedCreateProperty.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to create the property.'**
+  String get ownerPropertyErrorFailedCreateProperty;
+
+  /// No description provided for @ownerPropertyErrorFailedDeleteProperty.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to delete the property.'**
+  String get ownerPropertyErrorFailedDeleteProperty;
+
+  /// No description provided for @ownerPropertyErrorNoPropertiesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No properties found.'**
+  String get ownerPropertyErrorNoPropertiesFound;
+
+  /// No description provided for @ownerPropertyErrorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred.'**
+  String get ownerPropertyErrorUnknown;
+
+  /// No description provided for @ownerRequestsErrorConnectionTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection timeout. Please try again.'**
+  String get ownerRequestsErrorConnectionTimeout;
+
+  /// No description provided for @ownerRequestsErrorServerError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error. Please try again later.'**
+  String get ownerRequestsErrorServerError;
+
+  /// No description provided for @ownerRequestsErrorFailedAcceptBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to accept booking.'**
+  String get ownerRequestsErrorFailedAcceptBooking;
+
+  /// No description provided for @ownerRequestsErrorFailedRejectBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reject booking.'**
+  String get ownerRequestsErrorFailedRejectBooking;
+
+  /// No description provided for @ownerRequestsErrorFailedAcceptModification.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to accept modification.'**
+  String get ownerRequestsErrorFailedAcceptModification;
+
+  /// No description provided for @ownerRequestsErrorFailedRejectModification.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reject modification.'**
+  String get ownerRequestsErrorFailedRejectModification;
+
+  /// No description provided for @ownerRequestsErrorNoRequestsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No requests found.'**
+  String get ownerRequestsErrorNoRequestsFound;
+
+  /// No description provided for @ownerRequestsErrorFailedFetchPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch pending bookings.'**
+  String get ownerRequestsErrorFailedFetchPending;
+
+  /// No description provided for @ownerRequestsErrorFailedFetchModification.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to fetch modification requests.'**
+  String get ownerRequestsErrorFailedFetchModification;
+
+  /// No description provided for @ownerRequestsErrorFailedAcceptRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to accept request.'**
+  String get ownerRequestsErrorFailedAcceptRequest;
+
+  /// No description provided for @ownerRequestsErrorFailedRejectRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to reject request.'**
+  String get ownerRequestsErrorFailedRejectRequest;
+
+  /// No description provided for @ownerRequestsErrorDateConflict.
+  ///
+  /// In en, this message translates to:
+  /// **'Request cannot be accepted due to date conflict.'**
+  String get ownerRequestsErrorDateConflict;
+
+  /// No description provided for @ownerRequestsErrorUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unexpected error.'**
+  String get ownerRequestsErrorUnknown;
 }
 
 class _OwnerLocalizationsDelegate extends LocalizationsDelegate<OwnerLocalizations> {

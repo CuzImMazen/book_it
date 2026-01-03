@@ -99,7 +99,9 @@ final GoRouter router = GoRouter(
             return MultiBlocProvider(
               providers: [
                 BlocProvider(
-                  create: (_) => OwnerPropertiesCubit()..getOwnerProperties(),
+                  create: (_) =>
+                      OwnerPropertiesCubit(OwnerPropertiesRepo())
+                        ..getOwnerProperties(),
                 ),
                 BlocProvider(
                   create: (_) => CreatePropertyCubit(OwnerPropertiesRepo()),

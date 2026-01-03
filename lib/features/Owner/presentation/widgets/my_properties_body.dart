@@ -1,3 +1,4 @@
+import 'package:book_it/core/error/owner_properties_error_mapper.dart';
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/features/Home/presentation/viewModel/cubit/property_cubit.dart';
@@ -20,6 +21,7 @@ class _MyPropertiesBodyState extends State<MyPropertiesBody> {
     context.read<OwnerPropertiesCubit>().getOwnerProperties();
   }
 
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<OwnerPropertiesCubit, OwnerPropertiesState>(
       builder: (context, state) {
@@ -28,8 +30,8 @@ class _MyPropertiesBodyState extends State<MyPropertiesBody> {
             child: CircularProgressIndicator(color: kPrimaryColor),
           );
         }
-        if (state is OwnerPropertiesError) {
-          return Center(child: Text(state.message));
+        if (state is OwnerPropertiesErrorState) {
+          return Center(child: Text(state.error.localized(context)));
         }
         if (state is OwnerPropertiesLoaded) {
           if (state.properties.isEmpty) {
