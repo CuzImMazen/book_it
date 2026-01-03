@@ -64,7 +64,8 @@ class _SecondSignupFormState extends State<SecondSignupForm> {
             color: Colors.green,
             duration: Duration(seconds: 2),
           );
-          context.go("/signin");
+          context.pop();
+          context.pop();
         }
       },
       builder: (context, state) {
