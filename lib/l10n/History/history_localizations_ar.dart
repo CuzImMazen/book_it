@@ -111,4 +111,22 @@ class HistoryLocalizationsAr extends HistoryLocalizations {
 
   @override
   String get bookingErrorUnknown => 'حدث خطأ غير متوقع';
+
+  @override
+  String get status_canceled => 'ملغى';
+
+  @override
+  String get status_completed => 'مكتمل';
+
+  @override
+  String get status_active => 'نشط';
+
+  @override
+  String get status_pending => 'قيد الانتظار';
+
+  @override
+  String get status_edit => 'قيد انتظار التعديل';
+
+  @override
+  String get status_upcoming => 'قادم';
 }

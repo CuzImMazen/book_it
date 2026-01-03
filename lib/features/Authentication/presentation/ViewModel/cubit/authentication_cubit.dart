@@ -11,9 +11,6 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
   AuthenticationCubit(this._authRepo) : super(const AuthenticationInitial());
 
-  /// =========================
-  /// Sign Up
-  /// =========================
   Future<void> signUp({
     required String firstName,
     required String lastName,
@@ -46,9 +43,6 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  /// =========================
-  /// Sign In
-  /// =========================
   Future<void> signIn({
     required String phoneNumber,
     required String password,
@@ -67,9 +61,6 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
-  /// =========================
-  /// Sign Out
-  /// =========================
   Future<void> signOut() async {
     emit(const AuthenticationLoading());
 

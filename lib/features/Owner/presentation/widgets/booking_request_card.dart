@@ -1,5 +1,7 @@
 import 'package:book_it/core/extensions/localization_extension.dart';
+import 'package:book_it/core/utils/category_localization.dart';
 import 'package:book_it/core/utils/helpers.dart';
+import 'package:book_it/core/utils/location_localization.dart';
 import 'package:book_it/features/Owner/data/models/pending_booking.dart';
 import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_cubit.dart';
 import 'package:book_it/features/Owner/presentation/widgets/accept_button.dart';
@@ -35,80 +37,72 @@ class BookingRequestCard extends StatelessWidget {
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          capitalize(pendingBooking.property.category),
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w900,
-                          ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        localizedCategory(
+                          context,
+                          pendingBooking.property.category,
                         ),
-                      ),
-                      const Icon(Icons.person_2),
-                      const SizedBox(width: 7),
-                      Text(
-                        "${pendingBooking.user.firstName} ${pendingBooking.user.lastName}",
                         style: const TextStyle(
-                          fontSize: 15,
+                          fontSize: 20,
                           fontWeight: FontWeight.w900,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    const Icon(Icons.person_2),
+                    const SizedBox(width: 7),
+                    Text(
+                      "${pendingBooking.user.firstName} ${pendingBooking.user.lastName}",
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 3),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            overflow: TextOverflow.ellipsis,
-                            "${pendingBooking.property.governorate}, ${pendingBooking.property.city}",
-                            style: const TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        overflow: TextOverflow.ellipsis,
+                        "${localizedGovernorate(context, pendingBooking.property.governorate)}, ${localizedCity(context, pendingBooking.property.governorate, pendingBooking.property.city)}",
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w300,
                         ),
-                        const Icon(Icons.calendar_month_outlined),
-                        const SizedBox(width: 5),
-                        Text(
-                          formatBookingDates(
-                            pendingBooking.startDate,
-                            pendingBooking.endDate,
-                          ),
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    const Icon(Icons.calendar_month_outlined),
+                    const SizedBox(width: 5),
+                    Text(
+                      formatBookingDates(
+                        context,
+                        pendingBooking.startDate,
+                        pendingBooking.endDate,
+                      ),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Directionality(
-                  textDirection: TextDirection.ltr,
-                  child: Text(
-                    "\$${pendingBooking.property.price}/${context.ownerloc.bookingRequest_perNight}",
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
+                child: Text(
+                  "\$${pendingBooking.property.price}/${context.ownerloc.bookingRequest_perNight}",
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

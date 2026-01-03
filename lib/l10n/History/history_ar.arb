@@ -108,5 +108,12 @@
   "bookingErrorUnknown": "حدث خطأ غير متوقع",
   "@bookingErrorUnknown": {
     "description": "رسالة خطأ عام عند حدوث خطأ غير معروف"
-  }
+
+  },
+  "status_canceled": "ملغى",
+  "status_completed": "مكتمل",
+  "status_active": "نشط",
+  "status_pending": "قيد الانتظار",
+  "status_edit":"قيد انتظار التعديل",
+  "status_upcoming": "قادم"
 }

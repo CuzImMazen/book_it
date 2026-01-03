@@ -201,41 +201,29 @@ class OwnerLocalizationsEn extends OwnerLocalizations {
   String get ownerPropertyErrorUnknown => 'An unexpected error occurred.';
 
   @override
-  String get ownerRequestsErrorConnectionTimeout => 'Connection timeout. Please try again.';
+  String get ownerRequests_error_booking_conflict => 'Booking can\'t be accepted due to date conflict';
 
   @override
-  String get ownerRequestsErrorServerError => 'Server error. Please try again later.';
+  String get ownerRequests_error_modification_conflict => 'Modification can\'t be accepted due to date conflict';
 
   @override
-  String get ownerRequestsErrorFailedAcceptBooking => 'Failed to accept booking.';
+  String get ownerRequests_accept_success => 'Booking request accepted successfully';
 
   @override
-  String get ownerRequestsErrorFailedRejectBooking => 'Failed to reject booking.';
+  String get ownerRequests_reject_success => 'Booking request rejected successfully';
 
   @override
-  String get ownerRequestsErrorFailedAcceptModification => 'Failed to accept modification.';
+  String get ownerRequests_modification_accept_success => 'Modification request accepted successfully';
 
   @override
-  String get ownerRequestsErrorFailedRejectModification => 'Failed to reject modification.';
+  String get ownerRequests_modification_reject_success => 'Modification request rejected successfully';
 
   @override
-  String get ownerRequestsErrorNoRequestsFound => 'No requests found.';
+  String get ownerRequests_connection_timeout => 'Connection timeout. Please try again.';
 
   @override
-  String get ownerRequestsErrorFailedFetchPending => 'Failed to fetch pending bookings.';
+  String get ownerRequests_server_error => 'Server error occurred. Please try again.';
 
   @override
-  String get ownerRequestsErrorFailedFetchModification => 'Failed to fetch modification requests.';
-
-  @override
-  String get ownerRequestsErrorFailedAcceptRequest => 'Failed to accept request.';
-
-  @override
-  String get ownerRequestsErrorFailedRejectRequest => 'Failed to reject request.';
-
-  @override
-  String get ownerRequestsErrorDateConflict => 'Request cannot be accepted due to date conflict.';
-
-  @override
-  String get ownerRequestsErrorUnknown => 'Unexpected error.';
+  String get ownerRequests_unexpected_error => 'Unexpected error occurred';
 }

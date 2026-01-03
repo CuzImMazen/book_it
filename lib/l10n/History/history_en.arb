@@ -108,5 +108,11 @@
   "bookingErrorUnknown": "Unexpected error occurred",
   "@bookingErrorUnknown": {
     "description": "Generic unknown error message"
-  }
+  },
+  "status_canceled": "Canceled",
+  "status_completed": "Completed",
+  "status_active": "Active",
+  "status_pending": "Pending",
+  "status_edit": "Pending Edit",
+  "status_upcoming": "Upcoming"
 }

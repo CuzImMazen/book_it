@@ -1,4 +1,5 @@
 import 'package:book_it/core/extensions/localization_extension.dart';
+import 'package:book_it/core/utils/location_localization.dart';
 import 'package:book_it/features/Home/data/models/property_model.dart';
 import 'package:flutter/material.dart';
 
@@ -9,29 +10,27 @@ class DetailPageLocationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Row(
-        children: [
-          Text(
-            "${property.governorate}, ${property.city}",
-            style: TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.w500,
-              fontSize: 16,
-            ),
+    return Row(
+      children: [
+        Text(
+          "${localizedGovernorate(context, property.governorate)}, "
+          "${localizedCity(context, property.governorate, property.city)}",
+          style: TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.w500,
+            fontSize: 16,
           ),
-          Spacer(),
-          Text(
-            "\$${context.home.detail_pricePerNight(property.price)}",
-            style: TextStyle(
-              color: Colors.amber.shade800,
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-            ),
+        ),
+        Spacer(),
+        Text(
+          "\$${context.home.detail_pricePerNight(property.price)}",
+          style: TextStyle(
+            color: Colors.amber.shade800,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -93,7 +93,7 @@ class FilterViewBody extends StatelessWidget {
                     min: 100,
                     max: 1000,
                     divisions: 18,
-                    unit: "m²",
+                    unit: context.home.unit_square_meter,
                     currentRange: areaRange,
                     onChanged: (range) {
                       context.read<FilterCubit>().updateAreaRange(range);

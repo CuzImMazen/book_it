@@ -124,20 +124,19 @@
   "ownerPropertyErrorFailedDeleteProperty": "Failed to delete the property.",
   "ownerPropertyErrorNoPropertiesFound": "No properties found.",
   "ownerPropertyErrorUnknown": "An unexpected error occurred.",
-  "ownerRequestsErrorConnectionTimeout": "Connection timeout. Please try again.",
-  "ownerRequestsErrorServerError": "Server error. Please try again later.",
-  "ownerRequestsErrorFailedAcceptBooking": "Failed to accept booking.",
-  "ownerRequestsErrorFailedRejectBooking": "Failed to reject booking.",
-  "ownerRequestsErrorFailedAcceptModification": "Failed to accept modification.",
-  "ownerRequestsErrorFailedRejectModification": "Failed to reject modification.",
-  "ownerRequestsErrorNoRequestsFound": "No requests found.",
- 
-  "ownerRequestsErrorFailedFetchPending": "Failed to fetch pending bookings.",
-  "ownerRequestsErrorFailedFetchModification": "Failed to fetch modification requests.",
-  "ownerRequestsErrorFailedAcceptRequest": "Failed to accept request.",
-  "ownerRequestsErrorFailedRejectRequest": "Failed to reject request.",
-  "ownerRequestsErrorDateConflict": "Request cannot be accepted due to date conflict.",
-  "ownerRequestsErrorUnknown": "Unexpected error."
+  
+  "ownerRequests_error_booking_conflict": "Booking can't be accepted due to date conflict",
+  "ownerRequests_error_modification_conflict": "Modification can't be accepted due to date conflict",
+  "ownerRequests_accept_success": "Booking request accepted successfully",
+  "ownerRequests_reject_success": "Booking request rejected successfully",
+  "ownerRequests_modification_accept_success": "Modification request accepted successfully",
+  "ownerRequests_modification_reject_success": "Modification request rejected successfully",
+  "ownerRequests_connection_timeout": "Connection timeout. Please try again.",
+  "ownerRequests_server_error": "Server error occurred. Please try again.",
+  "ownerRequests_unexpected_error": "Unexpected error occurred"
+
+
+  
  
   
 }

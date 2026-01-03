@@ -111,4 +111,22 @@ class HistoryLocalizationsEn extends HistoryLocalizations {
 
   @override
   String get bookingErrorUnknown => 'Unexpected error occurred';
+
+  @override
+  String get status_canceled => 'Canceled';
+
+  @override
+  String get status_completed => 'Completed';
+
+  @override
+  String get status_active => 'Active';
+
+  @override
+  String get status_pending => 'Pending';
+
+  @override
+  String get status_edit => 'Pending Edit';
+
+  @override
+  String get status_upcoming => 'Upcoming';
 }

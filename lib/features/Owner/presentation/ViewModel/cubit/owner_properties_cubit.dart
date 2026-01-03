@@ -29,7 +29,6 @@ class OwnerPropertiesCubit extends Cubit<OwnerPropertiesState> {
     final currentState = state;
     if (currentState is! OwnerPropertiesLoaded) return;
 
-    // Optimistic update
     final updatedList = currentState.properties
         .where((p) => p.id != propertyId)
         .toList();
@@ -39,7 +38,6 @@ class OwnerPropertiesCubit extends Cubit<OwnerPropertiesState> {
     if (isClosed) return;
 
     if (error != null) {
-      // Rollback on failure
       emit(OwnerPropertiesErrorState(error));
       emit(currentState);
     }

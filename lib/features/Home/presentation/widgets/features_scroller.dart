@@ -16,7 +16,7 @@ class PropertyFeaturesScroller extends StatelessWidget {
         children: [
           PropertyFeatureContainer(
             icon: Icons.apartment,
-            data: '${property.area} m²',
+            data: '${property.area} ${context.home.unit_square_meter}',
           ),
           PropertyFeatureContainer(
             icon: Icons.bathtub,

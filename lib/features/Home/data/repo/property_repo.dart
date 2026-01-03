@@ -13,9 +13,6 @@ enum PropertyError {
 class PropertyRepo {
   final PropertyService _propertyService = PropertyService.instance;
 
-  /// =========================
-  /// Get Properties
-  /// =========================
   Future<(List<PropertyModel> properties, PropertyError? error)> getProperties(
     Map<String, String> queryParameters,
   ) async {
@@ -51,9 +48,6 @@ class PropertyRepo {
     }
   }
 
-  /// =========================
-  /// Rate Property
-  /// =========================
   Future<(bool success, PropertyError? error)> rateProperty(
     int propertyId,
     double stars,

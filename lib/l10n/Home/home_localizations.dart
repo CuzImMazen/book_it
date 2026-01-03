@@ -874,6 +874,12 @@ abstract class HomeLocalizations {
   /// In en, this message translates to:
   /// **'An unexpected error occurred.'**
   String get propertyErrorUnknown;
+
+  /// No description provided for @unit_square_meter.
+  ///
+  /// In en, this message translates to:
+  /// **'m²'**
+  String get unit_square_meter;
 }
 
 class _HomeLocalizationsDelegate extends LocalizationsDelegate<HomeLocalizations> {

@@ -1,4 +1,5 @@
 import 'package:book_it/core/style/colors.dart';
+import 'package:book_it/core/utils/category_localization.dart';
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/features/History/data/model/book_model.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +12,14 @@ class TitleAndButtonsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     if (book.status == "Active" || book.status == "Upcoming") {
       return Padding(
-        padding: const EdgeInsets.only(right: 8.0, bottom: 4),
+        padding: const EdgeInsets.only(right: 8.0, bottom: 4, left: 8),
         child: Row(
           children: [
             Expanded(
               child: Text(
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
-                capitalize(book.property.category),
+                localizedCategory(context, book.property.category),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
               ),
             ),
@@ -34,7 +35,7 @@ class TitleAndButtonsRow extends StatelessWidget {
               },
               child: Icon(
                 Icons.edit,
-                color: kPrimaryColor.withAlpha(125),
+                color: kPrimaryColor.withAlpha(200),
                 size: 22,
               ),
             ),
@@ -57,7 +58,7 @@ class TitleAndButtonsRow extends StatelessWidget {
               child: Text(
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
-                capitalize(book.property.category),
+                localizedCategory(context, book.property.category),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
               ),
             ),
@@ -96,7 +97,7 @@ class TitleAndButtonsRow extends StatelessWidget {
               child: Text(
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
-                capitalize(book.property.category),
+                localizedCategory(context, book.property.category),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
               ),
             ),
@@ -114,7 +115,7 @@ class TitleAndButtonsRow extends StatelessWidget {
               child: Text(
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
-                capitalize(book.property.category),
+                localizedCategory(context, book.property.category),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/utils/helpers.dart';
+import 'package:book_it/core/utils/location_localization.dart';
 import 'package:book_it/features/Home/data/models/property_model.dart';
 import 'package:book_it/features/Home/presentation/widgets/property_rating.dart';
 import 'package:flutter/material.dart';
@@ -56,81 +57,64 @@ class PropertyContainer extends StatelessWidget {
             SizedBox(height: 10),
 
             // Name and price
-            Directionality(
-              textDirection: TextDirection.ltr,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 6.0),
-                    child: Text(
-                      property.name,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 6.0),
+                  child: Text(
+                    property.name,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
                   ),
-                  Spacer(),
-                  Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: Text(
-                      "\$${context.home.detail_pricePerNight(property.price)}",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+                Spacer(),
+                Text(
+                  "\$${context.home.detail_pricePerNight(property.price)}",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                ),
+              ],
             ),
             SizedBox(height: 5),
-            // Location and availability
-            Directionality(
-              textDirection: TextDirection.ltr,
-              child: Row(
-                children: [
-                  Icon(Icons.location_on, color: Color(0xff0987b6)),
-                  Text(
-                    "${property.governorate}, ${property.city}",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xff0987b6),
-                    ),
+
+            Row(
+              children: [
+                Icon(Icons.location_on, color: Color(0xff0987b6)),
+                Text(
+                  "${localizedGovernorate(context, property.governorate)}, "
+                  "${localizedCity(context, property.governorate, property.city)}",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xff0987b6),
                   ),
-                  Spacer(),
-                  property.availability
-                      ? Text(
-                          context.home.detail_available,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.green,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        )
-                      : Text(
-                          context.home.detail_unavailable,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.red,
-                            fontWeight: FontWeight.w600,
-                          ),
+                ),
+                Spacer(),
+                property.availability
+                    ? Text(
+                        context.home.detail_available,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.green,
+                          fontWeight: FontWeight.w600,
                         ),
-                ],
-              ),
+                      )
+                    : Text(
+                        context.home.detail_unavailable,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.red,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+              ],
             ),
             const SizedBox(height: 10),
 
-            Directionality(
-              textDirection: TextDirection.ltr,
-              child: PropertyRatingWidget(
-                propertyId: property.id,
-                ownerId: property.owner?.id,
-                averageRating: property.averageRating,
-                ratingsCount: property.ratingsCount,
-                userRating: property.userRating,
-              ),
+            PropertyRatingWidget(
+              propertyId: property.id,
+              ownerId: property.owner?.id,
+              averageRating: property.averageRating,
+              ratingsCount: property.ratingsCount,
+              userRating: property.userRating,
             ),
           ],
         ),

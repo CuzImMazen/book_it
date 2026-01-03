@@ -252,22 +252,36 @@ Future<dynamic> showDiscardFiltersDialog(BuildContext parentContext) {
   );
 }
 
-String formatBookingDates(String start, String end) {
-  String padDate(String date) {
-    final parts = date.split('-');
-    final year = parts[0];
-    final month = parts[1].padLeft(2, '0');
-    final day = parts[2].padLeft(2, '0');
-    return "$year-$month-$day";
-  }
+// String formatBookingDates(String start, String end) {
+//   String padDate(String date) {
+//     final parts = date.split('-');
+//     final year = parts[0];
+//     final month = parts[1].padLeft(2, '0');
+//     final day = parts[2].padLeft(2, '0');
+//     return "$year-$month-$day";
+//   }
 
-  final startDate = DateTime.parse(padDate(start));
-  final endDate = DateTime.parse(padDate(end));
+//   final startDate = DateTime.parse(padDate(start));
+//   final endDate = DateTime.parse(padDate(end));
 
-  final startFormatted = DateFormat.MMMd().format(startDate);
-  final endFormatted = DateFormat.MMMd().format(endDate);
+//   final startFormatted = DateFormat.MMMd().format(startDate);
+//   final endFormatted = DateFormat.MMMd().format(endDate);
 
-  return "$startFormatted - $endFormatted";
+//   return "$startFormatted - $endFormatted";
+// }
+
+String formatBookingDates(BuildContext context, String start, String end) {
+  DateTime startDate = DateTime.tryParse(start) ?? DateTime.now();
+  DateTime endDate = DateTime.tryParse(end) ?? DateTime.now();
+
+  final locale = Localizations.localeOf(context).toString();
+
+  final startFormatted = DateFormat.MMMd(locale).format(startDate);
+  final endFormatted = DateFormat.MMMd(locale).format(endDate);
+
+  final separator = ' - ';
+
+  return '$startFormatted$separator$endFormatted';
 }
 
 String capitalize(String text) {

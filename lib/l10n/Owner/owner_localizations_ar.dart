@@ -201,41 +201,29 @@ class OwnerLocalizationsAr extends OwnerLocalizations {
   String get ownerPropertyErrorUnknown => 'حدث خطأ غير متوقع.';
 
   @override
-  String get ownerRequestsErrorConnectionTimeout => 'انتهت مهلة الاتصال. يرجى المحاولة مرة أخرى.';
+  String get ownerRequests_error_booking_conflict => 'لا يمكن قبول الحجز بسبب تعارض في التواريخ';
 
   @override
-  String get ownerRequestsErrorServerError => 'خطأ في الخادم. يرجى المحاولة لاحقًا.';
+  String get ownerRequests_error_modification_conflict => 'لا يمكن قبول التعديل بسبب تعارض في التواريخ';
 
   @override
-  String get ownerRequestsErrorFailedAcceptBooking => 'فشل في قبول الحجز.';
+  String get ownerRequests_accept_success => 'تم قبول طلب الحجز بنجاح';
 
   @override
-  String get ownerRequestsErrorFailedRejectBooking => 'فشل في رفض الحجز.';
+  String get ownerRequests_reject_success => 'تم رفض طلب الحجز بنجاح';
 
   @override
-  String get ownerRequestsErrorFailedAcceptModification => 'فشل في قبول التعديل.';
+  String get ownerRequests_modification_accept_success => 'تم قبول طلب التعديل بنجاح';
 
   @override
-  String get ownerRequestsErrorFailedRejectModification => 'فشل في رفض التعديل.';
+  String get ownerRequests_modification_reject_success => 'تم رفض طلب التعديل بنجاح';
 
   @override
-  String get ownerRequestsErrorNoRequestsFound => 'لا توجد طلبات.';
+  String get ownerRequests_connection_timeout => 'انتهت مهلة الاتصال. حاول مرة أخرى';
 
   @override
-  String get ownerRequestsErrorFailedFetchPending => 'فشل في جلب الحجوزات المعلقة.';
+  String get ownerRequests_server_error => 'حدث خطأ في الخادم. حاول مرة أخرى';
 
   @override
-  String get ownerRequestsErrorFailedFetchModification => 'فشل في جلب طلبات التعديل.';
-
-  @override
-  String get ownerRequestsErrorFailedAcceptRequest => 'فشل في قبول الطلب.';
-
-  @override
-  String get ownerRequestsErrorFailedRejectRequest => 'فشل في رفض الطلب.';
-
-  @override
-  String get ownerRequestsErrorDateConflict => 'لا يمكن قبول الطلب بسبب تعارض التواريخ.';
-
-  @override
-  String get ownerRequestsErrorUnknown => 'حدث خطأ غير متوقع.';
+  String get ownerRequests_unexpected_error => 'حدث خطأ غير متوقع';
 }

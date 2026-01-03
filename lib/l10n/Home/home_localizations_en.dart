@@ -401,4 +401,7 @@ class HomeLocalizationsEn extends HomeLocalizations {
 
   @override
   String get propertyErrorUnknown => 'An unexpected error occurred.';
+
+  @override
+  String get unit_square_meter => 'm²';
 }

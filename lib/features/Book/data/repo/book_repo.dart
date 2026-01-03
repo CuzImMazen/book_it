@@ -12,9 +12,6 @@ enum BookError {
 class BookRepo {
   final BookService _bookService = BookService.instance;
 
-  /// =========================
-  /// Create Booking
-  /// =========================
   Future<BookError?> createBook({
     required int id,
     required String startDate,
@@ -41,9 +38,6 @@ class BookRepo {
     }
   }
 
-  /// =========================
-  /// Private Error Mapper
-  /// =========================
   BookError _mapDioErrorToBookError(DioException e) {
     final status = e.response?.statusCode;
 

@@ -1,4 +1,5 @@
 import 'package:book_it/core/extensions/localization_extension.dart';
+import 'package:book_it/core/utils/location_localization.dart';
 import 'package:book_it/features/History/data/model/book_model.dart';
 import 'package:book_it/features/History/presentation/widgets/book_date_and_status_row.dart';
 import 'package:book_it/features/History/presentation/widgets/title_and_buttons_row.dart';
@@ -20,53 +21,50 @@ class BookingsContainer extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Directionality(
-              textDirection: TextDirection.ltr,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        height: 100,
-                        width: 100,
-                        book.property.mainImage,
-                        fit: BoxFit.cover,
-                      ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                      height: 100,
+                      width: 100,
+                      book.property.mainImage,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TitleAndButtonsRow(book: book),
-                        SizedBox(
-                          width: 185,
-                          child: Text(
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            "${book.property.governorate}, ${book.property.city}",
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w400,
-                            ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TitleAndButtonsRow(book: book),
+                      SizedBox(
+                        width: 185,
+                        child: Text(
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          "${localizedGovernorate(context, book.property.governorate)}, ${localizedCity(context, book.property.governorate, book.property.city)}",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
-                        SizedBox(height: 3),
-                        Text(
-                          "\$${context.history.price_per_night(book.property.price)}",
-                          style: TextStyle(fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: 10),
-                        BookDateAndStatusRow(book: book),
-                        SizedBox(height: 10),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 3),
+                      Text(
+                        "\$${context.history.price_per_night(book.property.price)}",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(height: 10),
+                      BookDateAndStatusRow(book: book),
+                      SizedBox(height: 10),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

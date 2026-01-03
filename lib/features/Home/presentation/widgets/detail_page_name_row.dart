@@ -9,34 +9,31 @@ class DetailPageNameRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Row(
-        children: [
-          Text(
-            property.name,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
-          ),
-          Spacer(),
-          property.availability
-              ? Text(
-                  context.home.detail_available,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.green,
-                    fontWeight: FontWeight.w900,
-                  ),
-                )
-              : Text(
-                  context.home.detail_unavailable,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.red,
-                    fontWeight: FontWeight.w600,
-                  ),
+    return Row(
+      children: [
+        Text(
+          property.name,
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+        ),
+        Spacer(),
+        property.availability
+            ? Text(
+                context.home.detail_available,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.green,
+                  fontWeight: FontWeight.w900,
                 ),
-        ],
-      ),
+              )
+            : Text(
+                context.home.detail_unavailable,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.red,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+      ],
     );
   }
 }

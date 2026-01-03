@@ -401,4 +401,7 @@ class HomeLocalizationsAr extends HomeLocalizations {
 
   @override
   String get propertyErrorUnknown => 'حدث خطأ غير متوقع.';
+
+  @override
+  String get unit_square_meter => 'م²';
 }

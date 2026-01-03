@@ -43,13 +43,13 @@ class RangeSliderContainer extends StatelessWidget {
             divisions: divisions,
             values: currentRange,
             labels: RangeLabels(
-              "${currentRange.start.toInt()}$unit",
-              "${currentRange.end.toInt()}$unit",
+              "${currentRange.start.toInt()} $unit",
+              "${currentRange.end.toInt()} $unit",
             ),
             onChanged: onChanged,
           ),
           Text(
-            "${context.home.min}: ${currentRange.start.toInt()}$unit - ${context.home.max}: ${currentRange.end.toInt()}$unit",
+            "${context.home.min}: ${currentRange.start.toInt()} $unit - ${context.home.max}: ${currentRange.end.toInt()} $unit",
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 16,

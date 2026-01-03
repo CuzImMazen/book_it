@@ -173,7 +173,8 @@
   "propertyErrorServerError": "حدث خطأ في الخادم. يرجى المحاولة لاحقًا.",
   "propertyErrorUnauthorizedRating": "لا يمكنك تقييم عقار لم تحجزه من قبل.",
   "propertyErrorNoPropertiesFound": "لم يتم العثور على عقارات.",
-  "propertyErrorUnknown": "حدث خطأ غير متوقع."
+  "propertyErrorUnknown": "حدث خطأ غير متوقع.",
+  "unit_square_meter": "م²"
 
 }
 

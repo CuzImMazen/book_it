@@ -15,9 +15,6 @@ enum OwnerPropertyError {
 class OwnerPropertiesRepo {
   final OwnerService _ownerService = OwnerService.instance;
 
-  /// =========================
-  /// Get Owner Properties
-  /// =========================
   Future<(List<PropertyModel> properties, OwnerPropertyError? error)>
   getOwnerProperties() async {
     try {
@@ -52,9 +49,6 @@ class OwnerPropertiesRepo {
     }
   }
 
-  /// =========================
-  /// Create Property
-  /// =========================
   Future<OwnerPropertyError?> createProperty({
     required String name,
     required String description,
@@ -95,9 +89,6 @@ class OwnerPropertiesRepo {
     }
   }
 
-  /// =========================
-  /// Delete Property
-  /// =========================
   Future<OwnerPropertyError?> deleteProperty(int propertyId) async {
     try {
       final response = await _ownerService.deleteProperty(propertyId);

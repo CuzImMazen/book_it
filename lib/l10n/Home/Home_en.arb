@@ -168,7 +168,8 @@
   "propertyErrorServerError": "Server error occurred. Please try again later.",
   "propertyErrorUnauthorizedRating": "You cannot rate a property you haven't booked before.",
   "propertyErrorNoPropertiesFound": "No properties found.",
-  "propertyErrorUnknown": "An unexpected error occurred."
+  "propertyErrorUnknown": "An unexpected error occurred.",
+   "unit_square_meter": "m²"
 
 }
 

@@ -298,6 +298,42 @@ abstract class HistoryLocalizations {
   /// In en, this message translates to:
   /// **'Unexpected error occurred'**
   String get bookingErrorUnknown;
+
+  /// No description provided for @status_canceled.
+  ///
+  /// In en, this message translates to:
+  /// **'Canceled'**
+  String get status_canceled;
+
+  /// No description provided for @status_completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get status_completed;
+
+  /// No description provided for @status_active.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get status_active;
+
+  /// No description provided for @status_pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get status_pending;
+
+  /// No description provided for @status_edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Edit'**
+  String get status_edit;
+
+  /// No description provided for @status_upcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get status_upcoming;
 }
 
 class _HistoryLocalizationsDelegate extends LocalizationsDelegate<HistoryLocalizations> {

@@ -18,9 +18,6 @@ enum AuthError {
 class AuthenticationRepo {
   final AuthenticationService _authService = AuthenticationService.instance;
 
-  /// =========================
-  /// Sign Up
-  /// =========================
   Future<AuthError?> signUp({
     required String firstName,
     required String lastName,
@@ -57,9 +54,6 @@ class AuthenticationRepo {
     }
   }
 
-  /// =========================
-  /// Sign In
-  /// =========================
   Future<(UserModel?, AuthError?)> signIn({
     required String phoneNumber,
     required String password,
@@ -89,9 +83,6 @@ class AuthenticationRepo {
     }
   }
 
-  /// =========================
-  /// Sign Out
-  /// =========================
   Future<AuthError?> signOut() async {
     try {
       final response = await _authService.signOut();
@@ -108,13 +99,9 @@ class AuthenticationRepo {
     }
   }
 
-  /// =========================
-  /// Error Mapper (PRIVATE)
-  /// =========================
   AuthError _mapDioErrorToAuthError(DioException e) {
     final status = e.response?.statusCode;
 
-    // Domain / validation errors
     switch (status) {
       case 401:
         return AuthError.invalidPassword;
@@ -126,12 +113,10 @@ class AuthenticationRepo {
         return AuthError.phoneAlreadyRegistered;
     }
 
-    // Server errors
     if (status != null && status >= 500) {
       return AuthError.serverError;
     }
 
-    // Network errors
     if (e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.receiveTimeout ||
         e.type == DioExceptionType.sendTimeout ||

@@ -1,3 +1,4 @@
+import 'package:book_it/core/error/owner_requests_mapper.dart';
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/widgets/primary_text.dart';
 import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_cubit.dart';
@@ -27,11 +28,13 @@ class _PendingRequestsViewState extends State<PendingRequestsView> {
     return BlocListener<OwnerRequestsCubit, OwnerRequestsState>(
       listener: (context, state) {
         if (state is OwnerRequestsLoaded && state.snackMessage != null) {
-          final displayMessage = state.snackMessage!.split("|")[0];
+          final rawMessage = state.snackMessage!.split("|")[0];
+
+          final message = mapOwnerRequestMessage(context, rawMessage);
 
           showSnackBar(
             context: context,
-            message: displayMessage,
+            message: message,
             color: state.snackSuccess == true ? Colors.green : Colors.red,
           );
 

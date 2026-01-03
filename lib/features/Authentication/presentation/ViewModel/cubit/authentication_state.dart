@@ -12,9 +12,6 @@ class AuthenticationLoading extends AuthenticationState {
   const AuthenticationLoading();
 }
 
-/// =========================
-/// Sign Up
-/// =========================
 class AuthenticationSignUpSuccess extends AuthenticationState {
   const AuthenticationSignUpSuccess();
 }
@@ -25,9 +22,6 @@ class AuthenticationSignUpFailure extends AuthenticationState {
   const AuthenticationSignUpFailure(this.error);
 }
 
-/// =========================
-/// Sign In
-/// =========================
 class AuthenticationSignInSuccess extends AuthenticationState {
   final UserModel user;
 
@@ -40,9 +34,6 @@ class AuthenticationSignInFailure extends AuthenticationState {
   const AuthenticationSignInFailure(this.error);
 }
 
-/// =========================
-/// Sign Out
-/// =========================
 class AuthenticationSignOutSuccess extends AuthenticationState {
   const AuthenticationSignOutSuccess();
 }
