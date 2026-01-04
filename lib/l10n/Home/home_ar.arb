@@ -37,7 +37,7 @@
 
  
   "damascus_alQadam": "القدم",
-  "damascus_mazzeh": "المزه",
+  "damascus_mazzeh": "المزة",
   "damascus_alSalihiyah": "الصالحية",
   "damascus_baramkeh": "البرامكة",
   "damascus_alZahra": "الزهراء",
@@ -50,7 +50,7 @@
   "ruralDamascus_alTall": "التل",
 
  
-  "aleppo_azaz": "أعزاز",
+  "aleppo_azaz": "عزاز",
   "aleppo_alBab": "الباب",
   "aleppo_manbij": "منبج",
   "aleppo_jarabulus": "جرابلس",
@@ -174,7 +174,10 @@
   "propertyErrorUnauthorizedRating": "لا يمكنك تقييم عقار لم تحجزه من قبل.",
   "propertyErrorNoPropertiesFound": "لم يتم العثور على عقارات.",
   "propertyErrorUnknown": "حدث خطأ غير متوقع.",
-  "unit_square_meter": "م²"
+  "unit_square_meter": "م²",
+  "no_favorites_yet": "لا توجد لديك شقق مفضلة ",
+   "favourites": "قائمة المفضلة",
+   "something_went_wrong": "حدث خطأ غير متوقع."
 
 }
 

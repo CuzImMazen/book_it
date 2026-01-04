@@ -21,6 +21,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     required String role,
     required File profilePicture,
     required File idImage,
+    required String fcmToken,
   }) async {
     emit(const AuthenticationLoading());
 
@@ -34,6 +35,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       role: role,
       profilePicture: profilePicture,
       idImage: idImage,
+      fcmToken: fcmToken,
     );
 
     if (error == null) {

@@ -12,6 +12,7 @@ import 'package:book_it/core/widgets/custom_text_field.dart';
 import 'package:book_it/core/widgets/primary_text.dart';
 import 'package:book_it/features/Authentication/presentation/widgets/role_selector_row.dart';
 import 'package:book_it/core/widgets/secondary_text.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -140,10 +141,13 @@ class _SecondSignupFormState extends State<SecondSignupForm> {
                   else
                     PrimaryButton(
                       text: context.auth.auth_signUp,
-                      onTap: () {
+                      onTap: () async {
                         FocusScope.of(context).unfocus();
                         if (_formKey.currentState!.validate()) {
-                          context.read<AuthenticationCubit>().signUp(
+                          final cubit = context.read<AuthenticationCubit>();
+                          final fcmToken = await FirebaseMessaging.instance
+                              .getToken();
+                          cubit.signUp(
                             firstName: widget.firstSignupData.name!,
                             lastName: widget.firstSignupData.lastName!,
                             birthDate: widget.firstSignupData.birthDate!,
@@ -155,6 +159,7 @@ class _SecondSignupFormState extends State<SecondSignupForm> {
                             profilePicture:
                                 widget.firstSignupData.profileImage!,
                             idImage: widget.firstSignupData.idImage!,
+                            fcmToken: fcmToken ?? "",
                           );
                         }
                       },

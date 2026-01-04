@@ -28,6 +28,7 @@ class AuthenticationRepo {
     required String role,
     required File profilePicture,
     required File idImage,
+    required String fcmToken,
   }) async {
     try {
       final response = await _authService.signUp(
@@ -40,6 +41,7 @@ class AuthenticationRepo {
         role: role,
         profilePicture: profilePicture,
         idImage: idImage,
+        fcmToken: fcmToken,
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {

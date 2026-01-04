@@ -1,9 +1,12 @@
 import 'package:book_it/core/extensions/localization_extension.dart';
 import 'package:book_it/core/utils/helpers.dart';
 import 'package:book_it/core/utils/location_localization.dart';
+import 'package:book_it/features/Favourites/presentation/viewModel/cubit/favourites_cubit.dart';
+import 'package:book_it/features/Favourites/presentation/viewModel/cubit/favourites_state.dart';
 import 'package:book_it/features/Home/data/models/property_model.dart';
 import 'package:book_it/features/Home/presentation/widgets/property_rating.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PropertyContainer extends StatelessWidget {
   const PropertyContainer({
@@ -52,6 +55,27 @@ class PropertyContainer extends StatelessWidget {
                       icon: Icon(Icons.delete, color: Colors.red, size: 30),
                     ),
                   ),
+                BlocBuilder<FavouritesCubit, FavouritesState>(
+                  builder: (context, state) {
+                    if (!context.read<FavouritesCubit>().isFavourite(
+                      property.id,
+                    )) {
+                      return SizedBox.shrink();
+                    }
+
+                    return Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        onPressed: () {
+                          context.read<FavouritesCubit>().toggleFavourite(
+                            property,
+                          );
+                        },
+                        icon: Icon(Icons.favorite, color: Colors.red, size: 30),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
             SizedBox(height: 10),

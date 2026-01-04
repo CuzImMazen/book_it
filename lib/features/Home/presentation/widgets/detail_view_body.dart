@@ -25,7 +25,7 @@ class DetailViewBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PropertyImages(images: property.images ?? []),
+          PropertyImages(property: property),
           SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),

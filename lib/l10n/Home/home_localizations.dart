@@ -880,6 +880,24 @@ abstract class HomeLocalizations {
   /// In en, this message translates to:
   /// **'m²'**
   String get unit_square_meter;
+
+  /// No description provided for @no_favorites_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorites yet'**
+  String get no_favorites_yet;
+
+  /// No description provided for @favourites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favourites;
+
+  /// No description provided for @something_went_wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get something_went_wrong;
 }
 
 class _HomeLocalizationsDelegate extends LocalizationsDelegate<HomeLocalizations> {

@@ -21,6 +21,7 @@ class AuthenticationService {
     required String role,
     required File profilePicture,
     required File idImage,
+    required String fcmToken,
   }) async {
     if (!profilePicture.existsSync() || !idImage.existsSync()) {
       throw Exception("Profile picture or ID image not found");
@@ -34,6 +35,7 @@ class AuthenticationService {
       "password": password,
       "password_confirmation": confirmPassword,
       "role": role,
+      "fcm_token": fcmToken,
       "profile_img": await MultipartFile.fromFile(
         profilePicture.path,
         filename: profilePicture.path.split('/').last,

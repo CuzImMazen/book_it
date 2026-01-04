@@ -404,4 +404,13 @@ class HomeLocalizationsEn extends HomeLocalizations {
 
   @override
   String get unit_square_meter => 'm²';
+
+  @override
+  String get no_favorites_yet => 'No favorites yet';
+
+  @override
+  String get favourites => 'Favorites';
+
+  @override
+  String get something_went_wrong => 'Something went wrong';
 }

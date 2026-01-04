@@ -18,7 +18,7 @@ class PropertyModel {
   final double? averageRating;
   final int ratingsCount;
   final double? userRating;
-
+  final bool? isFavorite;
   final UserModel? owner;
 
   const PropertyModel({
@@ -41,6 +41,7 @@ class PropertyModel {
     required this.averageRating,
     required this.userRating,
     required this.ratingsCount,
+    this.isFavorite,
   });
 
   factory PropertyModel.fromJson(Map<String, dynamic> json) {
@@ -77,6 +78,37 @@ class PropertyModel {
           ? (json['user_rating']['stars'] as num).toDouble()
           : null,
       ratingsCount: json['ratings_count'] as int,
+      isFavorite: json['is_favorite'] != null
+          ? json['is_favorite'] as bool
+          : null,
+    );
+  }
+  PropertyModel copyWith({
+    bool? isFavorite,
+    double? userRating,
+    List<String>? images,
+    String? mainImage,
+  }) {
+    return PropertyModel(
+      id: id,
+      name: name,
+      category: category,
+      description: description,
+      price: price,
+      governorate: governorate,
+      city: city,
+      availability: availability,
+      mainImage: mainImage ?? this.mainImage,
+      bedrooms: bedrooms,
+      bathrooms: bathrooms,
+      kitchen: kitchen,
+      area: area,
+      owner: owner,
+      averageRating: averageRating,
+      userRating: userRating ?? this.userRating,
+      ratingsCount: ratingsCount,
+      isFavorite: isFavorite ?? this.isFavorite,
+      images: images ?? this.images,
     );
   }
 }

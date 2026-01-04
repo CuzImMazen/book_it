@@ -105,7 +105,7 @@ class HomeLocalizationsAr extends HomeLocalizations {
   String get damascus_alQadam => 'القدم';
 
   @override
-  String get damascus_mazzeh => 'المزه';
+  String get damascus_mazzeh => 'المزة';
 
   @override
   String get damascus_alSalihiyah => 'الصالحية';
@@ -132,7 +132,7 @@ class HomeLocalizationsAr extends HomeLocalizations {
   String get ruralDamascus_alTall => 'التل';
 
   @override
-  String get aleppo_azaz => 'أعزاز';
+  String get aleppo_azaz => 'عزاز';
 
   @override
   String get aleppo_alBab => 'الباب';
@@ -404,4 +404,13 @@ class HomeLocalizationsAr extends HomeLocalizations {
 
   @override
   String get unit_square_meter => 'م²';
+
+  @override
+  String get no_favorites_yet => 'لا توجد لديك شقق مفضلة ';
+
+  @override
+  String get favourites => 'قائمة المفضلة';
+
+  @override
+  String get something_went_wrong => 'حدث خطأ غير متوقع.';
 }

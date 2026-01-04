@@ -11,6 +11,7 @@ import 'package:book_it/core/widgets/custom_text_field.dart';
 import 'package:book_it/features/Authentication/presentation/widgets/dont_have_account_row.dart';
 import 'package:book_it/core/widgets/primary_text.dart';
 import 'package:book_it/core/widgets/secondary_text.dart';
+import 'package:book_it/features/Favourites/presentation/viewModel/cubit/favourites_cubit.dart';
 import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_cubit.dart';
 import 'package:book_it/features/Home/presentation/viewModel/cubit/property_cubit.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,7 @@ class _SignInFormState extends State<SignInForm> {
         if (state is AuthenticationSignInSuccess) {
           Future.wait([
             context.read<PropertyCubit>().getProperties(const {}),
+            context.read<FavouritesCubit>().fetchFavourites(),
             context.read<BookingHistoryCubit>().fetchAllBookings(),
           ]);
           showSnackBar(

@@ -169,7 +169,10 @@
   "propertyErrorUnauthorizedRating": "You cannot rate a property you haven't booked before.",
   "propertyErrorNoPropertiesFound": "No properties found.",
   "propertyErrorUnknown": "An unexpected error occurred.",
-   "unit_square_meter": "m²"
+   "unit_square_meter": "m²",
+   "no_favorites_yet": "No favorites yet",
+   "favourites": "Favorites",
+   "something_went_wrong": "Something went wrong"
 
 }
 
