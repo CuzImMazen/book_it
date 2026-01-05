@@ -9,7 +9,7 @@
   "auth_signIn": "تسجيل الدخول",
   "auth_noAccount": "ليس لديك حساب؟",
   "auth_createAccount": "إنشاء حساب جديد",
-  "auth_accountCreated": "تم إنشاء الحساب بنجاح، يمكنك تسجيل الدخول الآن",
+  "auth_accountCreated": "تم إنشاء الحساب بنجاح ",
   "auth_signedInSuccess": "تم تسجيل الدخول بنجاح",
   "auth_signupTitle": "دعنا نستكشف معًا!",
   "auth_signupSubtitle": "أنشئ حسابك لبدء إدراج أو تأجير المنازل فورًا.",

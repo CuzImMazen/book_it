@@ -36,7 +36,7 @@ class AuthLocalizationsEn extends AuthLocalizations {
   String get auth_createAccount => 'Create new account';
 
   @override
-  String get auth_accountCreated => 'Account created successfully, you can sign in now';
+  String get auth_accountCreated => 'Account created successfully';
 
   @override
   String get auth_signedInSuccess => 'You signed in successfully';

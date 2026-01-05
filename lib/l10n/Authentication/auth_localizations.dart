@@ -152,7 +152,7 @@ abstract class AuthLocalizations {
   /// No description provided for @auth_accountCreated.
   ///
   /// In en, this message translates to:
-  /// **'Account created successfully, you can sign in now'**
+  /// **'Account created successfully'**
   String get auth_accountCreated;
 
   /// No description provided for @auth_signedInSuccess.

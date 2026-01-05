@@ -9,7 +9,7 @@
   "auth_signIn": "Sign In",
   "auth_noAccount": "Don't have an account?",
   "auth_createAccount": "Create new account",
-  "auth_accountCreated": "Account created successfully, you can sign in now",
+  "auth_accountCreated": "Account created successfully",
   "auth_signedInSuccess": "You signed in successfully",
   "auth_signupTitle": "Let's explore together!",
   "auth_signupSubtitle": "Create your account to start listing or renting homes instantly.",
