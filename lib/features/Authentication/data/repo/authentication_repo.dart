@@ -102,6 +102,14 @@ class AuthenticationRepo {
   }
 
   AuthError _mapDioErrorToAuthError(DioException e) {
+    if (e.response == null) {
+      return AuthError.networkError;
+    }
+    final contentType = e.response?.headers.value('content-type') ?? '';
+
+    if (!contentType.contains('application/json')) {
+      return AuthError.networkError;
+    }
     final status = e.response?.statusCode;
 
     switch (status) {
