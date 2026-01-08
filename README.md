@@ -19,7 +19,7 @@ Track booking status: Pending, Active, Upcoming, Canceled, Completed
 
 🏢 Owner
 
-Create an account (admin approval required)
+Create an account (admin approval from dashboard required)
 List, add, and delete properties
 View booking requests or modifications
 Approve or modify bookings
@@ -40,7 +40,7 @@ Follows MVVM (Model-View-ViewModel) architecture
 
 Uses Cubit for state management
 
-Implements design patterns and layered separation:
+Implements design patterns clean code practices and layered separation:
 
 Data layer – API calls, database
 
