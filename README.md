@@ -27,13 +27,19 @@ Approve or modify bookings
 ⚙️ General
 
 API Integration: Communicates with a Laravel backend via REST API. 
-Push notifications via Firebase Cloud Messaging (FCM). 
-Dark mode support
-Localization: Arabic & English
 
-💻 Tech Stack
+Push notifications via Firebase Cloud Messaging (FCM).  🔥
+
+Dark mode support 🌙
+
+Localization: Arabic & English 🌐
+
+💻 Tech Stack :
 
 Frontend: Flutter
+
 Backend: Laravel (not included)
+
 Communication: REST API
+
 Notifications: Firebase Cloud Messaging
