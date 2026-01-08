@@ -13,6 +13,7 @@ import 'package:book_it/core/widgets/secondary_text.dart';
 import 'package:book_it/features/Favourites/presentation/viewModel/cubit/favourites_cubit.dart';
 import 'package:book_it/features/History/presentation/ViewModel/cubit/booking_history_cubit.dart';
 import 'package:book_it/features/Home/presentation/viewModel/cubit/property_cubit.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -112,12 +113,16 @@ class _SignInFormState extends State<SignInForm> {
                       children: [
                         PrimaryButton(
                           text: context.auth.auth_signIn,
-                          onTap: () {
+                          onTap: () async {
                             if (_formKey.currentState!.validate()) {
                               FocusScope.of(context).unfocus();
-                              context.read<AuthenticationCubit>().signIn(
+                              final cubit = context.read<AuthenticationCubit>();
+                              final fcmToken = await FirebaseMessaging.instance
+                                  .getToken();
+                              cubit.signIn(
                                 phoneNumber: _phoneController.text.trim(),
                                 password: _passwordController.text.trim(),
+                                fcmToken: fcmToken ?? "",
                               );
                             }
                           },

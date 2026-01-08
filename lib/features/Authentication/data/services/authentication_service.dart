@@ -60,10 +60,11 @@ class AuthenticationService {
   Future<Response> signIn({
     required String phoneNumber,
     required String password,
+    required String fcmToken,
   }) async {
     return await _dio.post(
       "/signIn",
-      data: {"phone_number": phoneNumber, "password": password},
+      data: {"phone_number": phoneNumber, "password": password , "fcm_token": fcmToken},
       options: Options(extra: {"requiresToken": false}),
     );
   }

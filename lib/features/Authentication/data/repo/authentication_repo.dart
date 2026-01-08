@@ -59,11 +59,13 @@ class AuthenticationRepo {
   Future<(UserModel?, AuthError?)> signIn({
     required String phoneNumber,
     required String password,
+    required String fcmToken,
   }) async {
     try {
       final response = await _authService.signIn(
         phoneNumber: phoneNumber,
         password: password,
+        fcmToken: fcmToken,
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {

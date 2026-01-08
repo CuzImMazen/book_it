@@ -10,37 +10,6 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
   int? loadingBookingId;
   int? loadingModificationId;
 
-  // Future<void> getAllRequests() async {
-  //   emit(OwnerRequestsLoading());
-  //   try {
-  //     final (bookings, bookingsError) = await repo.getPendingRequests();
-  //     if (isClosed) return;
-  //     final (modifications, modificationsError) = await repo
-  //         .getPendingModificationRequests();
-  //     if (isClosed) return;
-  //     if (bookingsError != null || modificationsError != null) {
-  //       emit(
-  //         OwnerRequestsFailure(
-  //           bookingsError ?? modificationsError ?? "Unknown error",
-  //         ),
-  //       );
-  //       return;
-  //     }
-
-  //     emit(
-  //       OwnerRequestsLoaded(
-  //         bookings: bookings,
-  //         modifications: modifications,
-  //         loadingBookingId: null,
-  //         loadingModificationId: null,
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     if (!isClosed) {
-  //       emit(OwnerRequestsFailure(e.toString()));
-  //     }
-  //   }
-  // }
   Future<void> getAllRequests() async {
     emit(OwnerRequestsLoading());
 
@@ -63,6 +32,49 @@ class OwnerRequestsCubit extends Cubit<OwnerRequestsState> {
     emit(
       OwnerRequestsLoaded(
         bookings: bookings,
+        modifications: modifications,
+        loadingBookingId: null,
+        loadingModificationId: null,
+      ),
+    );
+  }
+
+  Future<void> getPendingBookings() async {
+    emit(OwnerRequestsLoading());
+
+    final (bookings, bookingsError) = await repo.getPendingRequests();
+    if (isClosed) return;
+
+    if (bookingsError != null) {
+      emit(OwnerRequestsFailure(bookingsError));
+      return;
+    }
+
+    emit(
+      OwnerRequestsLoaded(
+        bookings: bookings,
+        modifications: const [],
+        loadingBookingId: null,
+        loadingModificationId: null,
+      ),
+    );
+  }
+
+  Future<void> getPendingModifications() async {
+    emit(OwnerRequestsLoading());
+
+    final (modifications, modificationsError) = await repo
+        .getPendingModificationRequests();
+    if (isClosed) return;
+
+    if (modificationsError != null) {
+      emit(OwnerRequestsFailure(modificationsError));
+      return;
+    }
+
+    emit(
+      OwnerRequestsLoaded(
+        bookings: const [],
         modifications: modifications,
         loadingBookingId: null,
         loadingModificationId: null,

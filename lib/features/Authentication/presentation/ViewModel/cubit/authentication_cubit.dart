@@ -48,12 +48,14 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
   Future<void> signIn({
     required String phoneNumber,
     required String password,
+    required String fcmToken,
   }) async {
     emit(const AuthenticationLoading());
 
     final (user, error) = await _authRepo.signIn(
       phoneNumber: phoneNumber,
       password: password,
+      fcmToken: fcmToken,
     );
 
     if (user != null) {
