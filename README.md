@@ -6,9 +6,10 @@ The app works with a Laravel backend API (not included) to handle listings, user
 
 ⚠️ Work in Progress: Some features may be incomplete or require backend setup for full functionality.
 
-🌟 Features
+🌟 Features:
 
 🏠 Renter
+
 Create an account (admin approval required)
 Browse available properties
 Book properties (requires owner approval)
@@ -17,18 +18,21 @@ Add properties to favorites
 Track booking status: Pending, Active, Upcoming, Canceled, Completed
 
 🏢 Owner
+
 Create an account (admin approval required)
 List, add, and delete properties
 View booking requests or modifications
 Approve or modify bookings
 
 ⚙️ General
+
 API Integration: Communicates with a Laravel backend via REST API. 
 Push notifications via Firebase Cloud Messaging (FCM). 
 Dark mode support
 Localization: Arabic & English
 
 💻 Tech Stack
+
 Frontend: Flutter
 Backend: Laravel (not included)
 Communication: REST API
