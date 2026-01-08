@@ -1,7 +1,8 @@
 Book It – House Rental App
 
 Book It is a Flutter mobile application for renting and managing houses. Users can browse properties, make bookings, rate and favorite properties. Property owners can list and manage their properties, and approve or modify booking requests.
-The app works with a Laravel backend (not included) to handle listings, users, and bookings.
+
+The app works with a Laravel backend API (not included) to handle listings, users, and bookings.
 
 ⚠️ Work in Progress: Some features may be incomplete or require backend setup for full functionality.
 
@@ -22,7 +23,8 @@ View booking requests or modifications
 Approve or modify bookings
 
 ⚙️ General
-Push notifications via Firebase Cloud Messaging (FCM)
+API Integration: Communicates with a Laravel backend via REST API. 
+Push notifications via Firebase Cloud Messaging (FCM). 
 Dark mode support
 Localization: Arabic & English
 
@@ -31,8 +33,3 @@ Frontend: Flutter
 Backend: Laravel (not included)
 Communication: REST API
 Notifications: Firebase Cloud Messaging
-
-📚 Resources
-Flutter Documentation
-Flutter Codelab
-Flutter Cookbook
