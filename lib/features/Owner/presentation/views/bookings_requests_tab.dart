@@ -1,4 +1,5 @@
 import 'package:book_it/core/extensions/localization_extension.dart';
+import 'package:book_it/core/style/colors.dart';
 import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_cubit.dart';
 import 'package:book_it/features/Owner/presentation/ViewModel/cubit/owner_requests_state.dart';
 import 'package:book_it/features/Owner/presentation/widgets/booking_request_card.dart';
@@ -22,19 +23,44 @@ class BookingsRequestsTab extends StatelessWidget {
 
         if (state is OwnerRequestsLoaded) {
           if (state.bookings.isEmpty) {
-            return Center(child: Text(context.ownerloc.no_pending_bookings));
+            return RefreshIndicator(
+              color: kPrimaryColor,
+              onRefresh: () async {
+                await context.read<OwnerRequestsCubit>().getPendingBookings();
+              },
+              child: ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.7,
+                    child: Center(
+                      child: Text(
+                        context.ownerloc.no_pending_bookings,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
           }
 
-          return ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            itemCount: state.bookings.length,
-            itemBuilder: (context, index) {
-              final booking = state.bookings[index];
-              return BookingRequestCard(
-                pendingBooking: booking,
-                isLoading: state.loadingBookingId == booking.id,
-              );
+          return RefreshIndicator(
+            onRefresh: () async {
+              await context.read<OwnerRequestsCubit>().getPendingBookings();
             },
+            child: ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              itemCount: state.bookings.length,
+              itemBuilder: (context, index) {
+                final booking = state.bookings[index];
+                return BookingRequestCard(
+                  pendingBooking: booking,
+                  isLoading: state.loadingBookingId == booking.id,
+                );
+              },
+            ),
           );
         }
 
