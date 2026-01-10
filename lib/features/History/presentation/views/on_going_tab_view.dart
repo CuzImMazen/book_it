@@ -49,6 +49,7 @@ class OnGoingTabView extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
           child: RefreshIndicator(
+            color: kPrimaryColor,
             onRefresh: () async {
               await context.read<BookingHistoryCubit>().fetchOngoingBookings();
             },

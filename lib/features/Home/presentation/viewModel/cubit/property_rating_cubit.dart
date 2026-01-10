@@ -9,13 +9,14 @@ class PropertyRatingCubit extends Cubit<PropertyRatingState> {
   PropertyRatingCubit(this._propertyRepo) : super(PropertyRatingInitial());
 
   Future<void> rateProperty(int propertyId, double stars) async {
+    if (isClosed) return;
     emit(PropertyRatingLoading());
 
     final (success, error) = await _propertyRepo.rateProperty(
       propertyId,
       stars,
     );
-
+    if (isClosed) return;
     if (success) {
       emit(PropertyRatingSuccess());
     } else {
