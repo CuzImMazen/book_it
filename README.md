@@ -15,14 +15,14 @@ Browse available properties
 Book properties (requires owner approval)
 Rate properties
 Add properties to favorites
-Track booking status: Pending, Active, Upcoming, Canceled, Completed
+Track bookings Pending, Active, Upcoming, Canceled, Completed
 
 🏢 Owner
 
 Create an account (admin approval from dashboard required)
 List, add, and delete properties
 View booking requests or modifications
-Approve or modify bookings
+Approve or reject 
 
 ⚙️ General
 
