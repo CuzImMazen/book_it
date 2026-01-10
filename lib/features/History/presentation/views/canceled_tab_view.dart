@@ -25,19 +25,42 @@ class CanceledTabView extends StatelessWidget {
           return Center(child: Text(state.errorCanceled!.localized(context)));
         }
         if (state.canceled.isEmpty) {
-          return Center(
-            child: Text(context.history.history_no_canceled_bookings),
+          return RefreshIndicator(
+            color: kPrimaryColor,
+            onRefresh: () async {
+              await context.read<BookingHistoryCubit>().fetchCanceledBookings();
+            },
+            child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: Center(
+                    child: Text(
+                      context.history.history_no_canceled_bookings,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           );
         }
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10),
-          child: ListView.separated(
-            itemBuilder: (context, index) {
-              final booking = state.canceled[index];
-              return BookingsContainer(book: booking);
+          child: RefreshIndicator(
+            color: kPrimaryColor,
+            onRefresh: () async {
+              await context.read<BookingHistoryCubit>().fetchCanceledBookings();
             },
-            separatorBuilder: (context, index) => const SizedBox(height: 15),
-            itemCount: state.canceled.length,
+            child: ListView.separated(
+              itemBuilder: (context, index) {
+                final booking = state.canceled[index];
+                return BookingsContainer(book: booking);
+              },
+              separatorBuilder: (context, index) => const SizedBox(height: 15),
+              itemCount: state.canceled.length,
+            ),
           ),
         );
       },
