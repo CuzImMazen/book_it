@@ -23,11 +23,9 @@ import 'package:path_provider/path_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-<<<<<<< HEAD
-  await dotenv.load(fileName: ".env");
-=======
 
->>>>>>> 3b87c9adeeaa75778dc54d6bd4465997117d308b
+  await dotenv.load(fileName: ".env");
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
@@ -38,11 +36,7 @@ Future<void> main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory(directory.path),
   );
-<<<<<<< HEAD
 
-=======
-  await dotenv.load(fileName: ".env");
->>>>>>> 3b87c9adeeaa75778dc54d6bd4465997117d308b
   runApp(const Bookit());
 }
 
