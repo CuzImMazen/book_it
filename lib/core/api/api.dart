@@ -1,6 +1,10 @@
 import 'package:book_it/core/storage/token/token_storage.dart';
 import 'package:dio/dio.dart';
+<<<<<<< HEAD
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+=======
+import '../api/base_url.dart';
+>>>>>>> 3b87c9adeeaa75778dc54d6bd4465997117d308b
 
 class Api {
   static final Api _instance = Api._internal();
@@ -11,7 +15,11 @@ class Api {
   Api._internal() {
     dio = Dio(
       BaseOptions(
+<<<<<<< HEAD
         baseUrl: dotenv.env['BASE_URL'] ?? "",
+=======
+        baseUrl: baseUrl,
+>>>>>>> 3b87c9adeeaa75778dc54d6bd4465997117d308b
         connectTimeout: Duration(seconds: 15),
         receiveTimeout: Duration(seconds: 15),
         sendTimeout: Duration(seconds: 15),
